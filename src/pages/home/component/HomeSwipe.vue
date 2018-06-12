@@ -15,13 +15,19 @@ export default {
     return{
       swiper:[
         {
-          img:"https://shopstatic.vivo.com.cn/vivoshop/commodity/20180418/20180418104131830678_original.jpg"
+          img:"/static/img/home1.jpg"
         },
         {
-          img:"https://shopstatic.vivo.com.cn/vivoshop/commodity/20180430/20180430232146894398_original.jpg"
+          img:"/static/img/home2.jpg"
+        },
+        {
+          img:"/static/img/home3.jpg"
         }
       ]
     }
+  },
+  mounted(){
+
   }
 }
 </script>

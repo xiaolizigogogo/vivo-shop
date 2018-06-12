@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-        <h2>爆款产品</h2>
+        <h2>产品&服务</h2>
         <div class="main_box">
           <ul>
             <img src="https://shopstatic.vivo.com.cn/vivoshop/commodity/20180405/20180405101609299910_original.jpg" width="100%">
@@ -11,7 +11,7 @@
                 </div>
                 <p class="name">{{todo.homeName}}</p>
                 <p class="nametwo">{{todo.homeNametwo}}</p>
-                <p class="Price">￥{{todo.homePrice}}</p> 
+                <p class="Price">￥{{todo.homePrice}}</p>
               </div>
             </li>
           </ul>
