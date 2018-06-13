@@ -21,9 +21,10 @@ import add_address from "@/pages/add_address"
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     { path: '/', name: 'Home', component: Home },
-    { path: '/Home', name: 'Home', component: Home,meta:{index:1} },
+    { path: '/Home', name: 'Home', component: Home },
     { path: '/cart', name: 'cart', component: cart },
     { path: '/my', name: 'my', component: my },
     {
@@ -74,4 +75,5 @@ export default new Router({
   // scrollBehavior(to, from, savedPosition) {
   //   return { x: 0, y: 0 }
   // }
+
 })

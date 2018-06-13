@@ -21,11 +21,15 @@ import HomeList from './component/HomeList';
 import HomeContainer from './component/HomeContainer'
 import HomeFooter from '../../pages/footer'
 import axios from 'axios';
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail} from '../../api/api'
 export default {
   name:"Home",
   data(){
     return{
-      todos:[]
+      todos:[],
+      openid:'oUP2Z1VjX-BxzTDNEjVnoT_NTkus',
+      code:'',
+      lang:'zc_CN'
     }
   },
   components:{
@@ -36,6 +40,27 @@ export default {
   },
   mounted:function(){
     this.getData()
+    const  code=this.$route.query.code
+    console.log(code)
+    if(code){
+
+      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+        console.log(res)
+        localStorage.setItem("token",JSON.stringify(res.data.data))
+      })
+      getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
+        console.log(res)
+      })
+    }
+    getGoods().then(res=>{
+      console.log(res)
+    })
+    getCategory({"parentId":0}).then(res=>{
+      console.log(res)
+    })
+    getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
+      console.log(res)
+    })
   },
   methods:{
     getData:function(){
