@@ -26,6 +26,68 @@ const getCategory = (params) => {
   })
 }
 /**
+ * 获取广告位置列表
+ * @param page
+ * @param params
+ */
+const getAdPositions = (params) => {
+  return request({
+    url: '/shop/adPositions',
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 获取广告列表
+ * @param
+ * @param params
+ */
+const getAdPositionDetail = (params) => {
+  return request({
+    url: '/shop/adPositions/'+params.adPositionId,
+    method: 'get',
+    params: params
+  })
+}
+/**
+ *
+ * 不分页
+ * 获取购物车列表
+ */
+const getCarts = (params) => {
+  return request({
+    url: '/shop/carts/',
+    method: 'get',
+    params: params
+  })
+}
+/**
+ *
+ * 获取优惠券类表
+ */
+const getCoupons = (params) => {
+  return request({
+    url: '/shop/coupons/',
+    method: 'get',
+    params: params
+  })
+}
+
+/**
+ *
+ * 获取订单列表
+ */
+const getOrders = (params) => {
+  return request({
+    url: '/shop/orders/',
+    method: 'get',
+    params: params
+  })
+}
+
+
+/**
+ * 获取用户信息
  * @param openid
  * @param lang zh_CN
  * @param params
@@ -38,6 +100,7 @@ const getWechatUserInfo = (params) => {
   })
 }
 /**
+ * 获取用户信息
  * @param code
  * @param lang zh_CN
  * @param params
@@ -50,6 +113,7 @@ const getWechatOAuth2UserInfo = (params) => {
   })
 }
   /**
+   * 获取openid
    * @param code
    * @param params
    */
@@ -60,30 +124,7 @@ const getWechatOpenid = (params) => {
       params: params
     })
 }
-/**
- * 获取广告位置列表
- * @param page
- * @param params
- */
-const getAdPositions = (params) => {
-  return request({
-    url: '/shop/adPositions',
-    method: 'get',
-    params: params
-  })
-  /**
-   * 获取广告列表
-   * @param
-   * @param params
-   */
-}
-  const getAdPositionDetail = (params) => {
-    return request({
-      url: '/shop/adPositions/'+params.adPositionId,
-      method: 'get',
-      params: params
-    })
-}
+
 
 export {
   getGoods,
