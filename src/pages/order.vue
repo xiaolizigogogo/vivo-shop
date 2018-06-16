@@ -1,6 +1,6 @@
 <template>
   <div class="order" id="transition">
-      <Order-Header title="我的订单"></Order-Header>
+      <OrderHeader title="我的订单"></OrderHeader>
         <div class="orderMain">
             <div  class="order-box">
                 <p  v-for="(c,index) in t"
@@ -15,17 +15,17 @@
                         <div class="_order">
                             <p class="left">
                                 <i class="iconfont icon-qijiandian"></i>
-                                vivo官方旗舰店
+                                {{shopName}}
                             </p>
-                            <p class="right">已完成</p>
+                            <p class="right">{{orderStatus[list.orderStatus]}}</p>
                         </div>
                         <div class="order" >
                             <img :src="list.img">
 
                             <div class="order-div">
-                                <h3>{{list.name}}</h3>
+                                <h3>{{list.orderSn}}</h3>
                                 <!-- <p class="order-div-color">颜色:黑</p> -->
-                                <p class="order-div-price">￥{{list.price}}</p>
+                                <p class="order-div-price">￥{{list.orderPrice}}</p>
                             </div>
                             <div class="order-div-2">
                                 × {{list.value}}
@@ -34,8 +34,8 @@
                         <div class="order-2">
                             <div class="order-2-box">
                                 <p class="order-2-zero">共计<span>{{list.value}}</span>件商品</p>
-                                <p class="order-2-one">总计：<span>￥{{list.price}}</span></p>
-                                <p class="order-2-two">(含运费：¥0.00优惠：¥0.00)</p>
+                                <p class="order-2-one">总计：<span>￥{{list.actualPrice}}</span></p>
+                                <p class="order-2-two">(含运费：¥{{list.freightPrice}}优惠：¥{{list.couponPrice}})</p>
                             </div>
                         </div>
                         <div class="order-3">
@@ -58,7 +58,7 @@ import { mapState, mapMutations, mapGetters } from "vuex";
 import {getOrders} from '../api/api';
 import OrderHeader from "../common/Header";
 export default {
-  name: "order",
+  name: "orders",
   data() {
     return {
       nowIndex: 0,
@@ -76,21 +76,32 @@ export default {
           item: "待评价"
         }
       ],
-      orders:[]
+      orderStatus:{
+        "0":"待支付"
+      },
+      orders:[],
+      params:{
+        current:1,
+        size:10,
+        userId:14
+      }
     };
   },
   components: {
     OrderHeader
   },
   mounted:function(){
-    getOrders({"current":1,"size":10}).then(res=>{
+    getOrders(this.params).then(res=>{
         console.log(res)
-        this.list=res.data.data
+        this.orders=res.data.data.records
   })
   },
   computed: {
-    orders() {
-      return this.$store.state.orders;
+    // orders() {
+    //   return this.$store.state.orders;
+    // }
+    shopName(){
+      return "官方旗舰店"
     }
   },
   methods: {

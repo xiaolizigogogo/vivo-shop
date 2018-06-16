@@ -1,22 +1,22 @@
 <template>
   <div class="container">
       <div class="container-bj">
-          <img src="/static/img/tou.jpg">
-          <span>{{user.name}}}</span>
+          <img :src="user.header_url">
+          <span>{{user.name}}</span>
           <!--<p>不要被人言左右，要相信自己的判断</p>-->
       </div>
 
       <div class="container-integral">
           <p>
-              <span>{{user.coupons}}}</span>
+              <span>{{user.coupons}}</span>
               <span>优惠券</span>
           </p>
           <p>
-              <span>{{user.encourage}}}</span>
+              <span>{{user.encourage}}</span>
               <span>换鼓励金</span>
           </p>
           <p>
-              <span>{{user.integration}}}</span>
+              <span>{{user.integration}}</span>
               <span>积分</span>
           </p>
       </div>
@@ -89,6 +89,7 @@
 
 <script>
 import { mapState, mapMutations, mapGetters } from "vuex";
+import {getUserInfo} from '../../../api/api'
 export default {
   name:"Mycontainer",
   data(){
@@ -111,14 +112,17 @@ export default {
               },
           ],
         user:{
-            name:'',
-            header_url:'',
-            coupons:'',
-            encourage:'',
-            integration:''
+            name:'姜明礼',
+            header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
+            coupons:'10',
+            encourage:'10',
+            integration:'10'
 
         }
       }
+  },
+  mounted:function(){
+
   },
     computed:{
       ...mapGetters(["this.$store.state.orders"]),

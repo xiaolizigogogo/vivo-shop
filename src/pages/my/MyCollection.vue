@@ -25,12 +25,12 @@
                     <p class="go" @click="goDetalis(list.id)">
                         <span>去购买</span>
                     </p>
-                    
+
                 </div>
             </div>
         </div>
-       
-        
+
+
         <div v-show="collectionIndex===1" v-for="(list,index) in article"  @click="goNewsDetail(list.id)">
            <div class="article" >
                 <p class="tltie">{{list.title}}</p>
@@ -47,6 +47,7 @@
 import CollectionHeader from "../../common/Header";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import { MessageBox } from "mint-ui";
+import {getCollects} from '../../api/api'
 export default {
   name: "MyCollection",
   data() {
@@ -59,20 +60,29 @@ export default {
         {
           name: "文章"
         }
-      ]
+      ],
+      params:{
+
+      },
+      collections:[],
     };
   },
+  mounted:function(){
+    getCollects(this.params).then(res=>{
+      this.collections=res.data.data.records
+    })
+  },
   computed: {
-    collections() {
-      return this.$store.state.collections;
-    },
-    article() {
-      return this.$store.state.article;
-    },
-    ...mapGetters(
-      ["this.$store.state.collections"],
-      ["this.$store.state.article"]
-    )
+    // collections() {
+    //   return this.$store.state.collections;
+    // },
+    // article() {
+    //   return this.$store.state.article;
+    // },
+    // ...mapGetters(
+    //   ["this.$store.state.collections"],
+    //   ["this.$store.state.article"]
+    // )
   },
   components: {
     CollectionHeader

@@ -53,7 +53,7 @@ export default {
       })
     }
     getGoods().then(res=>{
-      console.log(res)
+      this.todos=res.data.data.records
     })
     getCategory({"parentId":0}).then(res=>{
       console.log(res)
@@ -64,11 +64,11 @@ export default {
   },
   methods:{
     getData:function(){
-      var _this=this
-      axios.get("/static/ceshi.json").then(function(res){
-        console.log(res)
-        _this.todos=res.data.data.home
-      })
+      // var _this=this
+      // axios.get("/static/ceshi.json").then(function(res){
+      //   console.log(res)
+      //   _this.todos=res.data.data.home
+      // })
     }
   }
 }

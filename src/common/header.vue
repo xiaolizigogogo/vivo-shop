@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name:"header",
+  name:"orderHeader",
   props:[
       "title"
   ]
@@ -28,7 +28,7 @@ export default {
         width 10%
         height 100%
         float left
-        i 
+        i
             font-size: 0.6rem;
             line-height: 1.45rem;
             text-align: center;
@@ -43,5 +43,5 @@ export default {
         width 10%
         height 100%
         float left
-        
+
 </style>

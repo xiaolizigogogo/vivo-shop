@@ -119,9 +119,9 @@ const getCollects = (params) => {
 /**
  * 获取我的交易记录
  */
-const getAddress = (params) => {
+const getTrades = (params) => {
   return request({
-    url: '/shop/address/',
+    url: '/shop/trades/',
     method: 'get',
     params: params
   })
@@ -164,13 +164,25 @@ const getWechatOpenid = (params) => {
       params: params
     })
 }
+/**
+ * 获取openid
+ * @param code
+ * @param params
+ */
+const getUserInfo = (params) => {
+  return request({
+    url: '/shop/users/user',
+    method: 'get',
+    params: params
+  })
+}
 /**操作**/
 /**
  * 添加商品到购物车
  * @param params
  * @returns {AxiosPromise}
  */
-const getWechatOpenid = (params) => {
+const addCart = (params) => {
   return request({
     url: '/shop/wechat/getOpenid',
     method: 'post',
@@ -192,5 +204,8 @@ export {
   getCollects,
   getGoodDetail,
   getCoupons,
-  getOrders
+  getOrders,
+  getTrades,
+  addCart,
+  getUserInfo
 }

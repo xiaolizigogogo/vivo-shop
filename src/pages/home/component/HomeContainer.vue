@@ -3,15 +3,14 @@
         <h2>产品&服务</h2>
         <div class="main_box">
           <ul>
-            <img src="https://shopstatic.vivo.com.cn/vivoshop/commodity/20180405/20180405101609299910_original.jpg" width="100%">
             <li v-for="(todo,index) in todos" :key="todo.id"   @click="open(todo.id)" >
               <div class="list">
                 <div class="image">
-                  <img v-lazy="todo.homeImg" alt="图片">
+                  <img v-lazy="todo.listPicUrl" alt="图片">
                 </div>
-                <p class="name">{{todo.homeName}}</p>
+                <p class="name">{{todo.name}}</p>
                 <p class="nametwo">{{todo.homeNametwo}}</p>
-                <p class="Price">￥{{todo.homePrice}}</p>
+                <p class="Price">￥{{todo.retailPrice}}</p>
               </div>
             </li>
           </ul>
