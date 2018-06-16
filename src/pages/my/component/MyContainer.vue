@@ -2,21 +2,21 @@
   <div class="container">
       <div class="container-bj">
           <img src="/static/img/tou.jpg">
-          <span>Myfwk</span>
-          <p>不要被人言左右，要相信自己的判断</p>
+          <span>{{user.name}}}</span>
+          <!--<p>不要被人言左右，要相信自己的判断</p>-->
       </div>
 
       <div class="container-integral">
           <p>
-              <span>0</span>
+              <span>{{user.coupons}}}</span>
               <span>优惠券</span>
           </p>
           <p>
-              <span>0</span>
+              <span>{{user.encourage}}}</span>
               <span>换鼓励金</span>
           </p>
           <p>
-              <span>{{jifeng}}</span>
+              <span>{{user.integration}}}</span>
               <span>积分</span>
           </p>
       </div>
@@ -33,7 +33,7 @@
              </p>
          </div>
      </router-link>
-    
+
       <div class="container-con" id="transition">
           <router-link to="/MyCollection" class="con">
                  <div class="con-left">
@@ -109,7 +109,15 @@ export default {
                   img:"/static/img/444.png",
                   name:"退货/退款"
               },
-          ]
+          ],
+        user:{
+            name:'',
+            header_url:'',
+            coupons:'',
+            encourage:'',
+            integration:''
+
+        }
       }
   },
     computed:{
@@ -158,13 +166,13 @@ export default {
         display flex
         justify-content center
         align-items center
-       
+
         p{
             width 25%
             display flex
             flex-direction column
             margin-top .3rem
-           
+
             img{
                 width .8rem
                 height .8rem

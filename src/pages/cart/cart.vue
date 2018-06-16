@@ -9,7 +9,7 @@
                         <i class="iconfont icon-xuanzekuangmoren"   v-show="!cart.danx1uan"></i>
                         <i class="iconfont icon-xuanzekuangxuanzhong" v-show="cart.danx1uan" style="color:#25b5fe"></i>
                     </div>
-                   
+
 
                     <!-- 购物车商品信息 -->
                      <div class="cartImage">
@@ -29,11 +29,11 @@
                         <a href="javascript:;" @click="add(index)" class="reduce">+</a>
                     </div>
 
-                    
+
                 </li>
             </ul>
         </div>
-         
+
 
         <div class="cartImg" v-if="!carts.length">
             <img src="/static/img/gouwuche.png" alt="购物车图片">
@@ -46,9 +46,9 @@
                 <i class="iconfont icon-xuanzekuangxuanzhong" v-show="qx" style="color:#25b5fe"></i>
                 <span>全选</span>
             </div>
-          
+
             <div class="Total">合计：<span style="font-size: 0.54rem;color:#E3211E">￥{{sum}}</span></div>
-           
+
                 <div class="Settlement">
                     <a href="javascript:void(0);" @click="settlement">结算 {{sumValue}}</a>
                 </div>
@@ -57,22 +57,31 @@
                 </div> -->
         </div>
 
-       
+
     </div>
 </template>
 <script>
 import { Toast } from "mint-ui";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import CartHeader from '../../common/header'
+import {getCarts} from '../../api/api'
 export default {
   name: "cart",
   data() {
     return {
-      qx: false
+      qx: false,
+      params:{
+
+      }
     };
   },
   components: {
     CartHeader
+  },
+  mounted:function(){
+    getCarts(this.params).then(res=>{
+      console.log(res)
+    })
   },
   computed: {
     carts() {

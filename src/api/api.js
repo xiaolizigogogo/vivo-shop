@@ -14,6 +14,18 @@ const getGoods = (params) => {
   })
 }
 /**
+ * 获取商品列表
+ * @param params
+ * @returns {AxiosPromise}
+ */
+const getGoodDetail = (params) => {
+  return request({
+    url: '/shop/goods/'+params.goodsId,
+    method: 'get',
+    params: params
+  })
+}
+/**
  * 获取分类列表
  * @param params
  * @returns {AxiosPromise}
@@ -84,8 +96,36 @@ const getOrders = (params) => {
     params: params
   })
 }
-
-
+/**
+ * 获取收货地址列表
+ */
+const getAddress = (params) => {
+  return request({
+    url: '/shop/address/',
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 获取我的收藏列表
+ */
+const getCollects = (params) => {
+  return request({
+    url: '/shop/collects/',
+    method: 'get',
+    params: params
+  })
+}
+/**
+ * 获取我的交易记录
+ */
+const getAddress = (params) => {
+  return request({
+    url: '/shop/address/',
+    method: 'get',
+    params: params
+  })
+}
 /**
  * 获取用户信息
  * @param openid
@@ -124,6 +164,19 @@ const getWechatOpenid = (params) => {
       params: params
     })
 }
+/**操作**/
+/**
+ * 添加商品到购物车
+ * @param params
+ * @returns {AxiosPromise}
+ */
+const getWechatOpenid = (params) => {
+  return request({
+    url: '/shop/wechat/getOpenid',
+    method: 'post',
+    data: params
+  })
+}
 
 
 export {
@@ -133,5 +186,11 @@ export {
   getWechatOAuth2UserInfo,
   getWechatOpenid,
   getAdPositions,
-  getAdPositionDetail
+  getAdPositionDetail,
+  getCarts,
+  getAddress,
+  getCollects,
+  getGoodDetail,
+  getCoupons,
+  getOrders
 }
