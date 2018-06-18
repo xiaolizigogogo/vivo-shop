@@ -6,26 +6,26 @@
                 <li v-for="(cart,index) in carts" class="cartList">
                      <!-- 购物车单选 -->
                      <div class="select" @click="danxuan(cart)" >
-                        <i class="iconfont icon-xuanzekuangmoren"   v-show="!cart.danx1uan"></i>
-                        <i class="iconfont icon-xuanzekuangxuanzhong" v-show="cart.danx1uan" style="color:#25b5fe"></i>
+                        <i class="iconfont icon-xuanzekuangmoren"   v-show="!cart.checked"></i>
+                        <i class="iconfont icon-xuanzekuangxuanzhong" v-show="cart.checked" style="color:#25b5fe"></i>
                     </div>
 
 
                     <!-- 购物车商品信息 -->
                      <div class="cartImage">
-                        <img :src="cart.img" >
+                        <img :src="cart.listPicUrl" >
                     </div>
                     <div class="cartInformation">
-                        <div class="cartName">{{cart.name}}
+                        <div class="cartName">{{cart.goodsName}}
                             <a href="javascript:;" class="iconfont icon-huishouzhan7"  @click="shanchu(index)" ></a>
                         </div>
-                        <p class="cartPrice">￥{{cart.price}}</p>
+                        <p class="cartPrice">￥{{cart.marketPrice}}</p>
                     </div>
 
                     <!-- 购物车商品数量 -->
                     <div class="cartNumber">
                         <a href="javascript:;" @click="reduce(index)" class="add">-</a>
-                        <input type="text"   v-model="cart.value" readonly="readonly"/>
+                        <input type="text"   v-model="cart.number" readonly="readonly"/>
                         <a href="javascript:;" @click="add(index)" class="reduce">+</a>
                     </div>
 
@@ -40,7 +40,7 @@
             <h1>购物车是空的哦，快去购物吧</h1>
             <router-link :to="{name:'Home'}">逛一逛</router-link>
         </div>
-        <div class="cartFooter"  v-if="carts.length">
+        <div class="cartFooter"  v-if="carts.length>0">
             <div class="checkAll" @click="quanxuan()" >
                 <i class="iconfont icon-xuanzekuangmoren" v-show="!qx"></i>
                 <i class="iconfont icon-xuanzekuangxuanzhong" v-show="qx" style="color:#25b5fe"></i>
@@ -57,77 +57,131 @@
                 </div> -->
         </div>
 
-
     </div>
+
 </template>
 <script>
 import { Toast } from "mint-ui";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import CartHeader from '../../common/header'
 import {getCarts} from '../../api/api'
+import HomeFooter from '../../pages/footer'
+import {addCart,updateCart,deleteCart,addOrder} from '../../api/api'
 export default {
   name: "cart",
   data() {
     return {
       qx: false,
+      checkedGoodsList: [],
+      checkedAddress: {},
+      checkedCoupon: [],
+      couponList: [],
+      goodsTotalPrice: 0.00, //商品总价
+      freightPrice: 0.00,    //快递费
+      couponPrice: 0.00,     //优惠券的价格
+      orderTotalPrice: 0.00,  //订单总价
+      actualPrice: 0.00,     //实际需要支付的总价
+      addressId: 1,
+      couponId: 0,
       params:{
 
-      }
+      },
+      carts:[],
+      ids:[]
     };
   },
   components: {
-    CartHeader
+    CartHeader,HomeFooter
   },
   mounted:function(){
     getCarts(this.params).then(res=>{
-      console.log(res)
+      this.carts=res.data.data
     })
   },
   computed: {
-    carts() {
-      return this.$store.state.carts;
-    },
     ...mapGetters(["this.$store.state.carts"]),
     sum: function() {
       var sum = 0;
-      this.$store.state.carts.forEach(cart => {
-        if (cart.danx1uan) {
-          sum += cart.price * cart.value;
+      this.carts.forEach(cart => {
+        if (cart.checked) {
+          sum += cart.marketPrice * cart.number;
         }
       });
       return sum;
     },
     sumValue() {
       var sumValue = 0;
-      this.$store.state.carts.forEach(cart => {
-        if (cart.danx1uan) {
-          sumValue += parseInt(cart.value);
+      this.carts.forEach(cart => {
+        if (cart.checked) {
+          sumValue += parseInt(cart.number);
         }
       });
       return sumValue;
     }
   },
   methods: {
-    ...mapMutations(["shanchu", "add", "reduce", "settlement"]),
-
+    // ...mapMutations(["shanchu"  , "reduce", "settlement"]),
+    add(cart){
+      let item=this.carts[cart]
+      item.number++
+      console.log(item);
+      updateCart(item)
+    },
+    reduce(cart){
+      let item=this.carts[cart]
+      item.number--
+      console.log(item);
+      updateCart(item)
+    },
+    shanchu(cart){
+      let item=this.carts[cart]
+      console.log(item);
+      this.carts.splice(cart,1)
+      deleteCart(item)
+    },
     danxuan(cart) {
       console.log(cart);
-      cart.danx1uan = !cart.danx1uan;
-      if (!cart.danx1uan) {
+      cart.checked = !cart.checked;
+      updateCart(cart)
+      if (!cart.checked) {
         this.qx = false;
       }
     },
     quanxuan() {
       this.qx = !this.qx;
       if (this.qx) {
-        this.$store.state.carts.forEach(cart => {
-          cart.danx1uan = true;
-        });
+        this.carts.forEach(cart => {
+          cart.checked = true;
+          updateCart(cart)
+        })
       } else {
-        this.$store.state.carts.forEach(cart => {
-          cart.danx1uan = false;
-        });
+        this.carts.forEach(cart => {
+          cart.checked = false;
+          updateCart(cart)
+        })
       }
+    },
+    settlement(){
+      if (this.addressId <= 0) {
+        alert('请选择收货地址');
+        return false;
+      }
+      addOrder( { addressId: this.addressId, couponId: this.couponId ,userId:14}).then(res => {
+        if (res) {
+          const orderId = res.data.data.id;
+          // pay.payOrder(parseInt(orderId)).then(res => {
+          //   wx.redirectTo({
+          //     url: '/pages/payResult/payResult?status=1&orderId=' + orderId
+          //   });
+          // }).catch(res => {
+          //   wx.redirectTo({
+          //     url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+          //   });
+          // });
+        } else {
+          // util.showErrorToast('下单失败');
+        }
+      });
     }
   }
 };

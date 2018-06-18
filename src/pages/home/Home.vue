@@ -52,9 +52,9 @@ export default {
         console.log(res)
       })
     }
-    getGoods().then(res=>{
-      this.todos=res.data.data.records
-    })
+    // getGoods().then(res=>{
+    //   this.todos=res.data.data.records
+    // })
     getCategory({"parentId":0}).then(res=>{
       console.log(res)
     })

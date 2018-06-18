@@ -1,6 +1,6 @@
 <template>
   <div id="bottom">
-    <ul class="bottom-ul"> 
+    <ul class="bottom-ul">
       <router-link  to="/home" tag="li">
         <div class="index">
           <i class="iconfont icon-shouye_xuanzhong" style="color:#179dfe" v-if="active ==='home'"></i>
@@ -9,20 +9,12 @@
         <span>首页</span>
       </router-link>
 
-      <router-link to="/classify" tag="li">
+      <router-link to="/cart" tag="li">
         <div class="index">
-          <i class="iconfont icon-fenleixuanzhong" style="color:#179dfe" v-if="active ==='classify'"></i>
-          <i class="iconfont icon-fenlei-copy" v-else></i>
-        </div>
-        <span>分类</span>
-      </router-link>
-
-      <router-link to="/news" tag="li">
-        <div class="index">
-          <i class="iconfont icon-dongtaixuanzhong" style="color:#179dfe" v-if="active ==='news'"></i>
+          <i class="iconfont icon-dongtaixuanzhong" style="color:#179dfe" v-if="active ==='cart'"></i>
           <i class="iconfont icon-dongtai" v-else></i>
         </div>
-        <span>动态</span>
+        <span>购物车</span>
       </router-link>
 
        <router-link to="/my" tag="li">
@@ -71,7 +63,7 @@
         text-align center
         span
           font-size .3rem
-        i 
+        i
           font-size .55rem
       .router-link:hover,.router-link-active
         color: #25b5fe;

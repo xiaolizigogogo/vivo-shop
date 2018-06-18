@@ -6,22 +6,22 @@
                 <li v-for="(goodDetail,index) in goodDetails" :key="index">
                     <div class="goodDetaiSwipe">
                         <mt-swipe :auto="4000">
-                            <mt-swipe-item v-for="list in goodDetail.homeSwipe"> 
-                                <img :src="list.swipe" alt="图片">
+                            <mt-swipe-item v-for="list in goodDetail.gallerys">
+                                <img :src="list.imgUrl" alt="图片">
                             </mt-swipe-item>
                         </mt-swipe>
                     </div>
                     <div class="goodDetailMain">
-                        <div class="gooDetailNumber">商品编号：{{goodDetail.number}}</div>
-                        <div class="goodDetailName">{{goodDetail.homeName}}</div>
+                        <div class="gooDetailNumber">商品编号：{{goodDetail.info.id}}</div>
+                        <div class="goodDetailName">{{goodDetail.info.name}}</div>
                         <div style="text-align: justify;font-size: 0.348rem;">
-                            <span style="margin-left:-.2rem;color:#FF4B3D;">【{{goodDetail.homeBright}}】</span>
-                            {{goodDetail.homeTitle}}
+                            <span style="margin-left:-.2rem;color:#FF4B3D;">【{{goodDetail.info.promotionDesc}}】</span>
+                            {{goodDetail.info.goodsBrief}}
                         </div>
                         <div class="goodDetailColor">{{goodDetail.color}}</div>
-                        <div class="goodDetailPaid">￥{{goodDetail.homePrice}}</div>
+                        <div class="goodDetailPaid">￥{{goodDetail.info.retailPrice}}</div>
                     </div>
-                    
+
                     <div class="goodDetailValue">
                         <div class="_Value">购买数量：</div>
                         <div class="_cartNumber" style="margin-left: 2rem;">
@@ -32,7 +32,7 @@
                     </div>
 
                     <Detail-Layer></Detail-Layer>
-                  
+
                     <div class="goodDetailBox">
                         <mt-navbar v-model="selected" >
                             <mt-tab-item id="tab-container1">图文详情</mt-tab-item>
@@ -50,7 +50,7 @@
                             </mt-tab-container-item>
 
                             <mt-tab-container-item id="tab-container2">
-                                <div class="peizhi" v-html="goodDetail.homePeizhi"></div>
+                                <div class="peizhi" v-html="goodDetail.info.goodsDesc"></div>
                             </mt-tab-container-item>
                         </mt-tab-container>
 
@@ -89,9 +89,9 @@
                                 <a href="javascript:void(0);" @click="pay(goodDetail.id,goodDetail.homeValue)">提交订单</a>
                             </div>
                         </div>
-                       
+
                     </div>
-                    
+
                 </li>
             </ul>
       </div>
@@ -103,6 +103,7 @@ import { Toast,MessageBox,Navbar,TabItem,TabContainer,TabContainerItem } from "m
 import { mapGetters, mapMutations } from "vuex";
 import DetailHeader from "./component/DetailHeader";
 import DetailLayer from "./component/DetailLayer";
+import {getGoodDetail} from '../../api/api'
 import axios from "axios";
 export default {
   name: "goodDetail",
@@ -112,14 +113,32 @@ export default {
       goodDetailHeader: "商品详情",
       selected: "tab-container1",
       goodDetails: [],
-      cartlength: 0
+      cartlength: 0,
+      id: 0,
+      goods: {},
+      gallery: [],
+      attribute: [],
+      issueList: [],
+      comment: [],
+      brand: {},
+      specificationList: [],
+      productList: [],
+      relatedGoods: [],
+      cartGoodsCount: 0,
+      userHasCollect: 0,
+      number: 1,
+      checkedSpecText: '请选择规格数量',
+      openAttr: false,
+      noCollectImage: "/static/images/icon_collect.png",
+      hasCollectImage: "/static/images/icon_collect_checked.png",
+      collectBackImage: "/static/images/icon_collect.png"
     };
   },
   components: {
     DetailHeader,
     DetailLayer
   },
-  computed: {   
+  computed: {
     paid: function() {
       var paid = 0;
       for (var i in this.goodDetails) {
@@ -144,22 +163,26 @@ export default {
   created() {
     var _this = this;
     var id = this.$route.query.id;
-    axios.get("/static/ceshi.json").then(res => {
-      for (var i = 0; i < res.data.data.home.length;i++){
-        if (res.data.data.home[i].id == id ) {
-            _this.goodDetails.push(res.data.data.home[i]);
-        }
-      }
-    });
+    getGoodDetail({"goodsId":id}).then(res=>{
+      _this.goodDetails.push(res.data.data)
+      console.log(res)
+    })
+    // axios.get("/static/ceshi.json").then(res => {
+    //   for (var i = 0; i < res.data.data.home.length;i++){
+    //     if (res.data.data.home[i].id == id ) {
+    //         _this.goodDetails.push(res.data.data.home[i]);
+    //     }
+    //   }
+    // });
+    //
+    // axios.get("/static/ceshi.json").then(res => {
+    //   for (var i = 0; i < res.data.data.set.length;i++){
+    //     if (res.data.data.set[i].id == id ) {
+    //         _this.goodDetails.push(res.data.data.set[i]);
+    //     }
+    //   }
+    // });
 
-    axios.get("/static/ceshi.json").then(res => {
-      for (var i = 0; i < res.data.data.set.length;i++){
-        if (res.data.data.set[i].id == id ) {
-            _this.goodDetails.push(res.data.data.set[i]);
-        }
-      }
-    });
-   
   },
 
   methods: {
@@ -203,7 +226,7 @@ export default {
     },
     jia: function(index) {
       this.goodDetails[index].homeValue++;
-  
+
     },
     jian: function(index) {
       if (this.goodDetails[index].homeValue == 1) {
@@ -429,7 +452,7 @@ export default {
 
             .collection-box {
                 text-align: center;
-                
+
             }
 
             i {

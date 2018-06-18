@@ -184,10 +184,35 @@ const getUserInfo = (params) => {
  */
 const addCart = (params) => {
   return request({
-    url: '/shop/wechat/getOpenid',
+    url: '/shop/carts/',
     method: 'post',
     data: params
   })
+}
+  /**
+   * 添加商品到购物车
+   * @param params
+   * @returns {AxiosPromise}
+   */
+  const updateCart = (params) => {
+    return request({
+      url: '/shop/carts/',
+      method: 'put',
+      data: params
+    })
+}
+const deleteCart = (params) => {
+  return request({
+    url: '/shop/carts/',
+    method: 'delete',
+    data: params
+  })}
+const addOrder = (params) => {
+    return request({
+      url: '/shop/orders/',
+      method: 'post',
+      data: params
+    })
 }
 
 
@@ -207,5 +232,8 @@ export {
   getOrders,
   getTrades,
   addCart,
-  getUserInfo
+  getUserInfo,
+  updateCart,
+  deleteCart,
+  addOrder
 }

@@ -10,6 +10,7 @@
               <p @click="drop">价格降序</p>
               <p>销量优先</p>
           </div>
+
           <div class="lower">
             <div v-for="(list,index) in lower.lower_data" :key="index" class="lower_list" @click="goDetails(list.id)">
               <img v-bind:src="list.ImageOne" alt="图片">
@@ -18,6 +19,7 @@
               <div>￥{{list.Price}}</div>
             </div>
           </div>
+
         </div>
   </div>
 </template>
@@ -26,6 +28,7 @@
 <script>
 import axios from "axios";
 import ChooseHeader from "../common/header";
+import {getGoods} from '../api/api'
 export default {
   name: "choose",
   data() {
@@ -33,19 +36,31 @@ export default {
       upper: [],
       lower: [],
       list: [],
-      phoneIndex: 0
+      phoneIndex: 0,
+      params:{
+        current:1,
+        size:10
+      },
+      noData:false
     };
   },
   components: {
     ChooseHeader
   },
   created() {
+    getGoods(this.params).then(res=>{
+      this.list=res.data.data.records
+    })
     var _this = this;
     axios.get("/static/ceshi.json").then(function(res) {
       _this.upper = res.data.data.phone.upper;
       _this.list = res.data.data.phone.lower;
       _this.lower = _this.list[0];
     });
+  },
+  mounted(){
+    this.top = 1
+    this.bottom = 20
   },
   methods: {
     goDetails: function(id) {
@@ -74,7 +89,50 @@ export default {
       data.sort((a, b) => {
         return a.Price < b.Price;
       });
-    }
+    },
+    refresh: function () {
+      console.log(2)
+      setTimeout(()=> {
+        this.current=1;
+        this.addData();
+      }, 1500)
+    },
+
+    infinite: function () {
+      console.log(3)
+      if(this.noData){
+        setTimeout(() => {
+          this.$refs.my_scroller.finishInfinite(2);
+        })
+        return;
+      }
+      setTimeout(() => {
+        this.current+=1;
+        this.addData();
+      }, 1500)
+    },
+    addData:function () {
+      console.log(1)
+      debugger
+      if(this.params.current==1){
+        this.list.splice(0,this.list.length);
+      }
+      getGoods(this.params).then(res=>{
+          this.list.push(res.data.data.records);
+        })
+      if(this.params.current==1){
+        this.$refs.my_scroller.finishPullToRefresh();
+        this.noData=false;
+      }else{
+        if(this.list.length>=20) {
+          this.noData = true;
+        }
+        setTimeout(() => {
+          this.$refs.my_scroller.finishInfinite(0);
+        })
+      }
+
+    },
   }
 };
 </script>
@@ -203,5 +261,8 @@ export default {
   color: red;
   margin-top: 10px;
   font-size: 0.35rem;
+}
+.scroller {
+  position: relative;
 }
 </style>

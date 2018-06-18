@@ -11,8 +11,8 @@
         </div>
         <div class="calssify-rigth" ref="wrapper2">
             <ul class="calssify-left-ul">
-                <li v-for="(list,index) in right.rigth_data" :key="index" @click="goDetails(list.id)">
-                     <img v-lazy="list.img">
+                <li v-for="(list,index) in right" :key="index" @click="goDetails(list.id)">
+                     <img :src="list.wapBannerUrl">
                     <span>{{list.name}}</span>
                 </li>
             </ul>
@@ -20,7 +20,7 @@
     </div>
 <v-footer></v-footer>
 </div>
-  
+
 </template>
 
 <script>
@@ -28,15 +28,22 @@ import ClassifyHeader from "../../common/header";
 import footer from "../../pages/footer";
 import axios from "axios";
 import { mapGetters } from "vuex";
+import {getCategory,getGoods} from '../../api/api'
 export default {
   data() {
     return {
       left: [],
-      rigth: [],
+      right: [],
       list: [],
       ce: [],
       key2: "",
-      classifyIndex: 0
+      classifyIndex: 0,
+      params:{
+        current:1,
+        size:10,
+        categoryId:0,
+        parentId:0
+      }
     };
   },
   components: {
@@ -54,18 +61,23 @@ export default {
   },
   created() {
     var _this = this;
-    axios.get("/static/ceshi.json").then(function(res) {
-      console.log(res)
-     _this.left = res.data.data.classify.left;
-      _this.list = res.data.data.classify.right;
-      _this.right = _this.list[0];
-    });
+    getCategory(this.params).then(res=>{
+      _this.left = res.data.data;
+      this.params.parentId=this.left[0].id;
+      getCategory(this.params).then(res=>{
+        _this.right = res.data.data;
+      })
+    })
   },
   methods: {
     qiehuan(index) {
       var _this = this;
+      this.params.parentId=this.left[index].id;
+      getCategory(this.params).then(res=>{
+        _this.right = res.data.data;
+      })
       _this.classifyIndex = index;
-      _this.right = _this.list[index];
+
     },
     goDetails(id) {
       console.log(id);

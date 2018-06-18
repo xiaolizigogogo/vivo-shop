@@ -121,6 +121,26 @@ export default {
             }
         })
         console.log(list)
+    },
+    refresh(done) {
+      setTimeout(() => {
+        var start = this.top - 1
+        for (var i = start; i > start - 10; i--) {
+          this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
+        }
+        this.top = this.top - 10
+        done()
+      }, 1500)
+    },
+    infinite(done) {
+      setTimeout(() => {
+        var start = this.bottom + 1
+        for (var i = start; i < start + 10; i++) {
+          this.items.push(i + ' - keep walking, be 2 with you.')
+        }
+        this.bottom = this.bottom + 10
+        done()
+      }, 1500)
     }
   }
 };
