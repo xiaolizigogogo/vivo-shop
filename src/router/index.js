@@ -18,6 +18,7 @@ import OrderDetails from "@/pages/OrderDetails"
 import pay from "@/pages/pay/pay"
 import address from "@/pages/address"
 import add_address from "@/pages/add_address"
+import subscribe from "@/pages/subscribe/subscribe"
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +28,11 @@ export default new Router({
     { path: '/Home', name: 'Home', component: Home },
     { path: '/cart', name: 'cart', component: cart },
     { path: '/my', name: 'my', component: my },
+    {
+      path: '/subscribe',
+      name:'subscribe',
+      component: subscribe
+    },
     {
       path: '/goodDetail',
       name: 'goodDetail',

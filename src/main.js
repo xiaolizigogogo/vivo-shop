@@ -6,6 +6,7 @@ import store from './vuex/index'
 import Navigation from 'vue-navigation'
 import Vuelazyload from 'vue-lazyload'
 import VueScroller from 'vue-scroller'
+import BScroll from 'better-scroll'
 Vue.use(VueScroller)
 Vue.use(Navigation, {router, store})
 
