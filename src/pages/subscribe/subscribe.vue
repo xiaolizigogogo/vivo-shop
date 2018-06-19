@@ -1,8 +1,8 @@
 <template>
     <div class="cart">
        <Cart-Header title="购物车"></Cart-Header>
-        <div class="cartMain wrapper" ref="wrapper">
-             <ul class="content">
+        <div class="cartMain list-wrapper scroll-content" ref="wrapper">
+             <ul class="list-content">
                 <li v-for="(cart,index) in carts" class="cartList">
                      <!-- 购物车单选 -->
                      <div class="select" @click="danxuan(cart)" >
@@ -32,30 +32,11 @@
 
                 </li>
             </ul>
+          <div class="loading-wrapper"></div>
         </div>
 
-      <div class="loading-wrapper"></div>
-        <div class="cartImg" v-if="!carts.length">
-            <img src="/static/img/gouwuche.png" alt="购物车图片">
-            <h1>购物车是空的哦，快去购物吧</h1>
-            <router-link :to="{name:'Home'}">逛一逛</router-link>
-        </div>
-        <div class="cartFooter"  v-if="carts.length>0">
-            <div class="checkAll" @click="quanxuan()" >
-                <i class="iconfont icon-xuanzekuangmoren" v-show="!qx"></i>
-                <i class="iconfont icon-xuanzekuangxuanzhong" v-show="qx" style="color:#25b5fe"></i>
-                <span>全选</span>
-            </div>
 
-            <div class="Total">合计：<span style="font-size: 0.54rem;color:#E3211E">￥{{sum}}</span></div>
 
-                <div class="Settlement">
-                    <a href="javascript:void(0);" @click="settlement">结算 {{sumValue}}</a>
-                </div>
-                <!-- <div class="Settlementtwo">
-                    <router-link :to="{name:'Home'}" >继续购物</router-link>
-                </div> -->
-        </div>
     </div>
 
 </template>
@@ -92,11 +73,6 @@ export default {
   },
   components: {
     CartHeader,HomeFooter
-  },
-  mounted:function(){
-    this.$nextTick(() => {
-      this.scroll = new BScroll(this.$refs.wrapper, {})
-    })
   },
   created:function(){
       this.loadData()
@@ -197,12 +173,13 @@ export default {
         this.carts = res.data.data.concat(this.carts)
         this.carts = res.data.data.concat(this.carts)
         this.$nextTick(() => {
+
           if (!this.scroll) {
-            this.scroll = new Bscroll(this.$refs.wrapper, {})
-            this.scroll.on('touchend', (pos) => {
+            this.scroll = new BScroll(this.$refs.wrapper, {})
+            this.scroll.on('touchEnd', (pos) => {
               console.log(1)
               // 下拉动作
-              if (pos.y > 10) {
+              if (pos.y > 1) {
                 this.loadData()
               }
             })
