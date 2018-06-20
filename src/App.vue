@@ -3,7 +3,6 @@
     <router-view/>
   </div>
 </template>
-
 <script>
 import rem from './rem/rem.js'
 export default {
@@ -15,7 +14,6 @@ export default {
   }
 }
 </script>
-
 <style>
  @import 'styles/style.css';
  @import './fon/iconfont.css';

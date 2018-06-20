@@ -214,6 +214,13 @@ const addOrder = (params) => {
       data: params
     })
 }
+const getAdmins=(params) => {
+  return request({
+    url: '/shop/admins/',
+    method: 'get',
+    data: params
+  })
+}
 
 
 export {
@@ -235,5 +242,6 @@ export {
   getUserInfo,
   updateCart,
   deleteCart,
-  addOrder
+  addOrder,
+  getAdmins
 }

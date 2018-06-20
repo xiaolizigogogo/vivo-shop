@@ -7,6 +7,10 @@ import Navigation from 'vue-navigation'
 import Vuelazyload from 'vue-lazyload'
 import VueScroller from 'vue-scroller'
 import BScroll from 'better-scroll'
+import {Loadmore} from 'mint-ui';
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.component(Loadmore.name, Loadmore);
 Vue.use(VueScroller)
 Vue.use(Navigation, {router, store})
 
@@ -15,8 +19,7 @@ Vue.use(VueLazyLoad,{
 })
 
 //引入UI组件
-import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
+
 Vue.use(MintUI)
 
 //引入axios文件
