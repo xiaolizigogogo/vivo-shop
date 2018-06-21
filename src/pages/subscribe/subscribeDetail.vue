@@ -6,19 +6,46 @@
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
-  <div class="main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
-    <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
-      <ul class="list" v-for="(cart,index) in carts">
-        <li  class="cartList">
-          <mt-cell :title="cart.username" to="/news"
-                   is-link
-                   value="立即预约">
-            <img slot="icon" :src="cart.avatar" width="80" height="80">
-          </mt-cell>
-        </li>
-      </ul>
-    </v-loadmore>
-  </div>
+  <!--<div class="main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">-->
+    <!--<v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">-->
+      <!--<ul class="list" v-for="(cart,index) in carts">-->
+        <!--<li  class="cartList">-->
+          <!--<mt-cell :title="cart.username" to="/news"-->
+                   <!--is-link-->
+                   <!--value="立即预约">-->
+            <!--<img slot="icon" :src="cart.avatar" width="80" height="80">-->
+          <!--</mt-cell>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</v-loadmore>-->
+  <!--</div>-->
+    <div>
+      <mt-actionsheet
+        :actions="actions"
+        v-model="sheetVisible">
+      </mt-actionsheet>
+      <mt-datetime-picker
+        ref="picker"
+        type="date"
+        v-model="pickerValue" :startDate="startDate"  year-format="{value} 年"
+        month-format="{value} 月"
+        date-format="{value} 日">
+
+      </mt-datetime-picker>
+      <mt-popup
+        v-model="popupVisible"
+        position="bottom" class="mint-datetime" >
+        <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel">取消</span> <span class="mint-datetime-action mint-datetime-confirm">确定</span></div>
+        <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
+      </mt-popup>
+
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+      <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
+      <mt-field label="日期" placeholder="请输入手机号" type="date" v-model="pickerValue"></mt-field>
+      <mt-button @click.native="openPicker">点击触发 openPicker</mt-button>
+      <mt-button @click.native="openPopup">点击触发 openPopup</mt-button>
+      <mt-button @click.native="openAction">点击触发 openAction</mt-button>
+    </div>
   </div>
 </template>
 <script>
@@ -30,6 +57,8 @@
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
   import BScroll from 'better-scroll'
   import {Loadmore} from 'mint-ui';
+  import { DatetimePicker } from 'mint-ui';
+  import {formatDate} from '../../api/global'
   export default {
     name: "subscribeDetail",
     data() {
@@ -59,7 +88,35 @@
         pageList: [],
         allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
         scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
-        id:undefined
+        id:undefined,
+        actions:[
+          {name:1,
+            method:this.itemClick(1)
+          }
+        ],
+        sheetVisible:false,
+        phone:'',
+        username:'',
+        pickerValue:'',
+        startDate:'',
+        popupVisible:false,
+        slots: [
+          {
+            flex: 1,
+            values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+            className: 'slot1',
+            textAlign: 'right'
+          }, {
+            divider: true,
+            content: '-',
+            className: 'slot2'
+          }, {
+            flex: 1,
+            values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+            className: 'slot3',
+            textAlign: 'left'
+          }
+        ]
       };
     },
     components: {
@@ -68,6 +125,10 @@
     created: function () {
       this.id=this.$route.query.id;
       console.log(this.id);
+      this.startDate=new Date()
+      this.pickerValue=formatDate(new Date())
+
+
     },
 
     computed: {
@@ -101,9 +162,15 @@
   mounted()
   {
     this.loadPageList();  //初次访问查询列表
+
   }
   ,
   methods: {
+    onValuesChange(picker, values) {
+      if (values[0] > values[1]) {
+        picker.setSlotValue(1, values[0]);
+      }
+    },
     add(cart)
     {
       let item = this.carts[cart]
@@ -176,28 +243,7 @@
   ,
     loadPageList:function (flag) {
       // 查询数据
-      getAdmins(this.params).then((res) => {
-        if(flag){
-          this.carts.push(res.data.data.records)
-        }
-        else{
-          this.carts=res.data.data.records
-        }
-      // 是否还有下一页，加个方法判断，没有下一页要禁止上拉
-      if(this.params.current==res.data.data.pages){
-        this.isHaveMore(false);
-      }
-      else{
-        this.isHaveMore(true);
-      }
-      this.$nextTick(function () {
-        // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写，
-        // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果，
-        // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好
-        this.scrollMode = "touch";
-      });
-    })
-      ;
+
     }
   ,
     more:function () {
@@ -213,7 +259,17 @@
       if (isHaveMore) {
         this.allLoaded = false;
       }
+    },
+    openPicker() {
+      this.$refs.picker.open();
+    },
+    openAction() {
+      this.sheetVisible=true;
+    },
+    openPopup() {
+      this.popupVisible=true;
     }
+
   }
   }
   ;

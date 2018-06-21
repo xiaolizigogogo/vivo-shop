@@ -3,14 +3,16 @@ import {getActionCode,getTaskCode} from './httpRequest'
 
 //时间格式化：20180320
 function formatDate(date){
-    if (!date) return; 
-    var y = date.getFullYear();  
-    var m = date.getMonth() + 1;  
-    m = m < 10 ? '0' + m : m;  
-    var d = date.getDate();  
-    d = d < 10 ? ('0' + d) : d;  
-    return y + '' + m + '' + d;  
+    if (!date) return;
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? '0' + m : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    // return y + '' + m + '' + d;
+  return y + '-' + m + '-' + d;
 }
+
 
 function formatNativeDate(date, fmt) {
     if (/(y+)/.test(fmt)) {
@@ -37,19 +39,19 @@ function padLeftZero(str) {
 }
 
 //金额格式化
-function fmoney(s, n)  
-{  
+function fmoney(s, n)
+{
    s = s||0
-   n = n > 0 && n <= 20 ? n : 2;  
-   s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";  
-   var l = s.split(".")[0].split("").reverse(),  
-   r = s.split(".")[1];  
-   let t = "";  
-   for(let i = 0; i < l.length; i ++ )  
-   {  
-      t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");  
-   }  
-   return (t.split("").reverse().join("") + "." + r).padStart(20);  
+   n = n > 0 && n <= 20 ? n : 2;
+   s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+   var l = s.split(".")[0].split("").reverse(),
+   r = s.split(".")[1];
+   let t = "";
+   for(let i = 0; i < l.length; i ++ )
+   {
+      t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+   }
+   return (t.split("").reverse().join("") + "." + r).padStart(20);
 }
 
 //深拷贝
@@ -68,7 +70,7 @@ function deepClone(obj1,obj2){
 //加载权限code
 function actionCode(processId,actId){
   var codeList = [];
-  
+
   getActionCode(processId,actId).then((res)=>{
     var _codeList = res.data.data;
     if(_codeList != null){
@@ -78,14 +80,14 @@ function actionCode(processId,actId){
         codeObj.code = _codeList[i]["conditionCode"];
         codeObj.name = _codeList[i]["conditionName"];
         codeList.push(codeObj);
-      }     
+      }
     }
   })
   return codeList ;
 };
 
 
-export default
+export
 {
   formatDate,
 	formatNativeDate,
