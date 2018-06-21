@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <mt-header title="预约中心">
+    <mt-header title="预约中心" class="mint-header">
       <router-link to="/" slot="left">
         <mt-button icon="back">返回</mt-button>
       </router-link>
@@ -10,7 +10,9 @@
     <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <ul class="list" v-for="(cart,index) in carts">
         <li  class="cartList">
-          <mt-cell :title="cart.username"  :to="{  path: '/subscribeDetail',query: {   id: cart.id}}" is-link  value="立即预约">
+          <mt-cell :title="cart.username" to="/news"
+                   is-link
+                   value="立即预约">
             <img slot="icon" :src="cart.avatar" width="80" height="80">
           </mt-cell>
         </li>
@@ -28,9 +30,8 @@
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
   import BScroll from 'better-scroll'
   import {Loadmore} from 'mint-ui';
-
   export default {
-    name: "subscribe",
+    name: "subscribeDetail",
     data() {
       return {
         qx: false,
@@ -57,19 +58,16 @@
         },
         pageList: [],
         allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
-        scrollMode: "auto" //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
+        scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
+        id:undefined
       };
     },
     components: {
       CartHeader, HomeFooter, 'v-loadmore': Loadmore
     },
     created: function () {
-      // this.loadData()
-      // var i =0;
-      //   var len=20;
-      // for (; i< len; i++){
-      //   this.list.push('demo' + i);
-      // }
+      this.id=this.$route.query.id;
+      console.log(this.id);
     },
 
     computed: {
@@ -462,5 +460,8 @@
     line-height: .98rem;
     display: block;
     font-size: 0.35rem;
+  }
+  .mint-header{
+    background-color:#ff2697
   }
 </style>
