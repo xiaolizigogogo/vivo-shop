@@ -6,32 +6,44 @@
       </router-link>
       <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
+  <!--<div class="main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">-->
+    <!--<v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">-->
+      <!--<ul class="list" v-for="(cart,index) in carts">-->
+        <!--<li  class="cartList">-->
+          <!--<mt-cell :title="cart.username" to="/news"-->
+                   <!--is-link-->
+                   <!--value="立即预约">-->
+            <!--<img slot="icon" :src="cart.avatar" width="80" height="80">-->
+          <!--</mt-cell>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</v-loadmore>-->
+  <!--</div>-->
     <div>
+      <mt-actionsheet
+        :actions="actions"
+        v-model="sheetVisible">
+      </mt-actionsheet>
       <mt-datetime-picker
         ref="picker"
         type="date"
-        v-model="params.subscribeDayValue" :startDate="startDate"  year-format="{value} 年"
+        v-model="pickerValue" :startDate="startDate"  year-format="{value} 年"
         month-format="{value} 月"
-        date-format="{value} 日"  value-format="yyyyMMddHHmmss"  @confirm="handleDateConfirm" >
+        date-format="{value} 日"  value-format="yyyyMMddHHmmss"  @confirm="handleConfirm" >
       </mt-datetime-picker>
       <mt-popup
         v-model="popupVisible"
         position="bottom" class="mint-datetime" >
-        <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel" @click="cancelPopup">取消</span> <span class="mint-datetime-action mint-datetime-confirm" @click="confirmPopup">确定</span></div>
-        <mt-picker :slots="slots" @change="onProductValuesChange" v-model="params.productId"></mt-picker>
+        <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel">取消</span> <span class="mint-datetime-action mint-datetime-confirm">确定</span></div>
+        <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
       </mt-popup>
 
-      <mt-popup
-        v-model="timeVisible"
-        position="bottom" class="mint-datetime" >
-        <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel" @click="cancelTime">取消</span> <span class="mint-datetime-action mint-datetime-confirm" @click="confirmTime">确定</span></div>
-        <mt-picker :slots="timeSlots" @change="onTimeValuesChange" v-model="value" value-key="key"></mt-picker>
-      </mt-popup>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="params.username"></mt-field>
-      <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="params.phone"></mt-field>
-      <mt-field label="日期" placeholder="选择日期"  v-model="params.subscribeDay" @click.native="openPicker"></mt-field>
-      <mt-field label="时间" placeholder="时间"  v-model="params.subscribeTimeValue" @click.native="openTime"></mt-field>
-      <mt-field label="服务项目" placeholder="选择服务"  v-model="params.productId" @click.native="openPopup"></mt-field>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+      <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="phone"></mt-field>
+      <mt-field label="日期" placeholder="请输入手机号"  v-model="pickerValue"></mt-field>
+      <mt-button @click.native="openPicker">点击触发 openPicker</mt-button>
+      <mt-button @click.native="openPopup">点击触发 openPopup</mt-button>
+      <mt-button @click.native="openAction">点击触发 openAction</mt-button>
     </div>
   </div>
 </template>
@@ -39,7 +51,7 @@
   import {Toast} from "mint-ui";
   import {mapState, mapMutations, mapGetters} from "vuex";
   import CartHeader from '../../common/header'
-  import {getCarts,getAdminAilviliableInfo} from '../../api/api'
+  import {getCarts} from '../../api/api'
   import HomeFooter from '../../pages/footer'
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
   import BScroll from 'better-scroll'
@@ -50,26 +62,47 @@
     name: "subscribeDetail",
     data() {
       return {
+        qx: false,
+        checkedGoodsList: [],
+        checkedAddress: {},
+        checkedCoupon: [],
+        couponList: [],
+        goodsTotalPrice: 0.00, //商品总价
+        freightPrice: 0.00,    //快递费
+        couponPrice: 0.00,     //优惠券的价格
+        orderTotalPrice: 0.00,  //订单总价
+        actualPrice: 0.00,     //实际需要支付的总价
+        addressId: 1,
+        couponId: 0,
         params: {
           current:1,
           size:10,
-          adminId:1,
-          userId:undefined,
-          subscribeDay:'2018-06-22',
-          phone:'',
-          username:'',
-          productId:'',
-          subscribeTime:'',
-          subscribeTimeValue:'',
-          subscribeDayValue:''
         },
         carts: [],
+        ids: [],
+        searchCondition: {  //分页属性
+          pageNo: "1",
+          pageSize: "10"
+        },
+        pageList: [],
+        allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
+        scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
         id:undefined,
+        actions:[
+          {name:1,
+            method:this.itemClick(1)
+          }
+        ],
+        sheetVisible:false,
+        phone:'',
+        username:'',
+        pickerValue:'',
+        startDate:'',
         popupVisible:false,
         slots: [
           {
             flex: 1,
-            values: ['美容','美甲'],
+            values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
             className: 'slot1',
             textAlign: 'right'
           }, {
@@ -82,107 +115,164 @@
             className: 'slot3',
             textAlign: 'left'
           }
-        ],
-        timeSlots: [
-          {
-            flex: 1,
-            values: [],
-            className: 'slot1',
-            textAlign: 'center'
-          }
-        ],
-        timeDefault:[],
-        unAvilTime:[],
-        startDate:'',
-        timeVisible:false,
-        value:'',
-        product:[]
+        ]
       };
     },
     components: {
       CartHeader, HomeFooter, 'v-loadmore': Loadmore
     },
     created: function () {
+      this.id=this.$route.query.id;
+      console.log(this.id);
       this.startDate=new Date()
-      this.params.adminId=this.$route.query.id;
-      for(let i=1;i<=24;i++){
-        if(i<10){
-          var item="0"+i+":00";
-        }
-        else{
-          var item=i+":00";
-        }
-        this.timeDefault.push({key:item,value:i+''})
-      }
+      this.pickerValue=formatDate(new Date())
+
 
     },
+
     computed: {
+      ...mapGetters(["this.$store.state.carts"]),
+    sum: function () {
+      var sum = 0;
+      this.carts.forEach(cart => {
+        if(cart.checked
+    )
+      {
+        sum += cart.marketPrice * cart.number;
+      }
+    })
+      ;
+      return sum;
+    },
+    sumValue() {
+      var sumValue = 0;
+      this.carts.forEach(cart => {
+        if(cart.checked
+    )
+      {
+        sumValue += parseInt(cart.number);
+      }
+    })
+      ;
+      return sumValue;
+    }
   }
   ,
   mounted()
   {
-    this.initTimeSlot();
     this.loadPageList();  //初次访问查询列表
+
   }
   ,
   methods: {
-    onProductValuesChange(picker, values) {
+    onValuesChange(picker, values) {
       if (values[0] > values[1]) {
         picker.setSlotValue(1, values[0]);
       }
-      this.value = values[0];
-      this.value2=values[1];
     },
-    onTimeValuesChange(picker, values) {
-      if(values[0]){
-        this.params.subscribeTimeValue=values[0].key
-        this.params.subscribeTime = values[0].value
+    add(cart)
+    {
+      let item = this.carts[cart]
+      item.number++
+      console.log(item);
+      updateCart(item)
+    }
+  ,
+    handleConfirm(data) {
+      let date = formatDate(data);
+        this.pickerValue = date;
+    },
+    reduce(cart)
+    {
+      let item = this.carts[cart]
+      item.number--
+      console.log(item);
+      updateCart(item)
+    }
+  ,
+    shanchu(cart)
+    {
+      let item = this.carts[cart]
+      console.log(item);
+      this.carts.splice(cart, 1)
+      deleteCart(item)
+    }
+  ,
+    danxuan(cart)
+    {
+      console.log(cart);
+      cart.checked = !cart.checked;
+      updateCart(cart)
+      if (!cart.checked) {
+        this.qx = false;
       }
-    },
+    }
+  ,
+    quanxuan()
+    {
+      this.qx = !this.qx;
+      if (this.qx) {
+        this.carts.forEach(cart => {
+          cart.checked = true;
+        updateCart(cart)
+      })
+      } else {
+        this.carts.forEach(cart => {
+          cart.checked = false;
+        updateCart(cart)
+      })
+      }
+    }
+  ,
     handleTopChange: function (status) {
       this.topStatus = status;
     }
   ,
-    loadPageList:function (flag) {
-      // 查询数据
-      getAdminAilviliableInfo(this.params).then(res=>{
-        this.unAvilTime=res.data.data.unailviliableTime
-        this.initTimeSlot();
-      })
+    itemClick: function (data) {
+      console.log('item click, msg : ' + data);
     }
   ,
+    loadTop:function () { //组件提供的下拉触发方法
+      //下拉加载
+      this.loadPageList();
+      this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+    }
+  ,
+    loadBottom:function () {
+      // 上拉加载
+      this.more();// 上拉触发的分页查询
+      this.$refs.loadmore.onBottomLoaded();// 固定方法，查询完要调用一次，用于重新定位
+    }
+  ,
+    loadPageList:function (flag) {
+      // 查询数据
+
+    }
+  ,
+    more:function () {
+      // 分页查询
+      this.params.current++;
+        this.loadPageList(true);
+      ;
+    }
+  ,
+    isHaveMore:function (isHaveMore) {
+      // 是否还有下一页，如果没有就禁止上拉刷新
+      this.allLoaded = true; //true是禁止上拉加载
+      if (isHaveMore) {
+        this.allLoaded = false;
+      }
+    },
     openPicker() {
       this.$refs.picker.open();
     },
+    openAction() {
+      this.sheetVisible=true;
+    },
     openPopup() {
       this.popupVisible=true;
-    },
-    cancelPopup(){
-      this.popupVisible=false;
-    },
-    confirmPopup(){
-      this.popupVisible=false;
-    },
-    openTime(){
-      this.timeVisible=true;
-    },
-    cancelTime(){
-      this.timeVisible=false;
-    },
-    confirmTime(){
-      this.timeVisible=false;
-    },
-    initTimeSlot(){
-      this.timeSlots[0].values=[];
-      this.timeDefault.forEach(item=>{
-        if(!this.unAvilTime.includes(item.value)){
-          this.timeSlots[0].values.push(item)
-        }
-      })
-    },
-    handleDateConfirm(){
-      this.params.subscribeDay=formatDate(this.params.subscribeDayValue)
-    },
+    }
+
   }
   }
   ;

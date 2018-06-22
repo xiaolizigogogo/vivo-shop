@@ -221,7 +221,27 @@ const getAdmins=(params) => {
     data: params
   })
 }
-
+const addSubscribes=(params)=>{
+  return request({
+    url: '/shop/subscribes/',
+    method: 'post',
+    data: params
+})
+}
+  const getSubscribes=(params)=>{
+    return request({
+      url: '/shop/subscribes/',
+      method: 'get',
+      data: params
+    })
+  }
+ const getAdminAilviliableInfo=(params)=>{
+      return request({
+        url: '/shop/admins/ailviliableInfo/',
+        method: 'get',
+        params: params
+      })
+}
 
 export {
   getGoods,
@@ -243,5 +263,8 @@ export {
   updateCart,
   deleteCart,
   addOrder,
-  getAdmins
+  getAdmins,
+  addSubscribes,
+  getSubscribes,
+  getAdminAilviliableInfo
 }
