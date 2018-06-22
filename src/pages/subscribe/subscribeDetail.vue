@@ -78,7 +78,7 @@
             className: 'slot2'
           }, {
             flex: 1,
-            values: ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06'],
+            values: ['30分钟', '40分钟', '60分钟'],
             className: 'slot3',
             textAlign: 'left'
           }
