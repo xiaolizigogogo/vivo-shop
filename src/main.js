@@ -10,6 +10,12 @@ import BScroll from 'better-scroll'
 import {Loadmore} from 'mint-ui';
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+
+import VueLazyLoad from 'vue-lazyload'
+//引入axios文件
+import axios from 'axios';
+//引入vue-resource
+import VueResource from 'vue-resource';
 Vue.component(Loadmore.name, Loadmore);
 Vue.use(VueScroller)
 Vue.use(Navigation, {router, store})
@@ -21,16 +27,43 @@ Vue.use(VueLazyLoad,{
 //引入UI组件
 
 Vue.use(MintUI)
+Vue.apis= ['onMenuShareTimelin',
+  'onMenuShareAppMessag',
+  'onMenuShareQ',
+  'onMenuShareWeib',
+  'onMenuShareQZon',
+  'startRecor',
+  'stopRecor',
+  'onVoiceRecordEn',
+  'playVoic',
+  'pauseVoic',
+  'stopVoic',
+  'onVoicePlayEn',
+  'uploadVoic',
+  'downloadVoic',
+  'chooseImag',
+  'previewImag',
+  'uploadImag',
+  'downloadImag',
+  'translateVoic',
+  'getNetworkTyp',
+  'openLocatio',
+  'getLocatio',
+  'hideOptionMen',
+  'showOptionMen',
+  'hideMenuItem',
+  'showMenuItem',
+  'hideAllNonBaseMenuIte',
+  'showAllNonBaseMenuIte',
+  'closeWindo',
+  'scanQRCod',
+  'chooseWXPa',
+  'openProductSpecificVie',
+  'addCar',
+  'chooseCar',
+  'openCard']
 
-//引入axios文件
-import axios from 'axios';
-
-//引入vue-resource
-import VueResource from 'vue-resource';
 Vue.use(VueResource)
-
-import VueLazyLoad from 'vue-lazyload'
-
 Vue.config.productionTip = false
 
 
