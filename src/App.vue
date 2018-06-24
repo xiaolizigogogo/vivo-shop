@@ -9,7 +9,42 @@ export default {
   name: 'app',
    data(){
     return{
-      transitionName:''
+      transitionName:'',
+      apis: ['onMenuShareTimelin',
+        'onMenuShareAppMessag',
+        'onMenuShareQ',
+        'onMenuShareWeib',
+        'onMenuShareQZon',
+        'startRecor',
+        'stopRecor',
+        'onVoiceRecordEn',
+        'playVoic',
+        'pauseVoic',
+        'stopVoic',
+        'onVoicePlayEn',
+        'uploadVoic',
+        'downloadVoic',
+        'chooseImag',
+        'previewImag',
+        'uploadImag',
+        'downloadImag',
+        'translateVoic',
+        'getNetworkTyp',
+        'openLocatio',
+        'getLocatio',
+        'hideOptionMen',
+        'showOptionMen',
+        'hideMenuItem',
+        'showMenuItem',
+        'hideAllNonBaseMenuIte',
+        'showAllNonBaseMenuIte',
+        'closeWindo',
+        'scanQRCod',
+        'chooseWXPa',
+        'openProductSpecificVie',
+        'addCar',
+        'chooseCar',
+        'openCard']
     }
   }
 }

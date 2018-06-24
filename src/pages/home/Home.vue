@@ -7,6 +7,7 @@
       <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container>
       <Home-Footer></Home-Footer>
+      <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
   </div>
   </div>
 </div>
@@ -23,7 +24,9 @@ import HomeContainer from './component/HomeContainer'
 import HomeFooter from '../../pages/footer'
 import HomeProductContainer from './component/HomeProductContainer'
 import axios from 'axios';
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail} from '../../api/api'
+import wx from 'weixin-js-sdk'
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket} from '../../api/api'
+
 export default {
   name:"Home",
   data(){
@@ -31,7 +34,9 @@ export default {
       todos:[],
       openid:'oUP2Z1VjX-BxzTDNEjVnoT_NTkus',
       code:'',
-      lang:'zc_CN'
+      lang:'zc_CN',
+      latitude:38.95223,
+      longitude:121.5255
     }
   },
   components:{
@@ -40,6 +45,67 @@ export default {
     HomeContainer,
     HomeFooter,HomeProductContainer
   },
+  created(){
+    getJsTicket({url:window.location.href}).then(res=>{
+      res.data.data.debug=true;
+      res.data.data.jsApiList=['onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'onMenuShareQZone',
+        'startRecord',
+        'stopRecord',
+        'onVoiceRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'onVoicePlayEnd',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'translateVoice',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard']
+      wx.config(res.data.data);
+
+    wx.ready(()=>{
+
+    wx.getLocation({
+      type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      success: function (res) {
+        console.log(res)
+         this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        var speed = res.speed; // 速度，以米/每秒计
+        var accuracy = res.accuracy; // 位置精度
+      }
+    });
+
+  });
+    wx.error(function(res){
+      console.log('wx err',res);
+      //可以更新签名
+    });
+
+    })
+  },
   mounted:function(){
     this.getData()
     const  code=this.$route.query.code
@@ -47,21 +113,17 @@ export default {
     if(code){
 
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        console.log(res)
         localStorage.setItem("token",JSON.stringify(res.data.data))
       })
       getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
-        console.log(res)
       })
     }
     // getGoods().then(res=>{
     //   this.todos=res.data.data.records
     // })
     getCategory({"parentId":0}).then(res=>{
-      console.log(res)
     })
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
-      console.log(res)
     })
   },
   methods:{
@@ -71,6 +133,15 @@ export default {
       //   console.log(res)
       //   _this.todos=res.data.data.home
       // })
+    },openLocation:function () {
+      wx.openLocation({
+        latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
+        longitude: this.longitude, // 经度，浮点数，范围为180 ~ -180。
+        name: 'TIT 创意园', // 位置名
+        address: '广州市海珠区新港中路 397 号', // 地址详情说明
+        scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
+      })
     }
   }
 }

@@ -235,12 +235,20 @@ const addSubscribes=(params)=>{
       data: params
     })
   }
- const getAdminAilviliableInfo=(params)=>{
-      return request({
-        url: '/shop/admins/ailviliableInfo',
-        method: 'get',
-        params: params
-      })
+ const getAdminAilviliableInfo=(params)=>
+{
+  return request({
+    url: '/shop/admins/ailviliableInfo',
+    method: 'get',
+    params: params
+  })
+}
+const getJsTicket=(params)=>{
+    return request({
+      url: '/shop/wechat/getJsTicket',
+      method: 'get',
+      params: params
+    })
 }
 
 export {
@@ -266,5 +274,6 @@ export {
   getAdmins,
   addSubscribes,
   getSubscribes,
-  getAdminAilviliableInfo
+  getAdminAilviliableInfo,
+    getJsTicket
 }
