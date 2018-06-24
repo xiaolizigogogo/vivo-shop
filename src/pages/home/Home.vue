@@ -3,15 +3,14 @@
       <div class="Homeheader"><i class="iconfont icon-VIVO"></i></div>
       <div class="official"><img src="/static/img/official.png" alt="图片" style="width: 100%;height:100%"></div>
       <Home-Swipe></Home-Swipe>
+      <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
-      <HomeProductContainer :todos="todos"></HomeProductContainer>
-      <Home-Container :todos="todos"></Home-Container>
+      <Home-Service />
+      <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
+      <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
   </div>
-  </div>
-</div>
-
 </template>
 
 <script>
@@ -20,9 +19,11 @@ import { Swipe, SwipeItem } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 import HomeSwipe from './component/HomeSwipe';
 import HomeList from './component/HomeList';
-import HomeContainer from './component/HomeContainer'
+// import HomeContainer from './component/HomeContainer'
 import HomeFooter from '../../pages/footer'
-import HomeProductContainer from './component/HomeProductContainer'
+// import HomeProductContainer from './component/HomeProductContainer'
+import MapPositioning from './component/MapPositioning'
+import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
 import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket} from '../../api/api'
@@ -42,8 +43,11 @@ export default {
   components:{
     HomeSwipe,
     HomeList,
-    HomeContainer,
-    HomeFooter,HomeProductContainer
+    // HomeContainer,
+    HomeFooter,
+    // HomeProductContainer,
+    MapPositioning,
+    HomeService
   },
   created(){
     getJsTicket({url:window.location.href}).then(res=>{
@@ -150,6 +154,7 @@ export default {
 <style>
   .Home{
     border-bottom: 10px;
+    margin-bottom: 1.75rem;
   }
   .Homeheader i{
     font-size: 0.55rem;
