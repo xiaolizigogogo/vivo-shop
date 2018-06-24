@@ -218,26 +218,26 @@ const getAdmins=(params) => {
   return request({
     url: '/shop/admins/',
     method: 'get',
-    data: params
+    params: params
   })
 }
 const addSubscribes=(params)=>{
   return request({
-    url: '/shop/subscribes/',
+    url: '/shop/subscribes',
     method: 'post',
     data: params
 })
 }
   const getSubscribes=(params)=>{
     return request({
-      url: '/shop/subscribes/',
+      url: '/shop/subscribes',
       method: 'get',
       data: params
     })
   }
  const getAdminAilviliableInfo=(params)=>{
       return request({
-        url: '/shop/admins/ailviliableInfo/',
+        url: '/shop/admins/ailviliableInfo',
         method: 'get',
         params: params
       })

@@ -4,6 +4,7 @@
       <div class="official"><img src="/static/img/official.png" alt="图片" style="width: 100%;height:100%"></div>
       <Home-Swipe></Home-Swipe>
       <Home-List></Home-List>
+      <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container>
       <Home-Footer></Home-Footer>
   </div>
@@ -20,6 +21,7 @@ import HomeSwipe from './component/HomeSwipe';
 import HomeList from './component/HomeList';
 import HomeContainer from './component/HomeContainer'
 import HomeFooter from '../../pages/footer'
+import HomeProductContainer from './component/HomeProductContainer'
 import axios from 'axios';
 import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail} from '../../api/api'
 export default {
@@ -36,7 +38,7 @@ export default {
     HomeSwipe,
     HomeList,
     HomeContainer,
-    HomeFooter
+    HomeFooter,HomeProductContainer
   },
   mounted:function(){
     this.getData()

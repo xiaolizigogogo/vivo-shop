@@ -16,14 +16,6 @@
         </div>
         <span>购物车</span>
       </router-link>
-
-       <router-link to="/my" tag="li">
-        <div class="index">
-          <i class="iconfont icon-wode-" style="color:#179dfe" v-if="active ==='my'"></i>
-          <i class="iconfont icon-wode"  v-else></i>
-        </div>
-        <span>我的</span>
-      </router-link>
       <router-link to="/subscribe" tag="li">
         <div class="index">
           <i class="iconfont icon-wode-" style="color:#179dfe" v-if="active ==='subscribe'"></i>
@@ -31,6 +23,14 @@
         </div>
         <span>预约</span>
       </router-link>
+       <router-link to="/my" tag="li">
+        <div class="index">
+          <i class="iconfont icon-wode-" style="color:#179dfe" v-if="active ==='my'"></i>
+          <i class="iconfont icon-wode"  v-else></i>
+        </div>
+        <span>我的</span>
+      </router-link>
+
     </ul>
   </div>
 </template>

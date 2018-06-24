@@ -19,7 +19,9 @@ import pay from "@/pages/pay/pay"
 import address from "@/pages/address"
 import add_address from "@/pages/add_address"
 import subscribe from "@/pages/subscribe/subscribe"
+import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
+import mytrade from "@/pages/my/trade"
 Vue.use(Router)
 
 export default new Router({
@@ -30,6 +32,16 @@ export default new Router({
     { path: '/cart', name: 'cart', component: cart },
     { path: '/my', name: 'my', component: my },
     { path: '/subscribeDetail', name: 'subscribeDetail', component: subscribeDetail },
+    {
+      path: '/mysubscribe',
+      name:'mysubscribe',
+      component: mysubscribe
+    },
+    {
+      path: '/mytrade',
+      name:'mytrade',
+      component: mytrade
+    },
     {
       path: '/subscribe',
       name:'subscribe',

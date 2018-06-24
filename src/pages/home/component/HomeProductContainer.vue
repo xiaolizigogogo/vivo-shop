@@ -1,7 +1,7 @@
 <template>
 
     <div class="main" >
-      <h2>产品</h2>
+      <h2>服务</h2>
 
       <div class="main_box" :style="{'-webkit-overflow-scrolling': scrollMode}">
         <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
@@ -31,7 +31,7 @@
   import {getGoods} from '../../../api/api'
   import {Loadmore} from 'mint-ui';
   export default {
-    name: "HomeContainer",
+    name: "HomeProductContainer",
     data() {
       return {
         params: {

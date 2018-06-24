@@ -19,10 +19,10 @@
         width 100%;
         height 1.45rem;
         background #ffffff
-        .header-left 
+        .header-left
             width 10%
             float left;
-            i 
+            i
                 font-size .6rem
                 line-height 1.45rem
                 text-align center
@@ -41,4 +41,13 @@
                 line-height 1.45rem
                 text-align center
                 display block
+
 </style>
+<style>   .myHeader{
+  height: 1.3rem;
+  line-height: 1.3rem;
+  font-size: 0.35rem;
+  padding-left: 0.3rem;
+  background: white;
+  font-size: 0.41rem;
+}</style>

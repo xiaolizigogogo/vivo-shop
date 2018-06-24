@@ -18,7 +18,7 @@
         v-model="popupVisible"
         position="bottom" class="mint-datetime" >
         <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel" @click="cancelPopup">取消</span> <span class="mint-datetime-action mint-datetime-confirm" @click="confirmPopup">确定</span></div>
-        <mt-picker :slots="slots" @change="onProductValuesChange" v-model="params.productId"></mt-picker>
+        <mt-picker :slots="slots" @change="onProductValuesChange" v-model="createParams.productId"></mt-picker>
       </mt-popup>
 
       <mt-popup
@@ -27,11 +27,12 @@
         <div class="picker-toolbar"><span class="mint-datetime-action mint-datetime-cancel" @click="cancelTime">取消</span> <span class="mint-datetime-action mint-datetime-confirm" @click="confirmTime">确定</span></div>
         <mt-picker :slots="timeSlots" @change="onTimeValuesChange" v-model="value" value-key="key"></mt-picker>
       </mt-popup>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="params.username"></mt-field>
-      <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="params.phone"></mt-field>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="createParams.username"></mt-field>
+      <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="createParams.phone"></mt-field>
       <mt-field label="日期" placeholder="选择日期"  v-model="params.subscribeDay" @click.native="openPicker"></mt-field>
-      <mt-field label="时间" placeholder="时间"  v-model="params.subscribeTimeValue" @click.native="openTime"></mt-field>
-      <mt-field label="服务项目" placeholder="选择服务"  v-model="params.productId" @click.native="openPopup"></mt-field>
+      <mt-field label="时间" placeholder="时间"  v-model="createParams.subscribeTimeValue" @click.native="openTime"></mt-field>
+      <mt-field label="服务项目" placeholder="选择服务"  v-model="createParams.productId" @click.native="openPopup"></mt-field>
+      <mt-button @click.native="handleCreate" type="primary" size="large" class="bottom">提交预约</mt-button>
     </div>
   </div>
 </template>
@@ -39,7 +40,7 @@
   import {Toast} from "mint-ui";
   import {mapState, mapMutations, mapGetters} from "vuex";
   import CartHeader from '../../common/header'
-  import {getCarts,getAdminAilviliableInfo} from '../../api/api'
+  import {getCarts,getAdminAilviliableInfo,addSubscribes} from '../../api/api'
   import HomeFooter from '../../pages/footer'
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
   import BScroll from 'better-scroll'
@@ -54,14 +55,18 @@
           current:1,
           size:10,
           adminId:1,
-          userId:undefined,
           subscribeDay:'2018-06-22',
+        },
+        createParams:{
+          productId:10,
+          subscribeTime:'',
           phone:'',
           username:'',
-          productId:'',
-          subscribeTime:'',
           subscribeTimeValue:'',
-          subscribeDayValue:''
+          userId:14,
+          adminId:1,
+          subscribeDayValue:'',
+          subscribeDay:'2018-06-22',
         },
         carts: [],
         id:undefined,
@@ -96,7 +101,8 @@
         startDate:'',
         timeVisible:false,
         value:'',
-        product:[]
+        product:[],
+        userInfo:''
       };
     },
     components: {
@@ -135,8 +141,8 @@
     },
     onTimeValuesChange(picker, values) {
       if(values[0]){
-        this.params.subscribeTimeValue=values[0].key
-        this.params.subscribeTime = values[0].value
+        this.createParams.subscribeTimeValue=values[0].key
+        this.createParams.subscribeTime = values[0].value
       }
     },
     handleTopChange: function (status) {
@@ -183,6 +189,12 @@
     handleDateConfirm(){
       this.params.subscribeDay=formatDate(this.params.subscribeDayValue)
     },
+    handleCreate(){
+
+      addSubscribes(this.createParams).then(res=>{
+
+      })
+    }
   }
   }
   ;
@@ -432,5 +444,9 @@
   }
   .mint-header{
     background-color:#ff2697
+  }
+  .bottom{
+    bottom: 0;
+    position: fixed;
   }
 </style>

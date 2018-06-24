@@ -1,89 +1,116 @@
 <template>
   <div class="container">
-      <div class="container-bj">
-          <img :src="user.header_url">
-          <span>{{user.name}}</span>
-          <!--<p>不要被人言左右，要相信自己的判断</p>-->
+    <div class="container-bj">
+      <img :src="user.header_url">
+      <span>{{user.name}}</span>
+      <!--<p>不要被人言左右，要相信自己的判断</p>-->
+    </div>
+
+    <div class="container-integral">
+      <p>
+        <span>{{user.coupons}}</span>
+        <span>优惠券</span>
+      </p>
+      <p>
+        <span>{{user.encourage}}</span>
+        <span>余额</span>
+      </p>
+      <p>
+        <span>{{user.integration}}</span>
+        <span>积分</span>
+      </p>
+    </div>
+
+    <router-link class="container-order" to="/order" tag="div">
+      <div class="container-order-1">
+        <p class="left">我的订单</p>
+        <p class="right">全部订单 ></p>
       </div>
-
-      <div class="container-integral">
-          <p>
-              <span>{{user.coupons}}</span>
-              <span>优惠券</span>
-          </p>
-          <p>
-              <span>{{user.encourage}}</span>
-              <span>换鼓励金</span>
-          </p>
-          <p>
-              <span>{{user.integration}}</span>
-              <span>积分</span>
-          </p>
+      <div class="container-order-2">
+        <p class="" v-for="list in container">
+          <img :src="list.img">
+          <span>{{list.name}}</span>
+        </p>
       </div>
+    </router-link>
+    <div>
 
-     <router-link class="container-order" to="/order" tag="div">
-         <div class="container-order-1">
-             <p class="left">我的订单</p>
-             <p class="right">全部订单 ></p>
-         </div>
-         <div class="container-order-2">
-             <p class="" v-for="list in container">
-                 <img :src="list.img">
-                 <span>{{list.name}}</span>
-             </p>
-         </div>
-     </router-link>
+      <mt-cell
+        title="我的收藏"
+        to="/MyCollection"
+        is-link>
+        <i class="iconfont icon-collection" slot="icon" width="24" height="24"></i>
+      </mt-cell>
+      <mt-cell
+        title="我的收货地址"
+        to="/address"
+        is-link
+        >
+        <i class="iconfont icon-shouhuodizhi" slot="icon" width="24" height="24"></i>
+      </mt-cell>
+      <mt-cell
+        title="我的购物车"
+        to="/cart"
+        is-link
+        >
+        <i class="iconfont icon-gouwuche" slot="icon" width="24" height="24"></i>
+      </mt-cell>
+      <mt-cell
+        title="我的交易记录"
+        to="/mytrade"
+        is-link
+        >
+        <i class="iconfont icon-zhifu" slot="icon" width="24" height="24"></i>
+      </mt-cell>
+      <mt-cell
+        title="我的预约"
+        to="/mysubscribe"
+        is-link
+        >
+        <i class="iconfont icon-gouwuche" slot="icon" width="24" height="24"></i>
+      </mt-cell>
 
-      <div class="container-con" id="transition">
-          <router-link to="/MyCollection" class="con">
-                 <div class="con-left">
-                  <i class="iconfont icon-collection"></i>
-                  <span>我的收藏</span>
-              </div>
-              <div class="con-rigth">
-                  <i class="iconfont icon-youjiantou"></i>
-              </div>
-          </router-link>
+    </div>
+      <!--<div class="container-con" id="transition">-->
+          <!--<router-link to="/MyCollection" class="con">-->
+                 <!--<div class="con-left">-->
+                  <!--<i class="iconfont icon-collection"></i>-->
+                  <!--<span>我的收藏</span>-->
+              <!--</div>-->
+              <!--<div class="con-rigth">-->
+                  <!--<i class="iconfont icon-youjiantou"></i>-->
+              <!--</div>-->
+          <!--</router-link>-->
+        <!--<router-link to="/MyCollection" class="con">-->
+          <!--<div class="con-left">-->
+            <!--<i class="iconfont icon-collection"></i>-->
+            <!--<span>我的收藏</span>-->
+          <!--</div>-->
+          <!--<div class="con-rigth">-->
+            <!--<i class="iconfont icon-youjiantou"></i>-->
+          <!--</div>-->
+        <!--</router-link>-->
+            <!--<router-link to="/address" class="con" id="transition">-->
+                 <!--<div class="con-left">-->
+                  <!--<i class="iconfont icon-gouwuche"></i>-->
+                  <!--<span>我的收货地址</span>-->
+              <!--</div>-->
+              <!--<div class="con-rigth">-->
+                  <!--<i class="iconfont icon-youjiantou"></i>-->
+              <!--</div>-->
+          <!--</router-link>-->
 
-            <router-link to="/address" class="con" id="transition">
-                 <div class="con-left">
-                  <i class="iconfont icon-gouwuche"></i>
-                  <span>我的收货地址</span>
-              </div>
-              <div class="con-rigth">
-                  <i class="iconfont icon-youjiantou"></i>
-              </div>
-          </router-link>
+           <!--<router-link to="/cart" class="con" id="transition">-->
+                 <!--<div class="con-left">-->
+                  <!--<i class="iconfont icon-gouwuche"></i>-->
+                  <!--<span>我的购物车</span>-->
+              <!--</div>-->
+              <!--<div class="con-rigth">-->
+                  <!--<i class="iconfont icon-youjiantou"></i>-->
+              <!--</div>-->
+          <!--</router-link>-->
+      <!--</div>-->
 
-           <router-link to="/cart" class="con" id="transition">
-                 <div class="con-left">
-                  <i class="iconfont icon-gouwuche"></i>
-                  <span>我的购物车</span>
-              </div>
-              <div class="con-rigth">
-                  <i class="iconfont icon-youjiantou"></i>
-              </div>
-          </router-link>
-
-          <router-link to="/order" class="con">
-                 <div class="con-left">
-                  <i class="iconfont icon-share_icon"></i>
-                  <span>扫码分享</span>
-              </div>
-              <div class="con-rigth">
-                  <i class="iconfont icon-youjiantou"></i>
-              </div>
-          </router-link>
-          <a target="_blank" href="http://www.myfwk.cn" class="con">
-                 <div class="con-left">
-                  <i class="iconfont icon-bangzhuguanyuwomen"></i>
-                  <span>关于我</span>
-              </div>
-              <div class="con-rigth">
-                  <i class="iconfont icon-youjiantou"></i>
-              </div>
-          </a>
-      </div>
   </div>
 </template>
 

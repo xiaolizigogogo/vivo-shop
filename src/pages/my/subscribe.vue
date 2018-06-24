@@ -1,12 +1,13 @@
 <template>
   <div class="cart">
-    <mt-header title="预约中心">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
-  <div class="main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
+    <!--<mt-header title="我的预约">-->
+      <!--<router-link to="/my" slot="left">-->
+        <!--<mt-button icon="back">返回</mt-button>-->
+      <!--</router-link>-->
+      <!--<mt-button icon="more" slot="right"></mt-button>-->
+    <!--</mt-header>-->
+    <My-Header title="我的预约"></My-Header>
+  <div class="container main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
     <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <ul class="list" v-for="(cart,index) in carts">
         <li  class="cartList">
@@ -25,12 +26,13 @@
   import CartHeader from '../../common/header'
   import {getCarts} from '../../api/api'
   import HomeFooter from '../../pages/footer'
-  import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
+  import {getAdmins,getSubscribes} from '../../api/api'
   import BScroll from 'better-scroll'
   import {Loadmore} from 'mint-ui';
+  import MyHeader from '../../common/header'
 
   export default {
-    name: "subscribe",
+    name: "mysubscribe",
     data() {
       return {
         qx: false,
@@ -62,7 +64,8 @@
       };
     },
     components: {
-      CartHeader, HomeFooter, 'v-loadmore': Loadmore
+      CartHeader, HomeFooter, 'v-loadmore': Loadmore,
+        MyHeader,
     },
     created: function () {
     },
@@ -98,7 +101,7 @@
   ,
     loadPageList:function (flag) {
       // 查询数据
-      getAdmins(this.params).then((res) => {
+      getSubscribes(this.params).then((res) => {
         if(flag){
           this.carts.push(res.data.data.records)
         }
@@ -382,5 +385,57 @@
     line-height: .98rem;
     display: block;
     font-size: 0.35rem;
+  }
+  .myHeader{
+    height: 1.3rem;
+    line-height: 1.3rem;
+    font-size: 0.35rem;
+    padding-left: 0.3rem;
+    background: white;
+    font-size: 0.41rem;
+  }
+
+  .myMain{
+    height: 100%;
+    background: white;
+    margin-top: 10px;
+    width: 100%;
+
+  }
+  .MyBox{
+    width: 100%;
+    height: 110px;
+    background: white;
+  }
+  .myOrder,.myCollection{
+    height: 50%;
+  }
+  .Main, .Order{
+    height: 100%;
+    /* background: red; */
+    margin-left: 10px;
+    border-bottom: 1px solid #cccccc;
+  }
+  .myMain img{
+    display: block;
+    width: 60px;
+    height: 60px;
+    padding: 7px;
+    float: left;
+  }
+  .myMain p{
+    line-height: 75px;
+  }
+
+  .Order i , .Order p{
+    display: block;
+    line-height: 55px;
+    float: left;
+    padding-left: 10px;
+  }
+  .container{
+    top: 1.45rem;
+    position: absolute;
+    width:100%
   }
 </style>
