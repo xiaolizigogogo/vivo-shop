@@ -115,7 +115,6 @@ export default {
     const  code=this.$route.query.code
     console.log(code)
     if(code){
-
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         localStorage.setItem("token",JSON.stringify(res.data.data))
       })
