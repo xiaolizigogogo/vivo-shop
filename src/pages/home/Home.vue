@@ -8,7 +8,8 @@
       <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
-      <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
+    <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
+    <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button>
   </div>
 </template>
 
@@ -25,8 +26,8 @@ import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket} from '../../api/api'
-
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder} from '../../api/api'
+import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
   data(){
@@ -149,6 +150,18 @@ export default {
     },
     turnPage(){
       this.$router.push({name:'serviceDetail'})
+    },
+    testPay(){
+      let params={
+        "openid":"obWT-0giZxiX-k1MNWMt2kXics5k",
+        "totalFee":"1",
+        "body":"66666666",
+        "tradeType":"JSAPI"
+      }
+      unifiedOrder(params).then(res=>{
+        console.log(res.data)
+        wexinPay(res.data,this.getData(),this.getData())
+      })
     }
   }
 }
