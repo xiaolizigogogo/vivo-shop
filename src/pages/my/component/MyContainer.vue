@@ -56,7 +56,7 @@
         <i class="iconfont icon-gouwuche" slot="icon" width="24" height="24"></i>
       </mt-cell>
       <mt-cell
-        title="我的交易记录"
+        title="在线买单"
         to="/mytrade"
         is-link
         >
