@@ -126,7 +126,7 @@
         justify-content center;
         text-align center;
         align-items center;
-        opacity 0.8;
+        opacity 0.6;
         span 
             color #fff;
             letter-spacing 0.08rem;
