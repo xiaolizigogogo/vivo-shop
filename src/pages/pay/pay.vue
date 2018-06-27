@@ -1,6 +1,5 @@
 <template>
     <div>
-        <Pay-Header title="结算"></Pay-Header>
         <div to="address" class="pay-address" >
              <p class="address-box">
                 <span class="name">收货人：myfwk</span>
@@ -365,7 +364,6 @@
 <script>
 import { Toast } from "mint-ui";
 import { mapGetters, mapMutations } from "vuex";
-import PayHeader from "../../common/header";
 import axios from "axios";
 export default {
   name: "pay",
@@ -393,7 +391,7 @@ export default {
     };
   },
   components: {
-    PayHeader
+    
   },
   //    computed: {
   //         address() {
@@ -456,6 +454,9 @@ export default {
         }
       }
     });
+  },
+  mounted(){
+    document.title = '结算'
   }
 };
 </script>

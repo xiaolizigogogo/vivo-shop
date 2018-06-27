@@ -1,6 +1,5 @@
 <template>
   <div class="parts">
-    <Parts-Header title="选购配件"></Parts-Header>
     <div class="partsMain">
         <div class="upper">
             <span v-for="(list,index) in PartsUpper" class="list" :class="{active:index===partsIndex}" :key="index" @click="btn(index)" >{{list.name}}</span>
@@ -25,7 +24,6 @@
 
 <script>
 import axios from "axios";
-import PartsHeader from "../common/header";
 import { Navbar, TabItem } from "mint-ui";
 export default {
   data() {
@@ -38,7 +36,7 @@ export default {
     };
   },
   components: {
-    PartsHeader
+    
   },
   created() {
     var _this = this;
@@ -48,6 +46,9 @@ export default {
       _this.list = res.data.data.parts.PartsLower;
       _this.PartsLower = _this.list[0];
     });
+  },
+  mounted(){
+      document.title = '选购配件'
   },
   methods: {
     goDetails: function(id) {

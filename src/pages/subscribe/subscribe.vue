@@ -1,11 +1,5 @@
 <template>
   <div class="cart">
-    <mt-header title="预约中心">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
   <div class="main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
     <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <ul class="list" v-for="(cart,index) in carts">
@@ -22,7 +16,6 @@
 <script>
   import {Toast} from "mint-ui";
   import {mapState, mapMutations, mapGetters} from "vuex";
-  import CartHeader from '../../common/header'
   import {getCarts} from '../../api/api'
   import HomeFooter from '../../pages/footer'
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
@@ -62,7 +55,7 @@
       };
     },
     components: {
-      CartHeader, HomeFooter, 'v-loadmore': Loadmore
+      HomeFooter, 'v-loadmore': Loadmore
     },
     created: function () {
     },
@@ -72,6 +65,7 @@
   ,
   mounted()
   {
+    document.title = '预约中心'
     this.loadPageList();  //初次访问查询列表
   }
   ,

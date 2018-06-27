@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import ClassifyHeader from "../../common/header";
 import footer from "../../pages/footer";
 import axios from "axios";
 import { mapGetters } from "vuex";
@@ -47,8 +46,7 @@ export default {
     };
   },
   components: {
-    "v-footer": footer,
-    ClassifyHeader
+    "v-footer": footer
   },
   //    mounted(){
   //       this.$nextTick(() => {

@@ -36,7 +36,6 @@ export default {
 <style lang="stylus" scoped>
     .home-swiper
         height 6.5rem;
-        margin-top 1px;
         img
             width 100%;
             height 6.5rem

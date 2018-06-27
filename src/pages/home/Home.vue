@@ -1,7 +1,5 @@
 <template>
   <div class="Home">
-      <div class="Homeheader"><i class="iconfont icon-VIVO"></i></div>
-      <div class="official"><img src="/static/img/official.png" alt="图片" style="width: 100%;height:100%"></div>
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
@@ -10,6 +8,8 @@
       <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
+    <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
+    <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button>
   </div>
 </template>
 
@@ -26,8 +26,8 @@ import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket} from '../../api/api'
-
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder} from '../../api/api'
+import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
   data(){
@@ -111,6 +111,7 @@ export default {
     })
   },
   mounted:function(){
+    document.title = '斯卡莱SPA美甲'
     this.getData()
     const  code=this.$route.query.code
     console.log(code)
@@ -145,6 +146,21 @@ export default {
         address: '广州市海珠区新港中路 397 号', // 地址详情说明
         scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
+      })
+    },
+    turnPage(){
+      this.$router.push({name:'serviceDetail'})
+    },
+    testPay(){
+      let params={
+        "openid":"obWT-0giZxiX-k1MNWMt2kXics5k",
+        "totalFee":"1",
+        "body":"66666666",
+        "tradeType":"JSAPI"
+      }
+      unifiedOrder(params).then(res=>{
+        console.log(res.data)
+        wexinPay(res.data,this.getData(),this.getData())
       })
     }
   }
