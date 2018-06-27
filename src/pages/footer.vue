@@ -3,7 +3,7 @@
     <ul class="bottom-ul">
       <router-link  to="/home" tag="li">
         <div class="index">
-          <i class="iconfont icon-shouye_xuanzhong" style="color:#179dfe" v-if="active ==='home'"></i>
+          <i class="iconfont icon-shouye_xuanzhong" style="color:#98499C" v-if="active ==='home'"></i>
           <i class="iconfont icon-shouye2" v-else></i>
         </div>
         <span>首页</span>
@@ -11,21 +11,21 @@
 
       <router-link to="/cart" tag="li">
         <div class="index">
-          <i class="iconfont icon-dongtaixuanzhong" style="color:#179dfe" v-if="active ==='cart'"></i>
+          <i class="iconfont icon-dongtaixuanzhong" style="color:#98499C" v-if="active ==='cart'"></i>
           <i class="iconfont icon-dongtai" v-else></i>
         </div>
         <span>购物车</span>
       </router-link>
       <router-link to="/subscribe" tag="li">
         <div class="index">
-          <i class="iconfont icon-wode-" style="color:#179dfe" v-if="active ==='subscribe'"></i>
+          <i class="iconfont icon-wode-" style="color:#98499C" v-if="active ==='subscribe'"></i>
           <i class="iconfont icon-wode"  v-else></i>
         </div>
         <span>预约</span>
       </router-link>
        <router-link to="/my" tag="li">
         <div class="index">
-          <i class="iconfont icon-wode-" style="color:#179dfe" v-if="active ==='my'"></i>
+          <i class="iconfont icon-wode-" style="color:#98499C" v-if="active ==='my'"></i>
           <i class="iconfont icon-wode"  v-else></i>
         </div>
         <span>我的</span>
@@ -73,5 +73,5 @@
         i
           font-size .55rem
       .router-link:hover,.router-link-active
-        color: #25b5fe;
+        color: #98499C
 </style>

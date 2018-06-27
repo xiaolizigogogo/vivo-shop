@@ -21,7 +21,7 @@ import add_address from "@/pages/add_address"
 import subscribe from "@/pages/subscribe/subscribe"
 import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
-import mytrade from "@/pages/my/trade"
+import mytrade from "@/pages/my/trade/index"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 Vue.use(Router)
 

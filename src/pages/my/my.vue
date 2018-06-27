@@ -35,7 +35,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
    .myHeader{
         height: 1.3rem;
         line-height: 1.3rem;
