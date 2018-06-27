@@ -6,12 +6,13 @@ let wx = require('weixin-js-sdk');
 @param{cb}:成功回调
 */
 let wexinPay = (data,cb,errorCb) => {
-let appId = data.appId;
-let timestamp = data.timeStamp;
-let nonceStr = data.nonceStr;
-let signature = data.signature;
-let packages = data.package;
-let paySign = data.paySign;
+var appId = data.appId;
+  var timestamp = data.timeStamp;
+  var nonceStr = data.nonceStr;
+  var signature = data.signature;
+  var packages = data.package;
+  var paySign = data.paySign;
+console.log(data);
 wx.config({
 debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
 appId: appId, // 必填，公众号的唯一标识

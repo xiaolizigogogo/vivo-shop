@@ -158,8 +158,7 @@ export default {
         "tradeType":"JSAPI"
       }
       unifiedOrder(params).then(res=>{
-        console.log(res.data)
-        wexinPay(res.data,this.getData(),this.getData())
+        wexinPay(res.data.data,this.getData(),this.getData())
       })
     }
   }
