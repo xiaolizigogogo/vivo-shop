@@ -10,6 +10,7 @@
       <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
+      <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
   </div>
 </template>
 
@@ -146,6 +147,9 @@ export default {
         scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
       })
+    },
+    turnPage(){
+      this.$router.push({name:'serviceDetail'})
     }
   }
 }

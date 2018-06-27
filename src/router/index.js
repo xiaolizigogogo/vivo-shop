@@ -22,6 +22,7 @@ import subscribe from "@/pages/subscribe/subscribe"
 import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
 import mytrade from "@/pages/my/trade"
+import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 Vue.use(Router)
 
 export default new Router({
@@ -89,6 +90,11 @@ export default new Router({
       path: '/add_address',
       name:'add_address',
       component:add_address
+    },
+    {
+      path: '/serviceDetail',
+      name:'serviceDetail',
+      component:serviceDetail
     }
   ],
   //路由切换页面始终回到最顶部
