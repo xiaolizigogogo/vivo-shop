@@ -8,15 +8,15 @@
 
     <div class="container-integral">
       <p>
-        <span>{{user.coupons}}</span>
+        <span class="mainColor">{{user.coupons}}</span>
         <span>优惠券</span>
       </p>
       <p>
-        <span>{{user.encourage}}</span>
+        <span class="mainColor">{{user.encourage}}</span>
         <span>余额</span>
       </p>
       <p>
-        <span>{{user.integration}}</span>
+        <span class="mainColor">{{user.integration}}</span>
         <span>积分</span>
       </p>
     </div>
@@ -24,16 +24,16 @@
     <router-link class="container-order" to="/order" tag="div">
       <div class="container-order-1">
         <p class="left">我的订单</p>
-        <p class="right">全部订单 ></p>
+        <p class="right mainColor">全部订单 ></p>
       </div>
       <div class="container-order-2">
-        <p class="" v-for="list in container">
-          <img :src="list.img">
+        <p class="myOrder" v-for="list in container">
+          <i :class="'iconfont ' + list.img"></i>
           <span>{{list.name}}</span>
         </p>
       </div>
     </router-link>
-    <div>
+    <div class="box">
 
       <mt-cell
         title="我的收藏"
@@ -123,18 +123,18 @@ export default {
       return{
           container:[
               {
-                  img:"/static/img/111.png",
+                  img:"icon-daifukuan",
                   name:"待付款"
               },
                {
-                  img:"/static/img/222.png",
+                  img:"icon-tubiaolunkuo-",
                   name:"待收货"
               },
                {
-                  img:"/static/img/333.png",
+                  img:"icon-daipingjia",
                   name:"待评价"
               }, {
-                  img:"/static/img/444.png",
+                  img:"icon-tuikuan",
                   name:"退货/退款"
               },
           ],
@@ -166,68 +166,78 @@ export default {
 
 
 <style lang="stylus" scoped>
-.container-order{
-    width 100%
+@import '../../../fon/fontMy/iconfont.css'
+.box
+    margin-top:0.3rem
+    margin-bottom:0.3rem
+.mainColor
+    color #98499C
+    font-weight bold
+.iconfont
+    color #98499C
+.mint-cell
+    height 1rem
+    display flex
+    justify-content flex-start
+    border-bottom 1px solid #98499C
+.container-order
+    box-shadow 5px 5px 5px #98499C
     height 3.5rem
     background white
     display block
-    margin-bottom .15rem
-    margin-top .15rem
+    margin 0.3rem 0.3rem 0
     font-size 0.35rem
-    .container-order-1{
+    .container-order-1
+        border-bottom 1px solid #e9e9e9
         width 100%
-        height 1.5rem
-        .left{
+        height 1.2rem
+        .left
             float: left;
             display: block;
-            line-height: 1.5rem;
+            line-height: 1.2rem;
             margin-left: .5rem;
             font-size: 0.4rem;
-        }
-        .right {
+        
+        .right 
             float: right;
-            line-height: 1.5rem;
+            line-height: 1.2rem;
             margin-right: .6rem;
             font-size: 0.4rem;
-        }
-    }
-    .container-order-2{
+        
+    
+    .container-order-2
         width 100%
-        height 1.5rem
+        height 2.3rem
         display flex
         justify-content center
-        align-items center
+        align-items flex-start
 
-        p{
+        .myOrder
             width 25%
             display flex
             flex-direction column
-            margin-top .3rem
+            align-items center
 
-            img{
-                width .8rem
-                height .8rem
-                margin auto
-            }
-            span{
+            .iconfont
+                font-size 0.8rem
+            
+            span
                 text-align center
-                padding-top .3rem
-            }
-        }
-    }
-}
+            
+        
+    
+
 .t{
     background-image url('/static/img/t.png');
 }
 
 .container {
     width: 100%;
-    height: 5rem;
     position: absolute;
     .container-bj {
         width: 100%;
-        height: 100%;
-        background: url('/static/img/bj.png') no-repeat;
+        height: 5rem;
+        background: url('/static/img/bg2.jpg') no-repeat;
         background-size: 100% 100%;
         display: flex;
         justify-content: center;
@@ -251,7 +261,8 @@ export default {
         }
     }
     .container-integral{
-        width 100%
+        box-shadow 5px 5px 5px #98499C
+        margin 0.3rem 0.3rem 0
         height 2rem
         background #ffffff
         display: flex;
