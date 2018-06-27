@@ -260,6 +260,13 @@ export default {
     height 1.2rem
 .weui-cell:before
   right 15px
-.weui-btn
-  background-color #98499C
+.weui-btn-area
+  margin 0.3rem
+  .weui-btn
+    height 1.2rem
+    background-color #98499C
+    display flex
+    justify-content center
+    align-items center
+    font-size 0.5rem
 </style>
