@@ -29,7 +29,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/shop/': {
-        target: 'http://localhost:4004',//226:8799              host:'192.168.1.226',
+        target: 'http://shop.yodemon.top:4004',//226:8799              host:'192.168.1.226',
         changeOrigin: true,
         pathRewrite: {
           '^/shop/': '/'
