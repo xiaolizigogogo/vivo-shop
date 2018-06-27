@@ -1,6 +1,5 @@
 <template>
   <div class="change">
-      <Change-header title="手机以旧换新"></Change-header>
       <div class="change-box">
         <div class="change-img" v-for="list in change">
           <img :src="list.changeImg"></div>
@@ -12,7 +11,6 @@
 
 <script>
 import axios from "axios";
-import ChangeHeader from '../Detail/component/DetailHeader'
 export default {
   name:"change",
   data(){
@@ -20,8 +18,8 @@ export default {
           change:[]
       }
   },
-  components:{
-      ChangeHeader
+  mounted(){
+      document.title = '手机以旧换新'
   },
   created(){
       var _this=this

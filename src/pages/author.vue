@@ -1,11 +1,5 @@
 <template>
   <div class="Author" >
-      <div class="AuthorHeader">
-        <router-link to="my">
-          <i class="iconfont icon-552cc14536532"></i>
-        </router-link>
-          关于我
-      </div>
       <div class="AuthorMain">
         <div>在校学生一枚明年毕业，这是我第一个用vue写的项目</div>
         <p>我的QQ:2239657654</p>
@@ -19,6 +13,9 @@
 <script>
 import { mapState } from 'vuex';
 export default {
+    mounted(){
+        document.title = '关于我'
+    }
 }
 </script>
 

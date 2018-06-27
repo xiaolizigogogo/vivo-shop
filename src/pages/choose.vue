@@ -1,6 +1,5 @@
 <template>
   <div class="choose">
-        <Choose-Header title="选购手机"></Choose-Header>
         <div class="_choose_twoMain">
           <div class="upper">
             <span v-for="(list,index) in upper" :key="index" class="list" @click="btn(index)" :class="{active:index===phoneIndex}">{{list.name}}</span>
@@ -27,7 +26,6 @@
 
 <script>
 import axios from "axios";
-import ChooseHeader from "../common/header";
 import {getGoods} from '../api/api'
 export default {
   name: "choose",
@@ -45,7 +43,7 @@ export default {
     };
   },
   components: {
-    ChooseHeader
+    
   },
   created() {
     getGoods(this.params).then(res=>{
@@ -59,6 +57,7 @@ export default {
     });
   },
   mounted(){
+    document.title = '选购手机'
     this.top = 1
     this.bottom = 20
   },

@@ -1,6 +1,5 @@
 <template>
   <div >
-    <News-Header></News-Header>
     <News-Container :NewsContainer="NewsContainer"></News-Container>
     <News-Footer></News-Footer>
         
@@ -9,13 +8,11 @@
 
 <script>
 import axios from 'axios';
-import NewsHeader from '../../pages/News/component/NewsHeader'
 import NewsContainer from '../../pages/News/component/NewsContainer'
 import NewsFooter from '../../pages/footer'
 export default {
     name:"information",
     components:{
-        NewsHeader,
         NewsContainer,
         NewsFooter
     },
@@ -30,6 +27,9 @@ export default {
            _this.NewsContainer=res.data.data.news
         })
        
+    },
+    mounted(){
+        document.title = '资讯动态'
     },
     methods: {
          open:function(id){

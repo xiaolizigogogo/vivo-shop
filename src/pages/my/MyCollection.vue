@@ -1,6 +1,5 @@
 <template>
   <div >
-    <Collection-Header title="我的收藏"></Collection-Header>
     <div class="box">
         <div class="shop_1">
             <p v-for="(list,index) in item" class="list"  :key="index" @click="btn(index)">
@@ -44,7 +43,6 @@
 </template>
 
 <script>
-import CollectionHeader from "../../common/Header";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import { MessageBox } from "mint-ui";
 import {getCollects} from '../../api/api'
@@ -68,6 +66,7 @@ export default {
     };
   },
   mounted:function(){
+      document.title = '我的收藏'
     getCollects(this.params).then(res=>{
       this.collections=res.data.data.records
     })
@@ -85,7 +84,7 @@ export default {
     // )
   },
   components: {
-    CollectionHeader
+    
   },
   methods: {
     ...mapMutations(["del", "cancel"]),

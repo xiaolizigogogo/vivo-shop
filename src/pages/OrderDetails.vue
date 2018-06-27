@@ -1,6 +1,5 @@
 <template>
   <div class="o1">
-      <Order-Header title="订单详情"></Order-Header>
         <div class="details-box">
       <div class="details-success">
           <p>订单状态：已完成</p>
@@ -87,7 +86,6 @@
 
 <script>
 import axios from "axios";
-import OrderHeader from "../common/header";
 export default {
   name: "o1",
   data() {
@@ -96,7 +94,7 @@ export default {
     };
   },
   components: {
-    OrderHeader
+    
   },
   created() {
     var _this = this;
@@ -117,6 +115,9 @@ export default {
         }
       }
     });
+  },
+  mounted(){
+      document.title = '订单详情'
   }
 };
 </script>
