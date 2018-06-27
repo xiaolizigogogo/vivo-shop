@@ -169,7 +169,8 @@ export default {
 @import '../../../fon/fontMy/iconfont.css'
 .box
     margin-top:0.3rem
-    margin-bottom:0.3rem
+    margin-bottom:1.45rem
+
 .mainColor
     color #98499C
     font-weight bold
