@@ -1,7 +1,5 @@
 <template>
   <div class="Home">
-      <div class="Homeheader"><i class="iconfont icon-VIVO"></i></div>
-      <div class="official"><img src="/static/img/official.png" alt="图片" style="width: 100%;height:100%"></div>
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
@@ -112,6 +110,7 @@ export default {
     })
   },
   mounted:function(){
+    document.title = '斯卡莱SPA美甲'
     this.getData()
     const  code=this.$route.query.code
     console.log(code)

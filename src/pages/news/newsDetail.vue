@@ -1,6 +1,5 @@
 <template>
   <div class="detail" id="transition">
-      <Detail-Header title="资讯详情"></Detail-Header>
       <div class="detail-con" v-for="(list,index) in newsDetail">
         <div class="detail-con-box" v-html="list.newsDetail"></div>
         <div class="details-box">
@@ -28,7 +27,6 @@ import {
   TabContainer,
   TabContainerItem
 } from "mint-ui";
-import DetailHeader from '../../common/header';
 import { mapGetters, mapMutations } from "vuex";
 export default {
   name: "newsDetail",
@@ -38,7 +36,7 @@ export default {
     };
   },
   components: {
-    DetailHeader
+    
   },
   computed: {
     ...mapGetters(["this.$store.state.article"])
@@ -106,6 +104,9 @@ export default {
         }
       }
     });
+  },
+  mounted(){
+    document.title = '咨询详情'
   }
   // created(){
   //   var id = this.$route.query.id;

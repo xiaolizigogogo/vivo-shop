@@ -1,6 +1,5 @@
 <template>
 <div class="goodDetail" id="transitionName">
-    <Detail-Header title="商品详情"></Detail-Header>
       <div class="goodDetailList">
             <ul style="background: white;">
                 <li v-for="(goodDetail,index) in goodDetails" :key="index">
@@ -101,7 +100,6 @@
 <script >
 import { Toast,MessageBox,Navbar,TabItem,TabContainer,TabContainerItem } from "mint-ui";
 import { mapGetters, mapMutations } from "vuex";
-import DetailHeader from "./component/DetailHeader";
 import DetailLayer from "./component/DetailLayer";
 import {getGoodDetail} from '../../api/api'
 import axios from "axios";
@@ -135,7 +133,6 @@ export default {
     };
   },
   components: {
-    DetailHeader,
     DetailLayer
   },
   computed: {

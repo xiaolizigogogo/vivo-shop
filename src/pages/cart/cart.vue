@@ -1,6 +1,5 @@
 <template>
     <div class="cart">
-       <Cart-Header title="购物车"></Cart-Header>
         <div class="cartMain">
              <ul>
                 <li v-for="(cart,index) in carts" class="cartList">
@@ -63,7 +62,6 @@
 <script>
 import { Toast } from "mint-ui";
 import { mapState, mapMutations, mapGetters } from "vuex";
-import CartHeader from '../../common/header'
 import {getCarts} from '../../api/api'
 import HomeFooter from '../../pages/footer'
 import {addCart,updateCart,deleteCart,addOrder} from '../../api/api'
@@ -91,12 +89,13 @@ export default {
     };
   },
   components: {
-    CartHeader,HomeFooter
+    HomeFooter
   },
   mounted:function(){
     getCarts(this.params).then(res=>{
       this.carts=res.data.data
     })
+    document.title = '购物车'
   },
   computed: {
     ...mapGetters(["this.$store.state.carts"]),

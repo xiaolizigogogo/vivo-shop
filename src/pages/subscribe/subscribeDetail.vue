@@ -1,11 +1,5 @@
 <template>
   <div class="cart">
-    <mt-header title="预约中心" class="mint-header">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
     <div>
       <mt-datetime-picker
         ref="picker"
@@ -39,7 +33,6 @@
 <script>
   import {Toast} from "mint-ui";
   import {mapState, mapMutations, mapGetters} from "vuex";
-  import CartHeader from '../../common/header'
   import {getCarts,getAdminAilviliableInfo,addSubscribes} from '../../api/api'
   import HomeFooter from '../../pages/footer'
   import {addCart, updateCart, deleteCart, addOrder,getAdmins} from '../../api/api'
@@ -106,7 +99,7 @@
       };
     },
     components: {
-      CartHeader, HomeFooter, 'v-loadmore': Loadmore
+      HomeFooter, 'v-loadmore': Loadmore
     },
     created: function () {
       this.startDate=new Date()
@@ -127,6 +120,7 @@
   ,
   mounted()
   {
+    document.title = '预约中心'
     this.initTimeSlot();
     this.loadPageList();  //初次访问查询列表
   }

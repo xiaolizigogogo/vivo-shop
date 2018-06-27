@@ -1,6 +1,5 @@
 <template>
   <div class="order" id="transition">
-      <OrderHeader title="我的订单"></OrderHeader>
         <div class="orderMain">
             <div  class="order-box">
                 <p  v-for="(c,index) in t"
@@ -56,7 +55,6 @@
 <script>
 import { mapState, mapMutations, mapGetters } from "vuex";
 import {getOrders} from '../api/api';
-import OrderHeader from "../common/Header";
 export default {
   name: "orders",
   data() {
@@ -88,13 +86,14 @@ export default {
     };
   },
   components: {
-    OrderHeader
+    
   },
   mounted:function(){
     getOrders(this.params).then(res=>{
         console.log(res)
         this.orders=res.data.data.records
   })
+    document.title = '我的订单'
   },
   computed: {
     // orders() {

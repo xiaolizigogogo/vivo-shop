@@ -13,12 +13,13 @@
 
 <script>
 export default {
-  
+  mounted(){
+    document.title = '开始预约';
+  }
 }
 </script>
 <style lang="stylus" scoped>
 .bgWall
-    margin-top 1.5rem
     width 100%
     height 3rem
     background-image url('/static/img/bg2.jpg')

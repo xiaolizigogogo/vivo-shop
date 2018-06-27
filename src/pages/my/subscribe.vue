@@ -6,7 +6,6 @@
       <!--</router-link>-->
       <!--<mt-button icon="more" slot="right"></mt-button>-->
     <!--</mt-header>-->
-    <My-Header title="我的预约"></My-Header>
   <div class="container main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
     <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
       <ul class="list" v-for="(cart,index) in carts">
@@ -23,13 +22,11 @@
 <script>
   import {Toast} from "mint-ui";
   import {mapState, mapMutations, mapGetters} from "vuex";
-  import CartHeader from '../../common/header'
   import {getCarts} from '../../api/api'
   import HomeFooter from '../../pages/footer'
   import {getAdmins,getSubscribes} from '../../api/api'
   import BScroll from 'better-scroll'
   import {Loadmore} from 'mint-ui';
-  import MyHeader from '../../common/header'
 
   export default {
     name: "mysubscribe",
@@ -64,8 +61,7 @@
       };
     },
     components: {
-      CartHeader, HomeFooter, 'v-loadmore': Loadmore,
-        MyHeader,
+      HomeFooter, 'v-loadmore': Loadmore
     },
     created: function () {
     },
@@ -75,6 +71,7 @@
   ,
   mounted()
   {
+    document.title='我的预约'
     this.loadPageList();  //初次访问查询列表
   }
   ,

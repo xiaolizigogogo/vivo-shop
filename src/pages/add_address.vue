@@ -1,6 +1,5 @@
 <template>
     <div>
-        <Address-Header title="新增地址"></Address-Header>
         <div class="address">
             <div class="address-box">
                 <label for="">收货人：</label>
@@ -30,7 +29,6 @@
 </template>
 
 <script>
-import AddressHeader from "../common/header";
 import { mapGetters, mapMutations } from "vuex";
 import { Toast } from "mint-ui";
 export default {
@@ -44,7 +42,7 @@ export default {
     };
   },
   components: {
-    AddressHeader
+    
   },
   methods: {
     btn() {
@@ -69,6 +67,9 @@ export default {
         this.$router.back();
       }
     }
+  },
+  mounted(){
+    document.title = '新增地址'
   }
 };
 </script>

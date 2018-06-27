@@ -1,6 +1,5 @@
 <template>
     <div class="my">
-        <My-Header title="个人中心"></My-Header>
         <My-Container></My-Container>
         <v-footer></v-footer>
     </div>
@@ -8,7 +7,6 @@
 
 <script>
 import footer from '../../pages/footer'
-import MyHeader from '../../common/header'
 import MyContainer from './component/MyContainer'
 export default {
   name:"my",
@@ -19,7 +17,6 @@ export default {
       }
   },
   components:{
-      MyHeader,
       MyContainer,
       "v-footer":footer
   },
@@ -30,6 +27,9 @@ export default {
       author:function(){
           this.$router.push('/author')
       }
+  },
+  mounted(){
+      document.title = '我的'
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
 <div>
-  <Success-Header title="结算"></Success-Header>
    <div class="success">
       <i class="iconfont icon-chenggong1"></i>
       <h2>购买成功</h2>
@@ -16,15 +15,14 @@
 </template>
 
 <script>
-import SuccessHeader from '../common/header'
 export default {
   data(){
     return{
       
     }
   },
-  components:{
-    SuccessHeader
+  mounted(){
+    document.title = '结算'
   }
 }
 </script>
