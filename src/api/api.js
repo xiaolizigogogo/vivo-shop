@@ -243,13 +243,21 @@ const addSubscribes=(params)=>{
     params: params
   })
 }
-const getJsTicket=(params)=>{
-    return request({
-      url: '/shop/wechat/getJsTicket',
-      method: 'get',
-      params: params
-    })
+const getJsTicket=(params)=> {
+  return request({
+    url: '/shop/wechat/getJsTicket',
+    method: 'get',
+    params: params
+  })
 }
+const unifiedOrder=(params)=>{
+  return request({
+    url: '/shop/wxPay/getJSSDKPayInfo',
+    method: 'post',
+    data: params
+  })
+}
+
 
 export {
   getGoods,
@@ -275,5 +283,6 @@ export {
   addSubscribes,
   getSubscribes,
   getAdminAilviliableInfo,
-    getJsTicket
+    getJsTicket,
+  unifiedOrder
 }

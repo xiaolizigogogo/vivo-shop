@@ -1,9 +1,11 @@
 <template>
    <div class="MapPositioning">
        <div class="all">
-           <h6>斯卡莱SPA美甲<span>1945km</span></h6>
-           <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>广东省佛山市禅城区福宁路213号</p>
-           <div class="box">
+           <div>
+               <h6>斯卡莱SPA美甲<span>1945km</span></h6>
+               <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>广东省佛山市禅城区福宁路213号</p>
+           </div>
+           <div>
                <h5><i class="iconfont icon-diliweizhi iconfontBig"></i></h5>
                <p>导航到店</p>
            </div>
@@ -18,6 +20,7 @@ h6
     font-weight bold;
 h5
     text-align center;
+    line-height 0.6rem;
 span
     display inline-block;
     font-size 0.2rem;
@@ -27,6 +30,7 @@ span
 p
     font-size 0.2rem;  
     color #909399; 
+    line-height 0.5rem;
 .iconfontLittle
     font-size 0.2rem;
 .iconfontBig
@@ -38,11 +42,9 @@ p
     border-bottom 1px solid #f4f4f4;
     padding 0.3rem;
 .all
-    position relative
-.box
-    position absolute;
-    right 0.3rem;
-    top 0;
+    display flex;
+    justify-content space-between;
+    padding 0 0.3rem;
 </style>
 
 <script>
