@@ -1,16 +1,18 @@
 <template>
   <div class="Home">
+    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore">
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
-
+    </mt-loadmore>
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
     <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button>
+    
   </div>
 </template>
 
@@ -133,6 +135,13 @@ export default {
     })
   },
   methods:{
+    loadTop(){
+      getAdmins(this.params).then((res) => {
+       this.list=res.data.data.records
+      }).then(res=>{
+        this.$refs.loadmore.onTopLoaded();
+      })
+    },
     getData:function(){
       // var _this=this
       // axios.get("/static/ceshi.json").then(function(res){
