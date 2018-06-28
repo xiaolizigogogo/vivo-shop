@@ -3,9 +3,10 @@
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
-      <Home-Service />
+      <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
+
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
@@ -26,18 +27,23 @@ import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder} from '../../api/api'
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
 import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
   data(){
     return{
-      todos:[],
+      list:[],
       openid:'oUP2Z1VjX-BxzTDNEjVnoT_NTkus',
       code:'',
       lang:'zc_CN',
       latitude:38.95223,
-      longitude:121.5255
+      longitude:121.5255,
+      params: {
+        current:1,
+        size:10,
+        enable:true,
+      },
     }
   },
   components:{
@@ -128,6 +134,9 @@ export default {
     getCategory({"parentId":0}).then(res=>{
     })
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
+    })
+    getAdmins(this.params).then((res) => {
+       this.list=res.data.data.records
     })
   },
   methods:{

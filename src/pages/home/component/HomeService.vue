@@ -7,7 +7,7 @@
             <div class="serviceTop">
                 <div class="serviceTopLeft">
                     <h6>
-                        小西
+                        {{item.username}}
                     </h6>
                     <p>
                         总监
@@ -125,7 +125,7 @@
         justify-content center;
         text-align center;
         align-items center;
-        span 
+        span
             color #fff;
             letter-spacing 0.08rem;
 .marks
@@ -167,7 +167,22 @@ span
 
 <script>
 export default {
+  data(){
+    return {
 
+    }
+  },
+  props:{
+    item:{
+
+    }
+  },
+  methods:{
+
+  },
+  mounted(){
+    console.log(this.item)
+  }
 }
 </script>
 
