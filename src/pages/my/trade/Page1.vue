@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="weui-btn-area">
-          <a class="weui-btn" href="javascript:" id="showTooltips" @click="testPay">确定支付</a>
+          <a class="weui-btn" href="javascript:" id="showTooltips" @click="pay">确定支付</a>
       </div>
     </div>
   </div>
@@ -58,18 +58,15 @@
         this.params.totalFee=this.params.money*100;
         this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
         this.params.attach=JSON.stringify({orderType:"TRADE_ONLINE_PAY"})
-        unifiedOrder(this.params).then(res=>{
-          wexinPay(res.data.data,function(){this.$route.push("/home")},function(){this.$route.push("/home")});
-        })
-      },
-      testPay(){
         let params=this.params
+        // alert(JSON.stringify(params))
         unifiedOrder(params).then(res=>{
+          // alert(JSON.stringify(res))
           wexinPay(res.data.data,this.success(),this.error())
         })
       },
-      success(){this.$route.push("/home")},
-      error(){this.$route.push("/home")},
+      success(){},
+      error(){},
     }
 
   }
