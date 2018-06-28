@@ -7,7 +7,7 @@
         <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
         <ul>
 
-          <li v-for="(todo,index) in list" :key="todo.id" @click="open(todo.id)">
+          <li v-for="(todo) in list" :key="todo.id" @click="open(todo.id)">
             <div class="list">
               <div class="image">
                 <img v-lazy="todo.listPicUrl" alt="图片">

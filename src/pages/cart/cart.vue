@@ -2,7 +2,7 @@
     <div class="cart">
         <div class="cartMain">
              <ul>
-                <li v-for="(cart,index) in carts" class="cartList">
+                <li v-for="(cart, index) in carts" class="cartList" :key="index">
                      <!-- 购物车单选 -->
                      <div class="select" @click="danxuan(cart)" >
                         <i class="iconfont icon-xuanzekuangmoren"   v-show="!cart.checked"></i>

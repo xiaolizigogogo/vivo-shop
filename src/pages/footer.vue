@@ -57,6 +57,7 @@
     bottom: 0;
     color: #666
     background white
+    z-index 1
     .bottom-ul
       display: flex;
       justify-content: center;

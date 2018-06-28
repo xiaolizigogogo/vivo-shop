@@ -1,16 +1,22 @@
 <template>
   <div class="Home">
+    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange">
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
-
+      <div slot="top" class="mint-loadmore-top">
+        <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
+        <span v-show="topStatus === 'loading'">Loading...</span>
+    </div>
+    </mt-loadmore>
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
     <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button>
+    
   </div>
 </template>
 
@@ -44,6 +50,7 @@ export default {
         size:10,
         enable:true,
       },
+      topStatus: '',
     }
   },
   components:{
@@ -133,6 +140,16 @@ export default {
     })
   },
   methods:{
+    handleTopChange(status) {
+        this.topStatus = status;
+      },
+    loadTop(){
+      getAdmins(this.params).then((res) => {
+       this.list=res.data.data.records
+      }).then(res=>{
+        this.$refs.loadmore.onTopLoaded();
+      })
+    },
     getData:function(){
       // var _this=this
       // axios.get("/static/ceshi.json").then(function(res){
@@ -167,7 +184,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="stylus" scoped>
   .Home{
     border-bottom: 10px;
     margin-bottom: 1.75rem;
@@ -201,5 +218,8 @@ export default {
       background: white;
       margin-top: 1.33rem;
     }
+.mint-loadmore-top
+  span 
+    font-size 0.5rem
 </style>
 
