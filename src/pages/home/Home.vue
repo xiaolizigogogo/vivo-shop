@@ -3,9 +3,10 @@
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
-      <Home-Service />
+      <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
+
       <Home-Footer></Home-Footer>
       <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
@@ -26,18 +27,23 @@ import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder} from '../../api/api'
+import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
 import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
   data(){
     return{
-      todos:[],
+      list:[],
       openid:'oUP2Z1VjX-BxzTDNEjVnoT_NTkus',
       code:'',
       lang:'zc_CN',
       latitude:38.95223,
-      longitude:121.5255
+      longitude:121.5255,
+      params: {
+        current:1,
+        size:10,
+        enable:true,
+      },
     }
   },
   components:{
@@ -88,46 +94,42 @@ export default {
         'chooseCard',
         'openCard']
       wx.config(res.data.data);
-
-    wx.ready(()=>{
-
-    wx.getLocation({
-      type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-      success: function (res) {
-        console.log(res)
-         this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-        this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-        var speed = res.speed; // 速度，以米/每秒计
-        var accuracy = res.accuracy; // 位置精度
-      }
-    });
-
+      wx.ready(()=>{
+    //  wx.getLocation({
+    //   type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+    //   success: function (res) {
+    //     console.log(res)
+    //      this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+    //     this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+    //     var speed = res.speed; // 速度，以米/每秒计
+    //     var accuracy = res.accuracy; // 位置精度
+    //   }
+    // });
   });
     wx.error(function(res){
       console.log('wx err',res);
       //可以更新签名
     });
-
     })
   },
   mounted:function(){
     document.title = '斯卡莱SPA美甲'
     this.getData()
     const  code=this.$route.query.code
-    console.log(code)
     if(code){
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        localStorage.setItem("token",JSON.stringify(res.data.data))
+        sessionStorage.setItem("token",JSON.stringify(res.data.data))
       })
       getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
       })
     }
-    // getGoods().then(res=>{
-    //   this.todos=res.data.data.records
-    // })
     getCategory({"parentId":0}).then(res=>{
     })
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
+    })
+    getAdmins(this.params).then((res) => {
+       this.list=res.data.data.records
     })
   },
   methods:{

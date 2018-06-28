@@ -2,12 +2,12 @@
     <div>
         <div class="HomeService">
             <div class="headPortrait">
-                <img src="/static/img/headPortrait.jpg" alt="" class="headImg">
+                <img :src="item.avatar" alt="" class="headImg">
             </div>
             <div class="serviceTop">
                 <div class="serviceTopLeft">
                     <h6>
-                        小西
+                        {{item.username}}
                     </h6>
                     <p>
                         总监
@@ -42,7 +42,7 @@
                 </div>
                 <div class="serviceMiddleRight">
                     <div>
-                        <span>预约TA</span>
+                        <span  @click="subscribe">预约TA</span>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
         justify-content center;
         text-align center;
         align-items center;
-        span 
+        span
             color #fff;
             letter-spacing 0.08rem;
 .marks
@@ -168,7 +168,30 @@ span
 
 <script>
 export default {
+  data(){
+    return {
 
+    }
+  },
+  props:{
+    item:{
+
+    }
+  },
+  methods:{
+      subscribe(){
+        localStorage.setItem("subscribeAdmin",JSON.stringify(this.item))
+        this.$router.push({
+          path:"serviceDetail",
+          query:{
+            id:this.item.id
+          }
+        })
+      }
+  },
+  mounted(){
+    console.log(this.item)
+  }
 }
 </script>
 
