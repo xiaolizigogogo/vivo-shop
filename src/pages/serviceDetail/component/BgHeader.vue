@@ -5,7 +5,7 @@
            <div class="beautifulHeader">
             <img src="/static/img/header.jpg" alt="beautiful">
           </div>
-          <p class="headerName">-&nbsp;&nbsp;小西&nbsp;&nbsp;-</p>
+          <p class="headerName">-&nbsp;&nbsp;{{item.username}}&nbsp;&nbsp;-</p>
          </div>
        </div>
   </div>
@@ -15,6 +15,11 @@
 export default {
   mounted(){
     document.title = '开始预约';
+  },
+  props:{
+    item:{
+
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="serviceDetail">
-       <Bg-Header></Bg-Header>
-       <Service-Content></Service-Content>
+       <Bg-Header :item="item"></Bg-Header>
+       <Service-Content :item="item"></Service-Content>
     </div>
 
 </template>
@@ -12,7 +12,9 @@ export default {
   name: "serviceDetail",
   data() {
     return {
+      item:{
 
+      }
     };
   },
   components: {
@@ -20,7 +22,7 @@ export default {
     ServiceContent
   },
   mounted:function(){
-    
+    this.item=JSON.parse(localStorage.getItem("subscribeAdmin"))
   },
   computed: {
 

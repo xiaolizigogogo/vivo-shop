@@ -4,7 +4,7 @@
       <div class="weui-cell inputCell">
           <div class="box topLabel"><label class="weui-label">消费金额(最少1元)</label></div>
           <div class="box">
-              <input class="weui-input" type="number" pattern="[0-9]+" placeholder="请输入与店家确认的金额"/>
+              <input class="weui-input" v-model="params.money" type="number" pattern="[0-9]+" placeholder="请输入与店家确认的金额"/>
           </div>
       </div>
       <div class="weui-cells">
@@ -32,18 +32,32 @@
         </div>
       </div>
       <div class="weui-btn-area">
-          <a class="weui-btn" href="javascript:" id="showTooltips">确定支付</a>
+          <a class="weui-btn" href="javascript:" id="showTooltips" @click="pay">确定支付</a>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import wexinPay from '../../pay/wxPayComponent'
   export default {
     name: "Page1",
+    data(){
+      return {
+         params:{
+          "openid":"obWT-0giZxiX-k1MNWMt2kXics5k",
+          "totalFee":"1",
+          "body":"66666666",
+          "tradeType":"JSAPI",
+           money:undefined
+        }
+      }
+    },
     methods:{
-
+      pay(){
+        wexinPay();
+      }
     }
-    
+
   }
 </script>
 <!-- 引入组件库 -->

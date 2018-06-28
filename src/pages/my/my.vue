@@ -8,6 +8,7 @@
 <script>
 import footer from '../../pages/footer'
 import MyContainer from './component/MyContainer'
+import {getWechatOpenid,getWechatUserInfo} from '../../api/api'
 export default {
   name:"my",
   data(){
@@ -15,6 +16,19 @@ export default {
         // lists:[]
         myName:"Chen Zi"
       }
+  },
+  create(){
+    const  code=this.$route.query.code
+    if(code){
+      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+        alert("获取token成功")
+        sessionStorage.setItem("token",JSON.stringify(res.data.data))
+      })
+      getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
+        alert("获取用户信息成功")
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+      })
+    }
   },
   components:{
       MyContainer,
@@ -44,13 +58,13 @@ export default {
         background: white;
         font-size: 0.41rem;
    }
-   
+
    .myMain{
        height: 100%;
        background: white;
        margin-top: 10px;
        width: 100%;
-       
+
    }
     .MyBox{
         width: 100%;
@@ -76,7 +90,7 @@ export default {
     .myMain p{
         line-height: 75px;
     }
-  
+
    .Order i , .Order p{
        display: block;
        line-height: 55px;

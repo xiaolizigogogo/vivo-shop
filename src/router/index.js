@@ -23,9 +23,9 @@ import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
 import mytrade from "@/pages/my/trade/index"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
+import store from '../vuex'
 Vue.use(Router)
-
-export default new Router({
+const router =  new Router({
   mode: 'history',
   routes: [
     { path: '/', name: 'Home', component: Home },
@@ -103,3 +103,13 @@ export default new Router({
   // }
 
 })
+// router.beforeEach((to, from, next) => {
+//   if(!store.state.user && to.path != '/author'){
+//     // 第一次进入项目
+//     holdno.cookie.set('beforeLoginUrl', to.fullPath) // 保存用户进入的url
+//     next('/author')
+//     return false
+//   }
+//   next()
+// })
+export default router

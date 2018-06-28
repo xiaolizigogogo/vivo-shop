@@ -85,7 +85,12 @@ export default {
       year: '',
       month: '',
       date: '',
-      time: '9:00'
+      time: '9:00',
+    }
+  },
+  props:{
+    item:{
+
     }
   },
   mounted(){
@@ -128,7 +133,7 @@ export default {
         end: new Date(that.year+10,0,1),
         defaultValue: [that.year,that.month,that.date],
         onChange: function(result){
-            
+
         },
         onConfirm: function(result){
             that.year = result[0].value;

@@ -94,43 +94,36 @@ export default {
         'chooseCard',
         'openCard']
       wx.config(res.data.data);
-
-    wx.ready(()=>{
-
-    wx.getLocation({
-      type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-      success: function (res) {
-        console.log(res)
-         this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-        this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-        var speed = res.speed; // 速度，以米/每秒计
-        var accuracy = res.accuracy; // 位置精度
-      }
-    });
-
+      wx.ready(()=>{
+    //  wx.getLocation({
+    //   type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+    //   success: function (res) {
+    //     console.log(res)
+    //      this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+    //     this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+    //     var speed = res.speed; // 速度，以米/每秒计
+    //     var accuracy = res.accuracy; // 位置精度
+    //   }
+    // });
   });
     wx.error(function(res){
       console.log('wx err',res);
       //可以更新签名
     });
-
     })
   },
   mounted:function(){
     document.title = '斯卡莱SPA美甲'
     this.getData()
     const  code=this.$route.query.code
-    console.log(code)
     if(code){
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        localStorage.setItem("token",JSON.stringify(res.data.data))
+        sessionStorage.setItem("token",JSON.stringify(res.data.data))
       })
       getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
+        sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
       })
     }
-    // getGoods().then(res=>{
-    //   this.todos=res.data.data.records
-    // })
     getCategory({"parentId":0}).then(res=>{
     })
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{

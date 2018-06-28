@@ -2,7 +2,7 @@
     <div>
         <div class="HomeService">
             <div class="headPortrait">
-                <img src="/static/img/headPortrait.jpg" alt="" class="headImg">
+                <img :src="item.avatar" alt="" class="headImg">
             </div>
             <div class="serviceTop">
                 <div class="serviceTopLeft">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="serviceMiddleRight">
                     <div>
-                        <span>预约TA</span>
+                        <span  @click="subscribe">预约TA</span>
                     </div>
                 </div>
             </div>
@@ -178,7 +178,15 @@ export default {
     }
   },
   methods:{
-
+      subscribe(){
+        localStorage.setItem("subscribeAdmin",JSON.stringify(this.item))
+        this.$router.push({
+          path:"serviceDetail",
+          query:{
+            id:this.item.id
+          }
+        })
+      }
   },
   mounted(){
     console.log(this.item)
