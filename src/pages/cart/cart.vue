@@ -199,6 +199,9 @@ export default {
   width: 24%;
   line-height: 1.18rem;
   float: left;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .checkAll i {
   font-size: 0.53rem;
@@ -297,7 +300,7 @@ export default {
 .cartFooter {
   position: fixed;
   width: 100%;
-  height: 1.2rem;
+  height: 1.5rem;
   font-size: 0.35rem;
   background: white;
   bottom: 0;
@@ -350,18 +353,21 @@ export default {
 .Total {
     float: left;
     width: 35%;
-    text-align: center;
-    line-height: 1.18rem;
     font-size: 0.35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .Settlement {
   width: 34%;
-  height: 80%;
   background: #f81200;
   float: right;
   margin-top: .1rem;
   border-radius: 40px;
   margin-right: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .Settlementtwo {
   width: 50%;
