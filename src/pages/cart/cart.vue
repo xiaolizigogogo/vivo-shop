@@ -199,6 +199,9 @@ export default {
   width: 24%;
   line-height: 1.18rem;
   float: left;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 .checkAll i {
   font-size: 0.53rem;
@@ -240,7 +243,6 @@ export default {
   margin-top: 0.04rem;
 }
 .cartMain {
-  margin-top: 1.3rem;
   margin-bottom: 1.24rem;
 }
 .cartMain ul li {
@@ -298,11 +300,13 @@ export default {
 .cartFooter {
   position: fixed;
   width: 100%;
-  height: 1.18rem;
+  height: 1.5rem;
   font-size: 0.35rem;
   background: white;
   bottom: 0;
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid #f4f4f4;
 }
 .cartImg img {
@@ -349,18 +353,21 @@ export default {
 .Total {
     float: left;
     width: 35%;
-    text-align: center;
-    line-height: 1.18rem;
     font-size: 0.35rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .Settlement {
   width: 34%;
-  height: 80%;
   background: #f81200;
   float: right;
   margin-top: .1rem;
   border-radius: 40px;
   margin-right: 0.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .Settlementtwo {
   width: 50%;

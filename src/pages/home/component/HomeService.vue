@@ -67,6 +67,7 @@
     margin 0.3rem;
     background white;
     position relative;
+    box-shadow 5px 5px 5px #98499C
 .serviceTop
     height 1.5rem;
     background #FEE2EA;
