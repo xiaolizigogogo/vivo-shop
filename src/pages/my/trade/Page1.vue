@@ -32,30 +32,44 @@
         </div>
       </div>
       <div class="weui-btn-area">
-          <a class="weui-btn" href="javascript:" id="showTooltips" @click="pay">确定支付</a>
+          <a class="weui-btn" href="javascript:" id="showTooltips" @click="testPay">确定支付</a>
       </div>
     </div>
   </div>
 </template>
 <script>
   import wexinPay from '../../pay/wxPayComponent'
+  import {unifiedOrder} from '../../../api/api'
   export default {
     name: "Page1",
     data(){
       return {
          params:{
-          "openid":"obWT-0giZxiX-k1MNWMt2kXics5k",
-          "totalFee":"1",
-          "body":"66666666",
-          "tradeType":"JSAPI",
+          openid:"",
+          totalFee:"1",
+          body:"在线买单",
+          tradeType:"JSAPI",
            money:undefined
         }
       }
     },
     methods:{
       pay(){
-        wexinPay();
-      }
+        this.params.totalFee=this.params.money*100;
+        this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
+        this.params.attach=JSON.stringify({orderType:"TRADE_ONLINE_PAY"})
+        unifiedOrder(this.params).then(res=>{
+          wexinPay(res.data.data,function(){this.$route.push("/home")},function(){this.$route.push("/home")});
+        })
+      },
+      testPay(){
+        let params=this.params
+        unifiedOrder(params).then(res=>{
+          wexinPay(res.data.data,this.success(),this.error())
+        })
+      },
+      success(){this.$route.push("/home")},
+      error(){this.$route.push("/home")},
     }
 
   }

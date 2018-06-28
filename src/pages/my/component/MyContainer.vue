@@ -162,7 +162,7 @@ export default {
       updateUserInfo(){
         let userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
         this.user.name=userInfo.nickname;
-        this.user.header_url=userInfo.headerImgUrl;
+        this.user.header_url=userInfo.headImgUrl;
       }
   },
 }
