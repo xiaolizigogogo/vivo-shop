@@ -240,7 +240,6 @@ export default {
   margin-top: 0.04rem;
 }
 .cartMain {
-  margin-top: 1.3rem;
   margin-bottom: 1.24rem;
 }
 .cartMain ul li {
@@ -298,11 +297,13 @@ export default {
 .cartFooter {
   position: fixed;
   width: 100%;
-  height: 1.18rem;
+  height: 1.2rem;
   font-size: 0.35rem;
   background: white;
   bottom: 0;
-  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-top: 1px solid #f4f4f4;
 }
 .cartImg img {
