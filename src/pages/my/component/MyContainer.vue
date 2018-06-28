@@ -27,7 +27,7 @@
         <p class="right mainColor">全部订单 ></p>
       </div>
       <div class="container-order-2">
-        <p class="myOrder" v-for="list in container">
+        <p class="myOrder" v-for="(list, index) in container" :key="index">
           <i :class="'iconfont ' + list.img"></i>
           <span>{{list.name}}</span>
         </p>
