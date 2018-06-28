@@ -139,12 +139,11 @@ export default {
               },
           ],
         user:{
-            name:'姜明礼',
+            name:"游客",
             header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
             coupons:'10',
             encourage:'10',
             integration:'10'
-
         }
       }
   },
@@ -152,13 +151,18 @@ export default {
 
   },
     computed:{
-      ...mapGetters(["this.$store.state.orders"]),
+      ...mapGetters(["this.$store.state.orders","this.$store.state.userInfo"]),
        jifeng(){
           var jifeng=0
           this.$store.state.orders.forEach(list => {
             jifeng += parseInt(list.price)
         });
          return jifeng;
+      },
+      updateUserInfo(){
+        let userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+        this.user.name=userInfo.nickname;
+        this.user.header_url=userInfo.headerImgUrl;
       }
   },
 }
@@ -199,14 +203,14 @@ export default {
             line-height: 1.2rem;
             margin-left: .5rem;
             font-size: 0.4rem;
-        
-        .right 
+
+        .right
             float: right;
             line-height: 1.2rem;
             margin-right: .6rem;
             font-size: 0.4rem;
-        
-    
+
+
     .container-order-2
         width 100%
         height 2.3rem
@@ -222,12 +226,12 @@ export default {
 
             .iconfont
                 font-size 0.8rem
-            
+
             span
                 text-align center
-            
-        
-    
+
+
+
 
 .t{
     background-image url('/static/img/t.png');

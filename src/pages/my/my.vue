@@ -18,17 +18,6 @@ export default {
       }
   },
   create(){
-    const  code=this.$route.query.code
-    if(code){
-      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        alert("获取token成功")
-        sessionStorage.setItem("token",JSON.stringify(res.data.data))
-      })
-      getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
-        alert("获取用户信息成功")
-        sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
-      })
-    }
   },
   components:{
       MyContainer,
@@ -43,7 +32,19 @@ export default {
       }
   },
   mounted(){
-      document.title = '我的'
+    document.title = '我的'
+    const  code=this.$route.query.code
+    if(code){
+      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+        alert("获取token成功:"+JSON.stringify(res.data.data))
+        sessionStorage.setItem("token",JSON.stringify(res.data.data))
+        getWechatUserInfo({"openid":res.data.data.openId,"lang":"zh_CN"}).then(res=>{
+          alert("获取用户信息成功:"+JSON.stringify(res.data.data))
+          sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+        })
+      })
+
+    }
   }
 }
 </script>
