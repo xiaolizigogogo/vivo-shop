@@ -29,4 +29,14 @@ body{
 .mint-swipe-indicator.is-active{
   background: #ddd;
 }
+.mint-cell-title{
+  font-size: 0.4rem;
+}
+.mint-cell-wrapper{
+  padding: 0 0.3rem;
+}
+.mint-cell-allow-right::after {
+  width: 0.3rem;
+  height: 0.3rem;
+}
 </style>

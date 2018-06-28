@@ -70,7 +70,6 @@
 .serviceTop
     height 1.5rem;
     background #FEE2EA;
-    opacity 0.5;
     position relative;
 .headPortrait
     border-radius 50%;
@@ -121,12 +120,11 @@
         width 2.5rem;
         height 0.8rem;
         border-radius 1rem;
-        background-color  #55276F;
+        background-color  #98499C;
         display flex;
         justify-content center;
         text-align center;
         align-items center;
-        opacity 0.6;
         span 
             color #fff;
             letter-spacing 0.08rem;

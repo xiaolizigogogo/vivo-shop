@@ -39,35 +39,35 @@
         title="我的收藏"
         to="/MyCollection"
         is-link>
-        <i class="iconfont icon-collection" slot="icon" width="24" height="24"></i>
+        <i class="iconfont icon-collection" slot="icon"></i>
       </mt-cell>
       <mt-cell
         title="我的收货地址"
         to="/address"
         is-link
         >
-        <i class="iconfont icon-shouhuodizhi" slot="icon" width="24" height="24"></i>
+        <i class="iconfont icon-shouhuodizhi" slot="icon"></i>
       </mt-cell>
       <mt-cell
         title="我的购物车"
         to="/cart"
         is-link
         >
-        <i class="iconfont icon-gouwuche" slot="icon" width="24" height="24"></i>
+        <i class="iconfont icon-gouwuche" slot="icon"></i>
       </mt-cell>
       <mt-cell
         title="在线买单"
         to="/mytrade"
         is-link
         >
-        <i class="iconfont icon-zhifu" slot="icon" width="24" height="24"></i>
+        <i class="iconfont icon-zhifu" slot="icon"></i>
       </mt-cell>
       <mt-cell
         title="我的预约"
         to="/mysubscribe"
         is-link
         >
-        <i class="iconfont icon-gouwuche" slot="icon" width="24" height="24"></i>
+        <i class="iconfont icon-gouwuche" slot="icon"></i>
       </mt-cell>
 
     </div>
@@ -176,6 +176,7 @@ export default {
     font-weight bold
 .iconfont
     color #98499C
+    font-size 0.4rem
 .mint-cell
     height 1rem
     display flex
