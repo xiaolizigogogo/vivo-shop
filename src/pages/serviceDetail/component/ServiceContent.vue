@@ -35,12 +35,12 @@
         <div class="ReservationsBottom DatePickerBottom">
           <div id="datePicker" @click="handleDatePicker">
             <span class="chooseDateTop">选择预约日期</span>
-            <span>{{year}}-{{month}}-{{date}}</span>
+            <span class="myDate">{{year}}-{{month}}-{{date}}</span>
           </div>
           <div class="smallLine"></div>
           <div id="datePicker" @click="handleSingleLinePicker">
             <span class="chooseDateTop">选择预约时间</span>
-            <span>{{time}}</span>
+            <span class="myDate">{{time}}</span>
           </div>
         </div>
       </div>
@@ -253,6 +253,8 @@ export default {
     .chooseDateTop
       color #9D9D9D
       font-size 0.3rem
+    .myDate
+      font-size 0.6rem
   .smallLine
     width 0.05rem
     height 0.5rem

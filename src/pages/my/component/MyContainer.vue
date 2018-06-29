@@ -239,7 +239,6 @@ export default {
 
 .container {
     width: 100%;
-    position: absolute;
     .container-bj {
         width: 100%;
         height: 5rem;
