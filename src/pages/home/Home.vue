@@ -2,7 +2,18 @@
   <div class="Home">
     <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange" @load="loaded" id="loadmores">
       <Home-Swipe></Home-Swipe>
-      <Map-Positioning></Map-Positioning>
+      <Map-Positioning>
+        <div class="all" @click="openLocation">
+           <div>
+               <h6>斯卡莱SPA美甲<span>1945km</span></h6>
+               <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>广东省佛山市禅城区福宁路213号</p>
+           </div>
+           <div>
+               <h5><i class="iconfont icon-diliweizhi iconfontBig"></i></h5>
+               <p>导航到店</p>
+           </div>
+       </div>
+      </Map-Positioning>
       <Home-List></Home-List>
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
@@ -166,7 +177,8 @@ export default {
       //   console.log(res)
       //   _this.todos=res.data.data.home
       // })
-    },openLocation:function () {
+    },
+    openLocation:function () {
       wx.openLocation({
         latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
         longitude: this.longitude, // 经度，浮点数，范围为180 ~ -180。
@@ -231,5 +243,31 @@ export default {
 .mint-loadmore-top
   span 
     font-size 0.5rem
+@import '../../fon/fontHome/iconfont.css'
+h6
+    font-size 0.4rem;
+    font-weight bold;
+h5
+    text-align center;
+    line-height 0.6rem;
+span
+    display inline-block;
+    font-size 0.2rem;
+    font-weight 400;
+    color #909399;
+    padding 0.1rem;
+p
+    font-size 0.2rem;  
+    color #909399; 
+    line-height 0.5rem;
+.iconfontLittle
+    font-size 0.2rem;
+.iconfontBig
+    font-size 0.5rem;
+    color #67C23A;
+.all
+    display flex;
+    justify-content space-between;
+    padding 0 0.3rem;
 </style>
 

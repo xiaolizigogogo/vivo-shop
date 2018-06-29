@@ -1,6 +1,6 @@
 <template>
     <div class="my">
-        <My-Container></My-Container>
+        <My-Container :getToken="token"></My-Container>
         <v-footer></v-footer>
     </div>
 </template>
@@ -14,7 +14,8 @@ export default {
   data(){
       return{
         // lists:[]
-        myName:"Chen Zi"
+        myName:"Chen Zi",
+        token: ''
       }
   },
   create(){
@@ -41,6 +42,7 @@ export default {
         getWechatUserInfo({"openid":res.data.data.openId,"lang":"zh_CN"}).then(res=>{
           alert("获取用户信息成功:"+JSON.stringify(res.data.data))
           sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+          this.token = {}
         })
       })
 
