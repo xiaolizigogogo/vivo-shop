@@ -1,6 +1,6 @@
 <template>
   <div class="Home">
-    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange">
+    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange" @load="loaded" id="loadmores">
       <Home-Swipe></Home-Swipe>
       <Map-Positioning></Map-Positioning>
       <Home-List></Home-List>
@@ -140,6 +140,14 @@ export default {
     })
   },
   methods:{
+    loaded () {
+
+          let myScroll = new IScroll('#loadmores', { 
+            mouseWheel: true,
+            scrollbars: true });
+
+        
+      },
     handleTopChange(status) {
         this.topStatus = status;
       },
