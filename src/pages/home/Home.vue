@@ -1,6 +1,5 @@
 <template>
   <div class="Home">
-    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange" id="loadmores">
       <Home-Swipe></Home-Swipe>
       <Map-Positioning>
         <div class="all" @click="openLocation">
@@ -22,7 +21,6 @@
         <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
         <span v-show="topStatus === 'loading'">Loading...</span>
     </div>
-    </mt-loadmore>
       <Home-Footer></Home-Footer>
       <!-- <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
