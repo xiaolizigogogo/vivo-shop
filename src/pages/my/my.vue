@@ -1,6 +1,6 @@
 <template>
     <div class="my">
-        <My-Container :getToken="token"></My-Container>
+        <My-Container :user="this.user"></My-Container>
         <v-footer></v-footer>
     </div>
 </template>
@@ -15,7 +15,13 @@ export default {
       return{
         // lists:[]
         myName:"Chen Zi",
-        token: ''
+        user:{
+          name:"游客",
+          header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
+          coupons:'10',
+          encourage:'10',
+          integration:'10'
+        }
       }
   },
   create(){
@@ -42,7 +48,7 @@ export default {
         getWechatUserInfo({"openid":res.data.data.openId,"lang":"zh_CN"}).then(res=>{
           alert("获取用户信息成功:"+JSON.stringify(res.data.data))
           sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
-          this.token = {}
+          this.user = res.data.data
         })
       })
 
