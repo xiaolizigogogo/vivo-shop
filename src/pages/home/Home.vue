@@ -24,9 +24,9 @@
     </div>
     </mt-loadmore>
       <Home-Footer></Home-Footer>
-      <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
+      <!-- <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
-    <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button>
+    <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button> -->
     
   </div>
 </template>
@@ -208,10 +208,12 @@ export default {
 
 <style lang="stylus" scoped>
   .Home{
+    position absolute
     width: 100%;
     height: 100%;
-    border-bottom: 10px;
-    margin-bottom: 1.75rem;
+    z-index: 999;
+    top: 0;
+    left: 0;
   }
   .Homeheader i{
     font-size: 0.55rem;
@@ -271,5 +273,7 @@ p
     display flex;
     justify-content space-between;
     padding 0 0.3rem;
+#loadmores
+  margin-bottom 1.75rem
 </style>
 
