@@ -208,6 +208,8 @@ export default {
 
 <style lang="stylus" scoped>
   .Home{
+    width: 100%;
+    height: 100%;
     border-bottom: 10px;
     margin-bottom: 1.75rem;
   }
