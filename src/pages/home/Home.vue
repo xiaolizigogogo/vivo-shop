@@ -1,6 +1,6 @@
 <template>
   <div class="Home">
-    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange" @load="loaded" id="loadmores">
+    <mt-loadmore :top-method="loadTop" :auto-fill="false" ref="loadmore"  @top-status-change="handleTopChange" id="loadmores">
       <Home-Swipe></Home-Swipe>
       <Map-Positioning>
         <div class="all" @click="openLocation">
@@ -151,16 +151,16 @@ export default {
     })
   },
   methods:{
-    loaded () {
-          clearTimeout(tmout)
-          let tmout = setTimeout(function(){
-            let myScroll = new IScroll('#loadmores', { 
-            mouseWheel: true,
-            scrollbars: true });
-          },200)
+    // loaded () {
+    //       clearTimeout(tmout)
+    //       let tmout = setTimeout(function(){
+    //         let myScroll = new IScroll('#loadmores', { 
+    //         mouseWheel: true,
+    //         scrollbars: true });
+    //       },200)
           
 
-      },
+    //   },
     handleTopChange(status) {
         this.topStatus = status;
       },
