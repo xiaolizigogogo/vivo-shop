@@ -17,10 +17,6 @@
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
-      <div slot="top" class="mint-loadmore-top">
-        <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-        <span v-show="topStatus === 'loading'">Loading...</span>
-    </div>
       <Home-Footer></Home-Footer>
       <!-- <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
@@ -206,12 +202,7 @@ export default {
 
 <style lang="stylus" scoped>
   .Home{
-    position absolute
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    top: 0;
-    left: 0;
+    margin-bottom 1.75rem
   }
   .Homeheader i{
     font-size: 0.55rem;
@@ -271,7 +262,5 @@ p
     display flex;
     justify-content space-between;
     padding 0 0.3rem;
-#loadmores
-  margin-bottom 1.75rem
 </style>
 
