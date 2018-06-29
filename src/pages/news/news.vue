@@ -8,7 +8,7 @@
 
 <script>
 import axios from 'axios';
-import NewsContainer from '../../pages/News/component/NewsContainer'
+import NewsContainer from '../../pages/news/component/NewsContainer'
 import NewsFooter from '../../pages/footer'
 export default {
     name:"information",
