@@ -240,8 +240,10 @@ export default {
 }
 
 .container {
+    overflow hidden
     width: 100%;
     .container-bj {
+        overflow hidden
         width: 100%;
         height: 5rem;
         background: url('/static/img/bg2.jpg') no-repeat;
