@@ -138,14 +138,17 @@ export default {
                   name:"退货/退款"
               },
           ],
-        user:{
-            name:"游客",
-            header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
-            coupons:'10',
-            encourage:'10',
-            integration:'10'
-        }
+
       }
+  },
+  props:{
+    user:{
+      name:"游客",
+      header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
+      coupons:'10',
+      encourage:'10',
+      integration:'10'
+    }
   },
   mounted:function(){
 
