@@ -141,12 +141,14 @@ export default {
   },
   methods:{
     loaded () {
-
-          let myScroll = new IScroll('#loadmores', { 
+          clearTimeout(tmout)
+          let tmout = setTimeout(function(){
+            let myScroll = new IScroll('#loadmores', { 
             mouseWheel: true,
             scrollbars: true });
+          },200)
+          
 
-        
       },
     handleTopChange(status) {
         this.topStatus = status;
