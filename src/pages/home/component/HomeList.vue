@@ -1,10 +1,10 @@
 <template>
    <div class="HomeList">
     <ul>
-        <li><div @click="xuangou"><img src="/static/img/xuangou.jpg" alt="关于我们"></div></li>
-        <li><div  @click="parts"><img src="/static/img/peijian.jpg" alt="预约服务"></div></li>
-        <li><div @click="btn"><img src="/static/img/pingbao.jpg" alt="特色产品"></div></li>
-        <li><div @click="btn"><img src="/static/img/dingzhi.jpg" alt="更多期待"></div></li>
+        <li><div @click="btn"><img src="/static/img/logo.jpg" alt="关于我们"></div></li>
+        <li><div  @click="btn"><img src="/static/img/logo.jpg" alt="预约服务"></div></li>
+        <li><div @click="btn"><img src="/static/img/logo.jpg" alt="特色产品"></div></li>
+        <li><div @click="btn"><img src="/static/img/logo.jpg" alt="更多期待"></div></li>
     </ul>
     </div>
 </template>
