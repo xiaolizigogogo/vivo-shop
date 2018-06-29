@@ -15,6 +15,7 @@
       </Map-Positioning>
       <Home-List></Home-List>
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
+      <div style="height:1.75rem"></div>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
@@ -202,7 +203,11 @@ export default {
 
 <style lang="stylus" scoped>
   .Home{
-    margin-bottom 1.75rem
+    position absolute
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
   .Homeheader i{
     font-size: 0.55rem;
