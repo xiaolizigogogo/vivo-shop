@@ -72,6 +72,7 @@ export default {
     })
   },
   computed: {
+    ...mapState(['article'])
     // collections() {
     //   return this.$store.state.collections;
     // },
@@ -112,10 +113,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.box {
-    padding-top: 1.45rem;
-}
-
 .active {
     color: #199cfe;
     border-bottom: 2px solid #199cfe;
