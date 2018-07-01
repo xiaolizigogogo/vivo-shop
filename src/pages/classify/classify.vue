@@ -80,8 +80,7 @@ export default {
     goDetails(id) {
       console.log(id);
       this.$router.push({
-        path: "goodDetail",
-        query: { id: id }
+        path: `/homeContainer/${id}`
       });
     }
   }

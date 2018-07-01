@@ -7,7 +7,6 @@ import Navigation from 'vue-navigation'
 import Vuelazyload from 'vue-lazyload'
 import VueScroller from 'vue-scroller'
 import BScroll from 'better-scroll'
-
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 

@@ -23,6 +23,7 @@ import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
 import mytrade from "@/pages/my/trade/index"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
+import HomeContainer from '@/pages/home/component/HomeContainer'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -49,7 +50,7 @@ const router =  new Router({
       component: subscribe
     },
     {
-      path: '/goodDetail',
+      path: '/goodDetail/:id',
       name: 'goodDetail',
       component: goodDetail,
       meta:{index:0}
@@ -95,7 +96,12 @@ const router =  new Router({
       path: '/serviceDetail',
       name:'serviceDetail',
       component:serviceDetail
-    }
+    },
+    {
+      path: '/homeContainer/:id',
+      name:'HomeContainer',
+      component:HomeContainer
+    },
   ],
   //路由切换页面始终回到最顶部
   // scrollBehavior(to, from, savedPosition) {

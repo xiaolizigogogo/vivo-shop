@@ -7,6 +7,7 @@ const state={
     address:localStorage["address"]?JSON.parse(localStorage["address"]): [],
     nowIndex:0,
     userInfo:sessionStorage["userInfo"]?JSON.parse(sessionStorage["userInfo"]): [],
+    ces: false
 }
 
 export default state

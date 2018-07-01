@@ -23,10 +23,12 @@
 
                     <div class="goodDetailValue">
                         <div class="_Value">购买数量：</div>
-                        <div class="_cartNumber" style="margin-left: 2rem;">
-                            <a href="javascript:;" @click="jian(index)" class="goodDetailReduce">-</a>
-                            <input type="text"   v-model="goodDetail.homeValue" readonly="readonly"/>
-                            <a href="javascript:;" @click="jia(index)" class="goodDetailAdd">+</a>
+                        <div>
+                            <div class="_cartNumber" style="margin-left: 1rem;">
+                                <a href="javascript:;" @click="jian(index)" class="goodDetailReduce">-</a>
+                                <input type="text"   v-model="goodDetail.homeValue" readonly="readonly"/>
+                                <a href="javascript:;" @click="jia(index)" class="goodDetailAdd">+</a>
+                            </div>
                         </div>
                     </div>
 
@@ -40,15 +42,18 @@
 
 
                         <mt-tab-container v-model="selected" swipeable>
-                            <mt-tab-container-item id="tab-container1">
-                               <div class="goodDetailImg">
-                                   <p v-for="Image in goodDetail.Images">
-                                       <img v-bind:src="Image.one" alt="详情图片">
-                                    </p>
+                            <mt-tab-container-item id="tab-container2">
+                               <div class="goodDetailParam">
+                                   <ul>
+                                       <li class="goodDetailLi" v-for="(item, index) in 10" :key="index">
+                                           <span class="paramKey fontSize04">paramKey</span>
+                                           <span class="paramValue fontSize03">paramValue</span>
+                                       </li>
+                                   </ul>
                                 </div>
                             </mt-tab-container-item>
 
-                            <mt-tab-container-item id="tab-container2">
+                            <mt-tab-container-item id="tab-container1">
                                 <div class="peizhi" v-html="goodDetail.info.goodsDesc"></div>
                             </mt-tab-container-item>
                         </mt-tab-container>
@@ -153,15 +158,16 @@ export default {
     )
   },
   mounted() {
+    
     if (this.$store.state.carts != undefined) {
       this.cartlength = this.$store.state.carts.length;
     }
   },
   created() {
     var _this = this;
-    var id = this.$route.query.id;
+    var id = this.$route.params.id;
     getGoodDetail({"goodsId":id}).then(res=>{
-      _this.goodDetails.push(res.data.data)
+      _this.goodDetails.push({...res.data.data, homeValue: 1})
       console.log(res)
     })
     // axios.get("/static/ceshi.json").then(res => {
@@ -191,7 +197,7 @@ export default {
            name:index.homeName,
            price:index.homePrice
        }
-        this.$stor.dispatch("setGoods",data)
+        this.$store.dispatch("setGoods",data)
     },
     // 点击按钮时，首先判断该商品是否在购物车已存在，如果存在则不再加入
     add: function(index) {
@@ -268,18 +274,10 @@ export default {
 };
 </script>
 
-<style lang="stylus" >
-// .goodDetail {
-// width: 100%;
-// height: 100%;
-// z-index: 999;
-// top: 0;
-// left: 0;
-// background: white;
-// }
+<style lang="stylus">
 .peizhi {
-    width: 90%;
-    margin: auto;
+
+    margin-top: 0.1rem;
     div{
         margin-bottom .5rem;
         margin-top .5rem;
@@ -297,8 +295,11 @@ export default {
         display: block;
     }
     p {
-         height .55rem
+        width: 100%;
         color: #888;
+        img {
+            width: 100%;
+        }
     }
 }
 
@@ -317,7 +318,6 @@ export default {
 
 .goodDetailList {
     margin-bottom: 1rem;
-    padding-top: 1.45rem;
 }
 
 .goodDetailHeader {
@@ -344,15 +344,13 @@ export default {
 
 .goodDetaiSwipe {
     height: 8rem;
-    margin-top: 3px;
     background: white;
 }
 
 .goodDetaiSwipe img {
-    width: 70%;
+    width: 100%;
     height: 7rem;
     display: block;
-    /* margin-top: 60px; */
     margin: auto;
 }
 
@@ -449,13 +447,18 @@ export default {
 
             .collection-box {
                 text-align: center;
-
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
             }
 
             i {
-                font-size: 0.6rem;
+                width: 0.76rem;
+                height: 0.7rem;
+                line-height: 0.7rem;
                 display: block;
-                text-align: center;
+                margin: auto;
+                font-size: 0.6rem;
             }
 
             span {
@@ -508,15 +511,9 @@ export default {
 .purchase a {
 }
 
-.goodDetailImg {
+.goodDetailParam {
     margin-top: 4px;
     margin-bottom: 6px;
-}
-
-.goodDetailImg img {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 table td {
@@ -529,44 +526,51 @@ table td {
     height: 2rem;
     border-bottom: 1px solid #cecece;
     padding: 0.4rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .goodDetailAdd {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
+    border-radius: 0 10px 10px 0;
     border-left: none;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     color: black;
 }
 
 .goodDetailReduce {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
+    border-radius: 10px 0 0 10px;
     border-right: none;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     color: black;
 }
 
 ._cartNumber input {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
     float: left;
     border: 1px solid #b2b2b2;
     text-align: center;
     color: black;
+    font-size: 0.4rem;
 }
 
 ._Value {
@@ -578,4 +582,19 @@ table td {
 .goodDetailColor {
     display: none;
 }
+.goodDetailLi{
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    border-top: 2px solid #F4F4F4;
+    .paramKey{
+        width: 3rem;
+        padding-left: 0.3rem;
+        
+    }
+    .paramValue{
+        flex: 1;
+    }
+}
+
 </style>
