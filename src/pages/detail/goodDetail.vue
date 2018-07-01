@@ -23,10 +23,12 @@
 
                     <div class="goodDetailValue">
                         <div class="_Value">购买数量：</div>
-                        <div class="_cartNumber" style="margin-left: 2rem;">
-                            <a href="javascript:;" @click="jian(index)" class="goodDetailReduce">-</a>
-                            <input type="text"   v-model="goodDetail.homeValue" readonly="readonly"/>
-                            <a href="javascript:;" @click="jia(index)" class="goodDetailAdd">+</a>
+                        <div>
+                            <div class="_cartNumber" style="margin-left: 1rem;">
+                                <a href="javascript:;" @click="jian(index)" class="goodDetailReduce">-</a>
+                                <input type="text"   v-model="goodDetail.homeValue" readonly="readonly"/>
+                                <a href="javascript:;" @click="jia(index)" class="goodDetailAdd">+</a>
+                            </div>
                         </div>
                     </div>
 
@@ -162,7 +164,7 @@ export default {
     var _this = this;
     var id = this.$route.params.id;
     getGoodDetail({"goodsId":id}).then(res=>{
-      _this.goodDetails.push(res.data.data)
+      _this.goodDetails.push({...res.data.data, homeValue: 1})
       console.log(res)
     })
     // axios.get("/static/ceshi.json").then(res => {
@@ -192,7 +194,7 @@ export default {
            name:index.homeName,
            price:index.homePrice
        }
-        this.$stor.dispatch("setGoods",data)
+        this.$store.dispatch("setGoods",data)
     },
     // 点击按钮时，首先判断该商品是否在购物车已存在，如果存在则不再加入
     add: function(index) {
@@ -318,7 +320,6 @@ export default {
 
 .goodDetailList {
     margin-bottom: 1rem;
-    padding-top: 1.45rem;
 }
 
 .goodDetailHeader {
@@ -345,15 +346,13 @@ export default {
 
 .goodDetaiSwipe {
     height: 8rem;
-    margin-top: 3px;
     background: white;
 }
 
 .goodDetaiSwipe img {
-    width: 70%;
+    width: 100%;
     height: 7rem;
     display: block;
-    /* margin-top: 60px; */
     margin: auto;
 }
 
@@ -450,13 +449,18 @@ export default {
 
             .collection-box {
                 text-align: center;
-
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
             }
 
             i {
-                font-size: 0.6rem;
+                width: 0.76rem;
+                height: 0.7rem;
+                line-height: 0.7rem;
                 display: block;
-                text-align: center;
+                margin: auto;
+                font-size: 0.6rem;
             }
 
             span {
@@ -530,16 +534,21 @@ table td {
     height: 2rem;
     border-bottom: 1px solid #cecece;
     padding: 0.4rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .goodDetailAdd {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
+    border-radius: 0 0.2rem 0.2rem 0;
     border-left: none;
     text-align: center;
     font-size: 0.5rem;
@@ -549,11 +558,13 @@ table td {
 .goodDetailReduce {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
+    border-radius: 0.2rem 0 0 0.2rem;
     border-right: none;
     text-align: center;
     font-size: 0.5rem;
@@ -563,7 +574,6 @@ table td {
 ._cartNumber input {
     width: 1rem;
     height: 0.8rem;
-    line-height: 0.8rem;
     float: left;
     border: 1px solid #b2b2b2;
     text-align: center;
