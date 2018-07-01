@@ -22,7 +22,7 @@
       <!-- <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
     <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
     <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button> -->
-    
+
   </div>
 </template>
 
@@ -52,9 +52,10 @@ export default {
       latitude:38.95223,
       longitude:121.5255,
       params: {
-        current:1,
-        size:10,
-        enable:true,
+        pageSize:10,
+        pageNumber:1,
+        status:0,
+        type:0
       },
       topStatus: '',
     }
@@ -142,18 +143,18 @@ export default {
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
     })
     getAdmins(this.params).then((res) => {
-       this.list=res.data.data.records
+       this.list=res.data.data.content
     })
   },
   methods:{
     // loaded () {
     //       clearTimeout(tmout)
     //       let tmout = setTimeout(function(){
-    //         let myScroll = new IScroll('#loadmores', { 
+    //         let myScroll = new IScroll('#loadmores', {
     //         mouseWheel: true,
     //         scrollbars: true });
     //       },200)
-          
+
 
     //   },
     handleTopChange(status) {
@@ -161,7 +162,7 @@ export default {
       },
     loadTop(){
       getAdmins(this.params).then((res) => {
-       this.list=res.data.data.records
+       this.list=res.data.data.content
       }).then(res=>{
         this.$refs.loadmore.onTopLoaded();
       })
@@ -239,7 +240,7 @@ export default {
       margin-top: 1.33rem;
     }
 .mint-loadmore-top
-  span 
+  span
     font-size 0.5rem
 @import '../../fon/fontHome/iconfont.css'
 h6
@@ -255,8 +256,8 @@ span
     color #909399;
     padding 0.1rem;
 p
-    font-size 0.2rem;  
-    color #909399; 
+    font-size 0.2rem;
+    color #909399;
     line-height 0.5rem;
 .iconfontLittle
     font-size 0.2rem;

@@ -431,7 +431,6 @@
     padding-left: 10px;
   }
   .container{
-    top: 1.45rem;
     position: absolute;
     width:100%
   }
