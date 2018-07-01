@@ -42,15 +42,18 @@
 
 
                         <mt-tab-container v-model="selected" swipeable>
-                            <mt-tab-container-item id="tab-container1">
-                               <div class="goodDetailImg">
-                                   <p v-for="Image in goodDetail.Images">
-                                       <img v-bind:src="Image.one" alt="详情图片">
-                                    </p>
+                            <mt-tab-container-item id="tab-container2">
+                               <div class="goodDetailParam">
+                                   <ul>
+                                       <li class="goodDetailLi" v-for="(item, index) in 10" :key="index">
+                                           <span class="paramKey fontSize04">paramKey</span>
+                                           <span class="paramValue fontSize03">paramValue</span>
+                                       </li>
+                                   </ul>
                                 </div>
                             </mt-tab-container-item>
 
-                            <mt-tab-container-item id="tab-container2">
+                            <mt-tab-container-item id="tab-container1">
                                 <div class="peizhi" v-html="goodDetail.info.goodsDesc"></div>
                             </mt-tab-container-item>
                         </mt-tab-container>
@@ -271,17 +274,9 @@ export default {
 };
 </script>
 
-<style lang="stylus" >
-// .goodDetail {
-// width: 100%;
-// height: 100%;
-// z-index: 999;
-// top: 0;
-// left: 0;
-// background: white;
-// }
+<style lang="stylus">
 .peizhi {
-    
+
     margin-top: 0.1rem;
     div{
         margin-bottom .5rem;
@@ -516,15 +511,9 @@ export default {
 .purchase a {
 }
 
-.goodDetailImg {
+.goodDetailParam {
     margin-top: 4px;
     margin-bottom: 6px;
-}
-
-.goodDetailImg img {
-    width: 100%;
-    height: auto;
-    display: block;
 }
 
 table td {
@@ -551,10 +540,10 @@ table td {
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
-    border-radius: 0 0.2rem 0.2rem 0;
+    border-radius: 0 10px 10px 0;
     border-left: none;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     color: black;
 }
 
@@ -567,10 +556,10 @@ table td {
     background: white;
     float: left;
     border: 1px solid #b2b2b2;
-    border-radius: 0.2rem 0 0 0.2rem;
+    border-radius: 10px 0 0 10px;
     border-right: none;
     text-align: center;
-    font-size: 0.5rem;
+    font-size: 0.6rem;
     color: black;
 }
 
@@ -581,6 +570,7 @@ table td {
     border: 1px solid #b2b2b2;
     text-align: center;
     color: black;
+    font-size: 0.4rem;
 }
 
 ._Value {
@@ -592,4 +582,19 @@ table td {
 .goodDetailColor {
     display: none;
 }
+.goodDetailLi{
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    border-top: 2px solid #F4F4F4;
+    .paramKey{
+        width: 3rem;
+        padding-left: 0.3rem;
+        
+    }
+    .paramValue{
+        flex: 1;
+    }
+}
+
 </style>

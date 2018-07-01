@@ -40,4 +40,16 @@ body{
   width: 0.3rem;
   height: 0.3rem;
 }
+  .fontSize04{
+    font-size: 0.4rem;
+  }
+  .fontSize03{
+    font-size: 0.3rem;
+  }
+  .colorRed{
+    color: red;
+  }
+  .color98499C{
+    color: #98499C;
+  }
 </style>
