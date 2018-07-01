@@ -121,10 +121,9 @@ export default {
 
     .calssify-rigth {
         flex: 1;
-        height: 100%;
         background: white;
-        margin-bottom: 1.51rem;
-
+        margin-bottom: 1rem;
+        overflow auto
         ul {
             display: flex;
             flex-wrap: wrap;

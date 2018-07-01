@@ -189,7 +189,6 @@ export default {
 <style>
 .select {
   float: left;
-  margin-top: 1.5rem;
   padding-left: 0.5rem;
 }
 .select i {
