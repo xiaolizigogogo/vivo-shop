@@ -281,8 +281,8 @@ export default {
 // background: white;
 // }
 .peizhi {
-    width: 90%;
-    margin: auto;
+    
+    margin-top: 0.1rem;
     div{
         margin-bottom .5rem;
         margin-top .5rem;
@@ -300,8 +300,11 @@ export default {
         display: block;
     }
     p {
-         height .55rem
+        width: 100%;
         color: #888;
+        img {
+            width: 100%;
+        }
     }
 }
 
