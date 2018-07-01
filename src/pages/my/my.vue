@@ -1,6 +1,6 @@
 <template>
     <div class="my">
-        <My-Container :user="this.user"></My-Container>
+        <My-Container :user="user"></My-Container>
         <v-footer></v-footer>
     </div>
 </template>

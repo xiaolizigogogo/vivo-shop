@@ -141,31 +141,25 @@ export default {
       }
   },
   props:{
-    user:{
-      name:"游客",
-      header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
-      coupons:'10',
-      encourage:'10',
-      integration:'10'
-    }
+    user: Object
   },
   mounted:function(){
 
   },
     computed:{
-      ...mapGetters(["this.$store.state.orders","this.$store.state.userInfo"]),
-       jifeng(){
-          var jifeng=0
-          this.$store.state.orders.forEach(list => {
-            jifeng += parseInt(list.price)
-        });
-         return jifeng;
-      },
-      updateUserInfo(){
-        let userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
-        this.user.name=userInfo.nickname;
-        this.user.header_url=userInfo.headImgUrl;
-      }
+    //   ...mapGetters(["this.$store.state.orders","this.$store.state.userInfo"]),
+    //    jifeng(){
+    //       var jifeng=0
+    //       this.$store.state.orders.forEach(list => {
+    //         jifeng += parseInt(list.price)
+    //     });
+    //      return jifeng;
+    //   },
+    //   updateUserInfo(){
+    //     let userInfo=JSON.parse(sessionStorage.getItem("userInfo"));
+    //     this.user.name=userInfo.nickname;
+    //     this.user.header_url=userInfo.headImgUrl;
+    //   }
   },
 }
 </script>
