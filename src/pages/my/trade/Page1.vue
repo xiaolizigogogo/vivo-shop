@@ -40,6 +40,7 @@
 <script>
   import wexinPay from '../../pay/wxPayComponent'
   import {unifiedOrder} from '../../../api/api'
+  import '../../../weui/weui.min.js'
   export default {
     name: "Page1",
     data(){
@@ -74,6 +75,7 @@
 <!-- 引入组件库 -->
 
 <style lang="stylus" scoped>
+@import '../../../styles/weui.min.css'
 .weui-cells
   margin-top 0
   .inputCell

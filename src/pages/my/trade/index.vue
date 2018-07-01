@@ -19,6 +19,7 @@
 <script>
 import Page1 from './Page1'
 import Page2 from './Page2'
+import '../../../weui/weui.min.js'
   export default {
     name: "mytrade",
     mounted(){
@@ -47,6 +48,7 @@ import Page2 from './Page2'
 <!-- 引入组件库 -->
 
 <style lang="stylus" scoped>
+@import '../../../styles/weui.min.css'
 .weui-navbar__item
   font-size 0.4rem
 </style>
