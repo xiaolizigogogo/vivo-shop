@@ -174,9 +174,7 @@ export default {
     }
   },
   props:{
-    item:{
-
-    }
+    item: Object
   },
   methods:{
       subscribe(){
@@ -190,7 +188,7 @@ export default {
       }
   },
   mounted(){
-    console.log(this.item)
+    console.log('item',this.item)
   }
 }
 </script>
