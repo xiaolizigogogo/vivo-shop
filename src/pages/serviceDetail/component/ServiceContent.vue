@@ -52,19 +52,19 @@
           <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
               <div class="weui-cell__bd">
-                  <input class="weui-input" type="text" placeholder="请输入预约姓名"/>
+                  <input class="weui-input" type="text" placeholder="请输入预约姓名" v-model="submitForm.username"/>
               </div>
             </div>
             <div class="weui-cell">
               <div class="weui-cell__bd">
-                  <input class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入预约手机号码"/>
+                  <input class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入预约手机号码" v-model="submitForm.phone"/>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="weui-btn-area">
-          <a class="weui-btn" href="javascript:" id="showTooltips">确定预约</a>
+          <a class="weui-btn" href="javascript:" id="showTooltips" @click="submit">确定预约</a>
       </div>
   </div>
 </template>
@@ -85,13 +85,24 @@ export default {
       date: '',
       time: '9:00',
       productTypes:[],
-
+      submitForm:{
+        productId:undefined,
+        subscribeTime:'',
+        phone:'',
+        username:'',
+        subscribeTimeValue:'',
+        userId:undefined,
+        adminId:undefined,
+        subscribeDayValue:'',
+        subscribeDay:'2018-06-22',
+      }
     }
   },
   props:{
     item:{
 
-    }
+    },
+    adminId:""
   },
   mounted(){
     let arr = getDate()
@@ -145,6 +156,7 @@ export default {
             that.year = result[0].value;
             that.month = result[1].value;
             that.date = result[2].value;
+            that.submitForm=that.year+that.month+that.date
         },
         id: 'datePicker'
     });
@@ -204,10 +216,15 @@ export default {
         onChange: function (result) {
         },
         onConfirm: function (result) {
-            that.time = result[0].label
+          that.time = result[0].label
+          that.submitForm.subscribeTime = result[0].value
         },
         id: 'singleLinePicker'
       });
+    },
+    submit(){
+      this.submitForm.adminId=this.adminId;
+      console.log(this.submitForm)
     }
   }
 }
