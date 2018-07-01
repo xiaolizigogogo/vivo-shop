@@ -1,10 +1,45 @@
 <template>
 
     <div class="main" >
-      <h2>产品</h2>
+      <div>
+        <div class="weui-search-bar" id="search_bar">
+          <form class="weui-search-bar__form">
+              <div class="weui-search-bar__box">
+                  <i class="weui-icon-search fontSize04"></i>
+                  <input type="search" class="weui-search-bar__input fontSize04" id="search_input" placeholder="搜索" ref="searchValue" />
+                  <a href="javascript:" class="weui-icon-clear fontSize04" id="search_clear" @click="handleClear"></a>
+              </div>
+              <label for="search_input" class="weui-search-bar__label" id="search_text" @click="handleClick" v-show="isShow">
+                  <i class="weui-icon-search fontSize04"></i>
+                  <span class="fontSize04">搜索</span>
+              </label>
+          </form>
+          <a href="javascript:" id="search_cancel" @click="handleCancel" v-show="!isShow">取消</a>
+        </div>
+      </div>
 
       <div class="main_box" :style="{'-webkit-overflow-scrolling': scrollMode}">
         <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
+        <div class="weui-panel__bd" v-for="todo in list" :key="todo.id" @click="open(todo.id)">
+          <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+              <div class="weui-media-box__hd">
+                  <img class="weui-media-box__thumb" v-lazy="todo.listPicUrl" alt="图片">
+              </div>
+              <div class="weui-media-box__bd">
+                  <h4 class="weui-media-box__title fontSize04" style="font-weight:bold"><span class="promotionDesc colorRed">{{todo.promotionDesc}}</span><span class="color98499C">{{todo.name}}</span></h4>
+                  <p class="weui-media-box__desc fontSize03">{{todo.goodsBrief}}</p>
+                  <p class="weui-media-box__desc fontSize03">剩余&nbsp;<span class="colorRed">{{todo.goodsNumber}}</span>&nbsp;{{todo.goodsUnit}}</p>
+                  <p class="weui-media-box__desc fontSize03 retailPrice colorRed">￥<span class="fontSize04">{{todo.retailPrice}}</span></p>
+              </div>
+          </a>
+        </div>
+        <div class="weui-panel__ft">
+            <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+                <div class="weui-cell__bd">查看更多</div>
+                <span class="weui-cell__ft"></span>
+            </a>    
+        </div>
+        <!-- <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
         <ul>
 
           <li v-for="(todo,index) in list" :key="todo.id" @click="open(todo.id)">
@@ -17,7 +52,7 @@
               <p class="Price">￥{{todo.retailPrice}}</p>
             </div>
           </li>
-        </ul>
+        </ul> -->
         </v-loadmore>
       </div>
 
@@ -43,6 +78,7 @@
         allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
         scrollMode: "touch", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
         items: [],
+        isShow: true
       }
     },
 
@@ -61,8 +97,17 @@
       'v-loadmore': Loadmore
     },
     methods: {
+      handleClear(){
+        this.$refs.searchValue.value = '';
+      },
+      handleCancel(){
+        this.isShow = true
+      },
+      handleClick(){
+        this.isShow = false
+      },
       open: function (id) {
-        this.$router.push({path: "goodDetail", query: {id: id}});
+        this.$router.push({path: `/goodDetail/${id}`});
       },
       loadTop:function () { //组件提供的下拉触发方法
         //下拉加载
@@ -237,5 +282,44 @@
   }
   .scroller {
     position: relative;
+  }
+  .weui-search-bar__label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .weui-search-bar__box{
+    padding-left: 1rem;
+  }
+  .weui-search-bar__input{
+    height: 1rem;
+  }
+  #search_cancel{
+    font-size: 0.4rem;
+    text-align: center;
+    color: #98499C;
+    padding-left: 0.1rem;
+  }
+  .fontSize04{
+    font-size: 0.4rem;
+  }
+  .fontSize03{
+    font-size: 0.3rem;
+  }
+  .colorRed{
+    color: red;
+  }
+  .color98499C{
+    color: #98499C;
+  }
+  .promotionDesc{
+    border: 1px solid red;
+    padding: 0 0.1rem;
+    font-size: 0.3rem;
+    margin-right: 0.1rem;
+  }
+  .weui-panel__bd{
+    margin-top: 0.1rem;
+    background-color: #ffffff;
   }
 </style>

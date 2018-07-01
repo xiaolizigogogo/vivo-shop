@@ -153,13 +153,14 @@ export default {
     )
   },
   mounted() {
+    
     if (this.$store.state.carts != undefined) {
       this.cartlength = this.$store.state.carts.length;
     }
   },
   created() {
     var _this = this;
-    var id = this.$route.query.id;
+    var id = this.$route.params.id;
     getGoodDetail({"goodsId":id}).then(res=>{
       _this.goodDetails.push(res.data.data)
       console.log(res)
