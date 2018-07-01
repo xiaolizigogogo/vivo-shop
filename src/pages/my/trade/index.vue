@@ -48,7 +48,6 @@ import '../../../weui/weui.min.js'
 <!-- 引入组件库 -->
 
 <style lang="stylus" scoped>
-@import '../../../styles/weui.min.css'
 .weui-navbar__item
   font-size 0.4rem
 </style>
