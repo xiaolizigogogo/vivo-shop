@@ -1,6 +1,5 @@
 <template>
 <div>
-<Classify-Header title="商品分类"></Classify-Header>
   <div class="calssify-con" >
         <div class="calssify-left" ref="wrapper">
             <ul class="calssify-left-ul" >
@@ -58,6 +57,7 @@ export default {
     ...mapGetters(["this.$store.state.sindex"])
   },
   created() {
+  document.title = '分类'
     var _this = this;
     getCategory(this.params).then(res=>{
       _this.left = res.data.data;
@@ -102,7 +102,6 @@ export default {
     width: 100%;
     top: 0;
     bottom: 0;
-    padding-top: 1.45rem;
 
     .calssify-left {
         flex: 0 0 2.9rem;

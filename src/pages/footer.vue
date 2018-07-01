@@ -7,7 +7,7 @@
           <i class="iconfont icon-shouye2" v-else></i>
           <span>首页</span>
         </div>
-        
+
       </router-link>
 
       <router-link to="/cart" tag="li">
@@ -16,15 +16,14 @@
           <i class="iconfont icon-dongtai" v-else></i>
           <span>购物车</span>
         </div>
-        
+
       </router-link>
-      <router-link to="/subscribe" tag="li">
+      <router-link to="/classify" tag="li">
         <div class="index">
-          <i class="iconfont icon-wode-" style="color:#98499C" v-if="active ==='subscribe'"></i>
-          <i class="iconfont icon-wode"  v-else></i>
-          <span>预约</span>
+          <i class="iconfont icon-fenleixuanzhong" style="color:#98499C" v-if="active ==='subscribe'"></i>
+          <i class="iconfont icon-fenlei-copy"  v-else></i>
+          <span>分类</span>
         </div>
-        
       </router-link>
        <router-link to="/my" tag="li">
         <div class="index">
@@ -32,7 +31,7 @@
           <i class="iconfont icon-wode"  v-else></i>
           <span>我的</span>
         </div>
-        
+
       </router-link>
 
     </ul>
