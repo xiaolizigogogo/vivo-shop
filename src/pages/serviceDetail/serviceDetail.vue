@@ -8,6 +8,7 @@
 <script>
 import BgHeader from './component/BgHeader'
 import ServiceContent from './component/ServiceContent'
+import {getAdminAilviliableInfo} from '../../api/api'
 export default {
   name: "serviceDetail",
   data() {
@@ -22,7 +23,12 @@ export default {
     ServiceContent
   },
   mounted:function(){
+   const id= this.$route.query.id;
+    getAdminAilviliableInfo({adminId:id}).then(res=>{
+      console.log(res)
+    })
     this.item=JSON.parse(localStorage.getItem("subscribeAdmin"))
+    console.log(this.item)
   },
   computed: {
 

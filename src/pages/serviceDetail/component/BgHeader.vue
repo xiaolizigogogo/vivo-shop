@@ -3,7 +3,7 @@
       <div class="bgWall">
          <div>
            <div class="beautifulHeader">
-            <img src="/static/img/header.jpg" alt="beautiful">
+            <img :src="item.avatar" alt="beautiful">
           </div>
           <p class="headerName">-&nbsp;&nbsp;{{item.username}}&nbsp;&nbsp;-</p>
          </div>

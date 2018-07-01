@@ -8,9 +8,7 @@
           <router-link to="/price" tag="a">查看价格表</router-link>
         </div>
         <div class="ReservationsBottom">
-          <div class="ReservationsMarks marks" @click="handleReservationsClick">皮肤管理</div>
-          <div class="ReservationsMarks marks" @click="handleReservationsClick">半永久</div>
-          <div class="ReservationsMarks marks" @click="handleReservationsClick">纹绣</div>
+          <div class="ReservationsMarks marks" @click="handleReservationsClick"  v-for="(item,index) in productTypes" :id="item.id" >{{item.name}}</div>
         </div>
       </div>
       <div class="Reservations ReservationNumber">
@@ -86,6 +84,8 @@ export default {
       month: '',
       date: '',
       time: '9:00',
+      productTypes:[],
+
     }
   },
   props:{
@@ -107,14 +107,20 @@ export default {
       this.date = arr[2]
     }
   },
+  created(){
+    this.productTypes=JSON.parse(sessionStorage.getItem("productTypes"));
+  }
+  ,
   methods:{
     handleReservationsClick(e){
+      console.log(e)
       const target = e.currentTarget;
       let ReservationsMarks = document.querySelectorAll('.ReservationsMarks')
       let len = ReservationsMarks.length
       for(let i = 0; i < len; i++){
         ReservationsMarks[i].setAttribute('class','ReservationsMarks marks')
       }
+      console.log(e.toElement.id)
       target.setAttribute('class','ReservationsMarks marks activeMarks')
     },
     handleReservationNumberClick(e){
@@ -148,44 +154,48 @@ export default {
       weui.picker([
       {
           label: '9:00',
-          value: 0,
+          value: 9,
           disabled: true // 不可用
       },
       {
           label: '10:00',
-          value: 1
+          value: 10
       },
       {
           label: '11:00',
-          value: 3
+          value: 11
       },
       {
           label: '12:00',
-          value: 4,
+          value: 12,
       },
       {
-          label: '13:0014:00',
-          value: 5,
+          label: '13:00',
+          value: 13,
+      },
+      {
+          label: '14:00',
+          value: 14,
       },
       {
           label: '15:00',
-          value: 6,
+          value: 15,
       },
       {
           label: '16:00',
-          value: 7,
+          value: 16,
       },{
           label: '17:00',
-          value: 8,
+          value: 17,
       },{
           label: '18:00',
-          value: 9,
+          value: 18,
       },{
           label: '19:00',
-          value: 10,
+          value: 19,
       },{
           label: '20:00',
-          value: 11,
+          value: 20,
       }
       ], {
         className: 'custom-classname',

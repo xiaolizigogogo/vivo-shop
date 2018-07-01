@@ -14,7 +14,7 @@
        </div>
       </Map-Positioning>
       <Home-List></Home-List>
-      <Home-Service  v-for="(item,index) in list" :key="index" :item="item"/>
+      <Home-Service  v-for="(item,index) in list" :key="index" :item="item" :productTypes="productTypes"/>
       <div style="height:1.75rem"></div>
       <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
       <Home-Container :todos="todos"></Home-Container> -->
@@ -32,14 +32,12 @@ import { Swipe, SwipeItem } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 import HomeSwipe from './component/HomeSwipe';
 import HomeList from './component/HomeList';
-// import HomeContainer from './component/HomeContainer'
 import HomeFooter from '../../pages/footer'
-// import HomeProductContainer from './component/HomeProductContainer'
 import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import {  getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
+import { getProductTypes, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
 import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
@@ -58,6 +56,7 @@ export default {
         type:0
       },
       topStatus: '',
+      productTypes:[]
     }
   },
   components:{
@@ -130,6 +129,9 @@ export default {
     document.title = '斯卡莱SPA美甲'
     this.getData()
     const  code=this.$route.query.code
+    /**
+     * 获取用户信息
+     */
     if(code){
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
@@ -138,25 +140,26 @@ export default {
         sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
       })
     }
-    getCategory({"parentId":0}).then(res=>{
+    /**
+     * 获取产品信息
+     */
+    getProductTypes({current:1,size:5}).then(res=>{
+      this.productTypes=res.data.data.records
+      sessionStorage.setItem("productTypes",JSON.stringify(this.productTypes))
     })
+    /**
+     * 获取轮播图
+     * */
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
     })
+    /**
+     * 获取员工
+     */
     getAdmins(this.params).then((res) => {
        this.list=res.data.data.content
     })
   },
   methods:{
-    // loaded () {
-    //       clearTimeout(tmout)
-    //       let tmout = setTimeout(function(){
-    //         let myScroll = new IScroll('#loadmores', {
-    //         mouseWheel: true,
-    //         scrollbars: true });
-    //       },200)
-
-
-    //   },
     handleTopChange(status) {
         this.topStatus = status;
       },
@@ -168,11 +171,7 @@ export default {
       })
     },
     getData:function(){
-      // var _this=this
-      // axios.get("/static/ceshi.json").then(function(res){
-      //   console.log(res)
-      //   _this.todos=res.data.data.home
-      // })
+
     },
     openLocation:function () {
       wx.openLocation({

@@ -250,13 +250,21 @@ const getJsTicket=(params)=> {
     params: params
   })
 }
-const unifiedOrder=(params)=>{
+const unifiedOrder=(params)=>
+{
   return request({
     url: '/shop/wxPay/getJSSDKPayInfo',
     method: 'post',
     data: params
   })
 }
+const getProductTypes=(params)=>{
+    return request({
+      url: '/shop/productTypes',
+      method: 'get',
+      params: params
+    })
+  }
 
 
 export {
@@ -284,5 +292,6 @@ export {
   getSubscribes,
   getAdminAilviliableInfo,
     getJsTicket,
-  unifiedOrder
+  unifiedOrder,
+  getProductTypes
 }

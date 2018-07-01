@@ -10,13 +10,13 @@
                         {{item.username}}
                     </h6>
                     <p>
-                        总监
+                        {{item.type}}
                     </p>
                 </div>
                 <div class="serviceTopRight">
-                    <h5>
-                        <span>￥</span>88
-                    </h5>
+                    <!--<h5>-->
+                        <!--<span>￥</span>88-->
+                    <!--</h5>-->
                     <p>
                         预约特惠价
                     </p>
@@ -24,20 +24,8 @@
             </div>
             <div class="serviceMiddle">
                 <div class="serviceMiddleLeft">
-                    <div class="marks">
-                        <span>美甲</span>
-                    </div>
-                    <div class="marks">
-                        <span>美容</span>
-                    </div>
-                    <div class="marks">
-                        <span>纹绣</span>
-                    </div>
-                    <div class="marks">
-                        <span>美睫</span>
-                    </div>
-                    <div class="marks">
-                        <span>培训</span>
+                    <div class="marks" v-for="(i,index) in productTypes">
+                        <span>{{i.name}}</span>
                     </div>
                 </div>
                 <div class="serviceMiddleRight">
@@ -48,13 +36,13 @@
             </div>
             <div class="serviceBottom">
                 <span style="color:red">
-                    好评率：100%
+                    好评率：{{item.commentPercent}}%
                 </span>
                 <span>
-                    作品数：235
+                    作品数：{{item.productCounts}}
                 </span>
                 <span>
-                    已被约：223
+                    已被约：{{item.subscribeTimes}}
                 </span>
             </div>
         </div>
@@ -174,7 +162,10 @@ export default {
     }
   },
   props:{
-    item: Object
+    item: Object,
+    productTypes:{
+      type:Array
+    }
   },
   methods:{
       subscribe(){
