@@ -38,6 +38,7 @@ import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
 import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
+import {signUrl} from '../../api/global'
 import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
@@ -69,7 +70,8 @@ export default {
     HomeService
   },
   created(){
-    getJsTicket({url:window.location.href}).then(res=>{
+    signUrl();
+    getJsTicket({url:window.signLink}).then(res=>{
       res.data.data.debug=true;
       res.data.data.jsApiList=['onMenuShareTimeline',
         'onMenuShareAppMessage',

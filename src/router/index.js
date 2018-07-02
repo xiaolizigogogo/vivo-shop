@@ -110,12 +110,19 @@ const router =  new Router({
 
 })
 router.beforeEach((to, from, next) => {
-
-  setTimeout(function () {
-
-    window.location = window.location;
-
-  }, 500);
-
-});
+  // if(!store.state.user && to.path != '/author'){
+  //   // 第一次进入项目
+  //   holdno.cookie.set('beforeLoginUrl', to.fullPath) // 保存用户进入的url
+  //   next('/author')
+  //   return false
+  // }
+  // window.location = window.location;
+  // 记录进入app时的url
+  if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
+  window.entryUrl = location.href.split('#')[0]
+  }
+  // 进行签名的时候  Android 不用使用之前的链接， ios 需要
+  let signLink =  /(Android)/i.test(navigator.userAgent) ? location.href.split('#')[0] : window.entryUrl;
+  next()
+})
 export default router

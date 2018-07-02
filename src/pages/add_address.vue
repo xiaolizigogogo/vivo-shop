@@ -58,7 +58,7 @@ export default {
 
   },
   created(){
-    getJsTicket({url:window.location.href}).then(res => {
+    getJsTicket({url:window.signLink}).then(res => {
 
       res.data.data.debug = true
       res.data.data.jsApiList = ['checkJsApi','editAddress']

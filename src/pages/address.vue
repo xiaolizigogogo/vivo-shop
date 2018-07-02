@@ -26,6 +26,7 @@
 
 <script>
 import { mapState, mapMutations, mapGetters } from "vuex";
+import {getAddress,addAddress} from '../api/api'
 export default {
     data(){
         return{

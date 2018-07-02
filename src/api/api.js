@@ -189,6 +189,13 @@ const addCart = (params) => {
     data: params
   })
 }
+const addAddress = (params) => {
+  return request({
+    url: '/shop/address',
+    method: 'post',
+    data: params
+  })
+}
   /**
    * 添加商品到购物车
    * @param params
@@ -301,5 +308,6 @@ export {
     getJsTicket,
   unifiedOrder,
   getProductTypes,
-  getUserInfoByOpenId
+  getUserInfoByOpenId,
+  addAddress
 }
