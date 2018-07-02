@@ -25,11 +25,11 @@
               <div class="weui-media-box__hd">
                   <img class="weui-media-box__thumb" v-lazy="todo.listPicUrl" alt="图片">
               </div>
-              <div class="weui-media-box__bd">
+              <div class="weui-media-box__bd hasBorderBottom">
                   <h4 class="weui-media-box__title fontSize04" style="font-weight:bold"><span class="promotionDesc colorRed">{{todo.promotionDesc}}</span><span class="color98499C">{{todo.name}}</span></h4>
                   <p class="weui-media-box__desc fontSize03">{{todo.goodsBrief}}</p>
                   <p class="weui-media-box__desc fontSize03">剩余&nbsp;<span class="colorRed">{{todo.goodsNumber}}</span>&nbsp;{{todo.goodsUnit}}</p>
-                  <p class="weui-media-box__desc fontSize03 retailPrice colorRed">￥<span class="fontSize04">{{todo.retailPrice}}</span></p>
+                  <p class="weui-media-box__desc fontSize03 retailPrice colorRed isBottom">￥<span class="fontSize04">{{todo.retailPrice}}</span></p>
               </div>
           </a>
         </div>
@@ -86,6 +86,7 @@
       todos: Array
     },
     mounted: function () {
+      document.title = '商品列表'
       this.loadPageList();
       for (var i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
@@ -307,7 +308,24 @@
     margin-right: 0.1rem;
   }
   .weui-panel__bd{
-    margin-top: 0.1rem;
     background-color: #ffffff;
+  }
+  .hasBorderBottom{
+    border-bottom: 1px solid #f4f4f4;
+  }
+  .weui-media-box{
+    padding: 0.3rem 0.3rem 0;
+  }
+  .weui-media-box__title,.weui-media-box__desc{
+    padding: 0 0 0.2rem;
+  }
+  .isBottom{
+    margin-bottom: 0.3rem;
+    padding-bottom: 0;
+  }
+  .weui-media-box__hd{
+    width: 2rem;
+    height: 2.5rem;
+    margin-right: 0.5rem;
   }
 </style>
