@@ -52,7 +52,7 @@
         },
         createParams:{
           productId:10,
-          subscribeTime:'',
+          subscribeTime:undefined,
           phone:'',
           username:'',
           subscribeTimeValue:'',

@@ -8,7 +8,7 @@
           <router-link to="/price" tag="a">查看价格表</router-link>
         </div>
         <div class="ReservationsBottom">
-          <div class="ReservationsMarks marks" @click="handleReservationsClick"  v-for="(item,index) in productTypes" :id="item.id" >{{item.name}}</div>
+          <div class="ReservationsMarks marks" @click="handleReservationsClick"  v-for="(item,index) in productTypes" :id="item.id" :name="item.name">{{item.name}}</div>
         </div>
       </div>
       <div class="Reservations ReservationNumber">
@@ -57,7 +57,7 @@
             </div>
             <div class="weui-cell">
               <div class="weui-cell__bd">
-                  <input class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入预约手机号码" v-model="submitForm.phone"/>
+                  <input class="weui-input" type="tel" pattern="[0-9]*" placeholder="请输入预约手机号码" v-model="submitForm.phoneNumber"/>
               </div>
             </div>
           </div>
@@ -77,6 +77,7 @@ const getDate = function(){
   let date = dateNow.getDate()
   return [year, month, date]
 }
+import {addSubscribes} from '../../../api/api'
 export default {
   data(){
     return {
@@ -87,22 +88,80 @@ export default {
       productTypes:[],
       submitForm:{
         productId:undefined,
-        subscribeTime:'',
-        phone:'',
+        subscribeTime:0,
+        phoneNumber:'',
         username:'',
         subscribeTimeValue:'',
         userId:undefined,
-        adminId:undefined,
+        adminId:0,
         subscribeDayValue:'',
-        subscribeDay:'2018-06-22',
-      }
+        subscribeDay:undefined,
+        productName:undefined,
+        userNumber:'',
+        openid:'',
+        productUrl:'',
+      },
+      userInfo:{
+
+      },
+      timeArray:[
+        {
+          label: '9:00',
+          value: 9
+        },
+        {
+          label: '10:00',
+          value: 10
+        },
+        {
+          label: '11:00',
+          value: 11
+        },
+        {
+          label: '12:00',
+          value: 12,
+        },
+        {
+          label: '13:00',
+          value: 13,
+        },
+        {
+          label: '14:00',
+          value: 14,
+        },
+        {
+          label: '15:00',
+          value: 15,
+        },
+        {
+          label: '16:00',
+          value: 16,
+        },{
+          label: '17:00',
+          value: 17,
+        },{
+          label: '18:00',
+          value: 18,
+        },{
+          label: '19:00',
+          value: 19,
+        },{
+          label: '20:00',
+          value: 20,
+        }
+      ]
     }
   },
   props:{
     item:{
 
     },
-    adminId:""
+    adminId:{
+      type:String
+    },
+    unAvilTime:{
+      type:Array
+    }
   },
   mounted(){
     let arr = getDate()
@@ -117,9 +176,20 @@ export default {
     }else{
       this.date = arr[2]
     }
+    //初始化
+    this.submitForm.adminId=this.item.id
   },
   created(){
     this.productTypes=JSON.parse(sessionStorage.getItem("productTypes"));
+    this.timeArray.forEach(item=>{
+      if(this.unAvilTime.includes(item.value)){
+        item.disabled=true
+      }
+      const date=new Date()
+      if(date.getHours()>=item.value){
+        item.disabled=true
+      }
+    })
   }
   ,
   methods:{
@@ -131,7 +201,9 @@ export default {
       for(let i = 0; i < len; i++){
         ReservationsMarks[i].setAttribute('class','ReservationsMarks marks')
       }
-      console.log(e.toElement.id)
+      console.log(this.submitForm)
+      this.submitForm.productId=e.toElement.id
+      this.submitForm.productName=e.toElement.textContent
       target.setAttribute('class','ReservationsMarks marks activeMarks')
     },
     handleReservationNumberClick(e){
@@ -141,6 +213,7 @@ export default {
       for(let i = 0; i < len; i++){
         ReservationsMarks[i].setAttribute('class','ReservationNumberMarks marks')
       }
+      this.submitForm.userNumber=e.toElement.textContent
       target.setAttribute('class','ReservationNumberMarks marks activeMarks')
     },
     handleDatePicker(){
@@ -156,60 +229,14 @@ export default {
             that.year = result[0].value;
             that.month = result[1].value;
             that.date = result[2].value;
-            that.submitForm=that.year+that.month+that.date
+            that.submitForm.subscribeDay=that.year+"-"+that.month+"-"+that.date
         },
         id: 'datePicker'
     });
     },
     handleSingleLinePicker(){
       let that = this
-      weui.picker([
-      {
-          label: '9:00',
-          value: 9,
-          disabled: true // 不可用
-      },
-      {
-          label: '10:00',
-          value: 10
-      },
-      {
-          label: '11:00',
-          value: 11
-      },
-      {
-          label: '12:00',
-          value: 12,
-      },
-      {
-          label: '13:00',
-          value: 13,
-      },
-      {
-          label: '14:00',
-          value: 14,
-      },
-      {
-          label: '15:00',
-          value: 15,
-      },
-      {
-          label: '16:00',
-          value: 16,
-      },{
-          label: '17:00',
-          value: 17,
-      },{
-          label: '18:00',
-          value: 18,
-      },{
-          label: '19:00',
-          value: 19,
-      },{
-          label: '20:00',
-          value: 20,
-      }
-      ], {
+      weui.picker(this.timeArray, {
         className: 'custom-classname',
         container: 'body',
         defaultValue: [0],
@@ -223,8 +250,30 @@ export default {
       });
     },
     submit(){
-      this.submitForm.adminId=this.adminId;
-      console.log(this.submitForm)
+      if(this.submitForm.productId==undefined){
+        alert("请选择服务项目")
+        return
+      }
+      if(this.submitForm.subscribeDay==undefined){
+        alert("请选择服务日期")
+        return
+      }
+      if(this.submitForm.subscribeTime==undefined){
+        alert("请选择服务时间")
+        return
+      }
+      this.submitForm.userId=124
+      this.submitForm.openid=''
+      this.submitForm.adminId=this.adminId
+      this.submitForm.productUrl=this.item.avatar
+      addSubscribes(this.submitForm).then(res=>{
+        if(res.data.status==200){
+          alert("预约成功")
+        }
+        else{
+          alert(res.data.exception)
+        }
+      });
     }
   }
 }

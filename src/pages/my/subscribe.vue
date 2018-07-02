@@ -1,437 +1,301 @@
 <template>
-  <div class="cart">
-    <!--<mt-header title="我的预约">-->
-      <!--<router-link to="/my" slot="left">-->
-        <!--<mt-button icon="back">返回</mt-button>-->
-      <!--</router-link>-->
-      <!--<mt-button icon="more" slot="right"></mt-button>-->
-    <!--</mt-header>-->
-  <div class="container main-body cartMain" :style="{'-webkit-overflow-scrolling': scrollMode}">
-    <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
-      <ul class="list" v-for="(cart,index) in carts">
-        <li  class="cartList">
-          <mt-cell :title="cart.username"  :to="{  path: '/subscribeDetail',query: {   id: cart.id}}" is-link  value="立即预约">
-            <img slot="icon" :src="cart.avatar" width="80" height="80">
-          </mt-cell>
-        </li>
-      </ul>
-    </v-loadmore>
-  </div>
-  </div>
-</template>
-<script>
-  import {Toast} from "mint-ui";
-  import {mapState, mapMutations, mapGetters} from "vuex";
-  import {getCarts} from '../../api/api'
-  import HomeFooter from '../../pages/footer'
-  import {getAdmins,getSubscribes} from '../../api/api'
-  import BScroll from 'better-scroll'
-  import {Loadmore} from 'mint-ui';
 
+  <div class="main" >
+    <div>
+      <div class="weui-search-bar" id="search_bar">
+        <form class="weui-search-bar__form">
+          <div class="weui-search-bar__box">
+            <i class="weui-icon-search fontSize04"></i>
+            <input type="search" class="weui-search-bar__input fontSize04" id="search_input" placeholder="搜索" ref="searchValue" />
+            <a href="javascript:" class="weui-icon-clear fontSize04" id="search_clear" @click="handleClear"></a>
+          </div>
+          <label for="search_input" class="weui-search-bar__label" id="search_text" @click="handleClick" v-show="isShow">
+            <i class="weui-icon-search fontSize04"></i>
+            <span class="fontSize04">搜索</span>
+          </label>
+        </form>
+        <a href="javascript:" id="search_cancel" @click="handleCancel" v-show="!isShow">取消</a>
+      </div>
+    </div>
+
+    <div class="main_box" :style="{'-webkit-overflow-scrolling': scrollMode}">
+      <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
+        <div class="weui-panel__bd" v-for="todo in list" :key="todo.id" @click="open(todo.id)">
+          <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+            <div class="weui-media-box__hd">
+              <img class="weui-media-box__thumb" v-lazy="todo.productUrl" alt="图片">
+            </div>
+            <div class="weui-media-box__bd">
+              <h4 class="weui-media-box__title fontSize04" style="font-weight:bold"><span class="promotionDesc colorRed">{{todo.subscribeDay}} {{todo.subscribeTime}}点</span><span class="color98499C">{{todo.name}}</span></h4>
+              <p class="weui-media-box__desc fontSize03">预约项目&nbsp;{{todo.productName}}</p>
+              <p class="weui-media-box__desc fontSize03">预约状态&nbsp;<span class="colorRed" v-if="todo.subscribeStatus === '0'">待确认</span><span class="colorRed" v-if="todo.subscribeStatus === '1'">已确认</span><span class="colorRed" v-if="todo.subscribeStatus === '2'">已取消</span></p>
+              <p class="weui-media-box__desc fontSize03 retailPrice colorRed">完成状态&nbsp;<span v-if="todo.finishStatus=='0'">未完成</span><span v-if="todo.finishStatus=='1'">已完成</span></p>
+            </div>
+          </a>
+        </div>
+        <div class="weui-panel__ft">
+          <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+          </a>
+        </div>
+      </v-loadmore>
+    </div>
+
+  </div>
+
+
+</template>
+
+<script>
+  import {mapState, mapMutations, mapGetters} from "vuex";
+  import {getGoods,getSubscribes} from '../../api/api'
+  import {Loadmore} from 'mint-ui';
   export default {
     name: "mysubscribe",
     data() {
       return {
-        qx: false,
-        checkedGoodsList: [],
-        checkedAddress: {},
-        checkedCoupon: [],
-        couponList: [],
-        goodsTotalPrice: 0.00, //商品总价
-        freightPrice: 0.00,    //快递费
-        couponPrice: 0.00,     //优惠券的价格
-        orderTotalPrice: 0.00,  //订单总价
-        actualPrice: 0.00,     //实际需要支付的总价
-        addressId: 1,
-        couponId: 0,
         params: {
-          current:1,
-          size:10,
-          enable:true,
+          current: 1,
+          size: 20,
+          descs: ['id'],
+          isAsc:false
         },
-        carts: [],
-        ids: [],
-        searchCondition: {  //分页属性
-          pageNo: "1",
-          pageSize: "10"
-        },
-        pageList: [],
+        noData: true,
+        list: [],
         allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
-        scrollMode: "auto" //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
-      };
-    },
-    components: {
-      HomeFooter, 'v-loadmore': Loadmore
-    },
-    created: function () {
+        scrollMode: "touch", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
+        items: [],
+        isShow: true
+      }
     },
 
-    computed: {
-  }
-  ,
-  mounted()
-  {
-    document.title='我的预约'
-    this.loadPageList();  //初次访问查询列表
-  }
-  ,
-  methods: {
-    handleTopChange: function (status) {
-      this.topStatus = status;
-    }
-  ,
-    itemClick: function (data) {
-      console.log('item click, msg : ' + data);
-    }
-  ,
-    loadTop:function () { //组件提供的下拉触发方法
-      //下拉加载
+    props: {
+      todos: Array
+    },
+    mounted: function () {
       this.loadPageList();
-      this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
-    }
-  ,
-    loadBottom:function () {
-      // 上拉加载
-      this.more();// 上拉触发的分页查询
-      this.$refs.loadmore.onBottomLoaded();// 固定方法，查询完要调用一次，用于重新定位
-    }
-  ,
-    loadPageList:function (flag) {
-      // 查询数据
-      getSubscribes(this.params).then((res) => {
-        if(flag){
-          this.carts.push(res.data.data.records)
-        }
-        else{
-          this.carts=res.data.data.records
-        }
-      // 是否还有下一页，加个方法判断，没有下一页要禁止上拉
-      if(this.params.current==res.data.data.pages){
-        this.isHaveMore(false);
+      for (var i = 1; i <= 20; i++) {
+        this.items.push(i + ' - keep walking, be 2 with you.')
       }
-      else{
-        this.isHaveMore(true);
+      this.top = 1
+      this.bottom = 20
+    },
+    components:{
+      'v-loadmore': Loadmore
+    },
+    methods: {
+      handleClear(){
+        this.$refs.searchValue.value = '';
+      },
+      handleCancel(){
+        this.isShow = true
+      },
+      handleClick(){
+        this.isShow = false
+      },
+      open: function (id) {
+        this.$router.push({path: `/goodDetail/${id}`});
+      },
+      loadTop:function () { //组件提供的下拉触发方法
+        //下拉加载
+        this.loadPageList();
+        this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
       }
-      this.$nextTick(function () {
-        // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写，
-        // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果，
-        // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好
-        this.scrollMode = "touch";
-      });
-    })
-      ;
-    }
-  ,
-    more:function () {
-      // 分页查询
-      this.params.current++;
+      ,
+      loadBottom:function () {
+        // 上拉加载
+        this.more();// 上拉触发的分页查询
+        this.$refs.loadmore.onBottomLoaded();// 固定方法，查询完要调用一次，用于重新定位
+      }
+      ,
+      loadPageList:function (flag) {
+        // 查询数据
+        getSubscribes(this.params).then((res) => {
+          if(flag){
+            this.list.push(res.data.data.records)
+          }
+          else{
+            this.list=res.data.data.records
+          }
+          // 是否还有下一页，加个方法判断，没有下一页要禁止上拉
+          if(this.params.current==res.data.data.pages){
+            this.isHaveMore(false);
+          }
+          else{
+            this.isHaveMore(true);
+          }
+          this.$nextTick(function () {
+            // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写，
+            // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果，
+            // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好
+            this.scrollMode = "touch";
+          });
+        })
+        ;
+      }
+      ,
+      more:function () {
+        // 分页查询
+        this.params.current++;
         this.loadPageList(true);
-      ;
-    }
-  ,
-    isHaveMore:function (isHaveMore) {
-      // 是否还有下一页，如果没有就禁止上拉刷新
-      this.allLoaded = true; //true是禁止上拉加载
-      if (isHaveMore) {
-        this.allLoaded = false;
+        ;
       }
-    }
+      ,
+      isHaveMore:function (isHaveMore) {
+        // 是否还有下一页，如果没有就禁止上拉刷新
+        this.allLoaded = true; //true是禁止上拉加载
+        if (isHaveMore) {
+          this.allLoaded = false;
+        }
+      }
+    },
   }
-  }
-  ;
 </script>
-<!-- 引入组件库 -->
 
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  html, body {
-    height: 100%;
-  }
-
-  #app {
-
-    height: 100%;
-    overflow: scroll;
-  }
-
-  .scroll-wrapper {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-  }
-
-  .scroll-wrapper li {
-    line-height: 120px;
-    font-size: 60px;
-    text-align: center;
-  }
-
-  .select {
-    float: left;
-    margin-top: 1.5rem;
-    padding-left: 0.5rem;
-  }
-
-  .select i {
-    font-size: 0.53rem;
-  }
-
-  .checkAll {
-    width: 24%;
-    line-height: 1.18rem;
-    float: left;
-  }
-
-  .checkAll i {
-    font-size: 0.53rem;
-    padding-left: .5rem;
-  }
-
-  .cart {
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    top: 0;
-    left: 0;
-    background: #f4f4f4;
-  }
-
-  .cartheader {
-    position: fixed;
-    width: 100%;
-    box-shadow: 0 0 10px #cecece;
+<style lang="stylus" scoped>
+  .main h2 {
+    display: block;
     height: 1.3rem;
+    background: white;
+    font-size: 0.35rem;
     line-height: 1.3rem;
-    font-size: 0.35rem;
     padding-left: 0.3rem;
+  }
+
+  .main_box {
+    height: 339px;
+  }
+
+  .list {
+    height: 4.7rem;
     background: white;
-    top: 0;
-    font-size: 0.41rem;
-  }
-
-  .cartheader i {
-    display: block;
     float: left;
-    height: 50px;
-    font-size: 0.71rem;
-    color: black;
-    width: 0.9rem;
-  }
-
-  .cartList {
-    width: 100%;
-    height: 4rem;
-    background: white;
-    margin-top: 0.04rem;
-  }
-
-
-  .cartMain ul li {
-    list-style: none;
-  }
-
-  .cartImage img {
-    width: 2.6rem;
-    height: 2.8rem;
-  }
-
-  .cartImage {
-    float: left;
-    padding: 0.5rem 0.3rem;
-  }
-
-  .cartInformation {
-    width: 7.7rem;
-    font-size: 0.35rem;
-    padding-left: 0.3rem;
-    padding-top: 0.6rem;
-  }
-
-  .cartPrice {
-    color: red;
-    margin-top: 0.2rem;
-    font-size: 0.4rem;
-  }
-
-  .cartNumber {
-    float: left;
-    margin-top: 0.3rem;
-  }
-
-  .cartNumber .add,
-  .cartNumber .reduce {
-    display: block;
-    width: 0.75rem;
-    height: 0.75rem;
-    line-height: 0.75rem;
-    border: 1px solid #dedede;
-    float: left;
-    color: #b2b2b2;
-    text-align: center;
-    font-size: 0.5rem;
-  }
-
-  .cartNumber input {
-    width: 0.96rem;
-    height: 0.76rem;
-    float: left;
-    text-align: center;
-    border: 1px solid #dedede;
-  }
-
-  .cartNumber .add {
-    border-right: none;
-  }
-
-  .cartNumber .reduce {
-    border-left: none;
-  }
-
-  .cartFooter {
-    position: fixed;
-    width: 100%;
-    height: 1.18rem;
-    font-size: 0.35rem;
-    background: white;
-    bottom: 0;
-    display: block;
+    width: 50%;
+    border-right: 1px solid #f4f4f4;
     border-top: 1px solid #f4f4f4;
   }
 
-  .cartImg img {
-    width: 4.4rem;
-    height: 5.2rem;
+  .list span {
     display: block;
+    color: red;
+    padding-left: 0.5rem;
+    padding-top: 0.1rem;
+  }
+
+  .main_box ul {
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  ul li {
+    list-style: none;
+  }
+
+  .Price {
+    font-size: 0.33rem;
+    color: red;
     margin: auto;
-    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.3rem;
   }
 
-  .cartImg a {
-    display: block;
-    text-align: center;
-    margin: 0.8rem auto;
-    width: 110px;
-    height: 37px;
-    line-height: 37px;
-    border-radius: 4px;
-    text-align: center;
-    background: #e0524b;
-    color: white;
+  .name {
+    width: 80%;
+    height: 0.5rem;
+    line-height: 0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: auto;
+    font-size: 0.29rem;
     font-weight: 800;
-    font-size: 0.5rem;
-  }
-
-  .cartName {
-    width: 9.3rem;
-    font-size: 0.36rem;
-  }
-
-  .cartName a {
-    color: black;
-    font-size: 0.57rem;
-    float: right;
-  }
-
-  .cartImg h1 {
-    margin-top: 0.5rem;
     text-align: center;
-    color: #959595;
-    font-size: 0.6rem;
   }
 
-  ._box {
-    width: 63%;
-    height: 100%;
-    float: left;
-  }
-
-  .Total {
-    float: left;
-    width: 35%;
+  .nametwo {
+    height: 0.48rem;
+    font-size: 0.1rem;
     text-align: center;
-    line-height: 1.18rem;
-    font-size: 0.35rem;
   }
 
-  .Settlement {
-    width: 34%;
-    height: 80%;
-    background: #f81200;
-    float: right;
-    margin-top: .1rem;
-    border-radius: 40px;
-    margin-right: 0.3rem;
-  }
-
-  .Settlementtwo {
-    width: 50%;
-    height: 100%;
-    background: #e3211e;
-    float: right;
-  }
-
-  .Settlement a,
-  .Settlementtwo a {
-    color: white;
-    text-align: center;
-    line-height: .98rem;
-    display: block;
-    font-size: 0.35rem;
-  }
-  .myHeader{
-    height: 1.3rem;
-    line-height: 1.3rem;
-    font-size: 0.35rem;
-    padding-left: 0.3rem;
-    background: white;
-    font-size: 0.41rem;
-  }
-
-  .myMain{
-    height: 100%;
-    background: white;
-    margin-top: 10px;
+  .image {
     width: 100%;
-
-  }
-  .MyBox{
-    width: 100%;
-    height: 110px;
     background: white;
-  }
-  .myOrder,.myCollection{
-    height: 50%;
-  }
-  .Main, .Order{
-    height: 100%;
-    /* background: red; */
-    margin-left: 10px;
-    border-bottom: 1px solid #cccccc;
-  }
-  .myMain img{
-    display: block;
-    width: 60px;
-    height: 60px;
-    padding: 7px;
-    float: left;
-  }
-  .myMain p{
-    line-height: 75px;
-  }
 
-  .Order i , .Order p{
-    display: block;
-    line-height: 55px;
-    float: left;
-    padding-left: 10px;
+    img {
+      width: 2.5rem;
+      height: 2.3rem;
+      display: block;
+      margin: auto;
+      margin-top: .5rem;
+      margin-bottom .2rem
+    }
   }
-  .container{
-    position: absolute;
-    width:100%
+  html, body {
+    margin: 0;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  .row {
+    width: 100%;
+    height: 50px;
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #444;
+    background-color: #fff;
+  }
+  .grey-bg {
+    background-color: #eee;
+  }
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 44px;
+    width: 100%;
+    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
+    background-color: #fff;
+    z-index: 1000;
+    color: #666;
+  }
+  .header > .title {
+    font-size: 16px;
+    line-height: 44px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .scroller {
+    position: relative;
+  }
+  .weui-search-bar__label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .weui-search-bar__box{
+    padding-left: 1rem;
+  }
+  .weui-search-bar__input{
+    height: 1rem;
+  }
+  #search_cancel{
+    font-size: 0.4rem;
+    text-align: center;
+    color: #98499C;
+    padding-left: 0.1rem;
+  }
+  .promotionDesc{
+    border: 1px solid red;
+    padding: 0 0.1rem;
+    font-size: 0.3rem;
+    margin-right: 0.1rem;
+  }
+  .weui-panel__bd{
+    margin-top: 0.1rem;
+    background-color: #ffffff;
   }
 </style>

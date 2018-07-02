@@ -1,7 +1,7 @@
 <template>
     <div class="serviceDetail">
        <Bg-Header :item="item"></Bg-Header>
-       <Service-Content :item="item"></Service-Content>
+       <Service-Content :item="item" :unAvilTime="unAvilTime" :adminId="item.id"></Service-Content>
     </div>
 
 </template>
@@ -15,7 +15,8 @@ export default {
     return {
       item:{
 
-      }
+      },
+      unAvilTime:[]
     };
   },
   components: {
@@ -25,10 +26,11 @@ export default {
   mounted:function(){
    const id= this.$route.query.id;
     getAdminAilviliableInfo({adminId:id}).then(res=>{
-      console.log(res)
+      this.item=res.data.data.userInfo
+      this.unAvilTime=res.data.data.unailviliableTime
     })
-    this.item=JSON.parse(localStorage.getItem("subscribeAdmin"))
-    console.log(this.item)
+    // this.item=JSON.parse(localStorage.getItem("subscribeAdmin"))
+    // console.log(this.item)
   },
   computed: {
 
