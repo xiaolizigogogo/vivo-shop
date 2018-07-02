@@ -86,11 +86,15 @@ function actionCode(processId,actId){
   return codeList ;
 };
 function signUrl(){
+  if(window.location.href.indexOf("redirect")!=-1){
+      return;
+  }
   if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
     window.entryUrl = location.href.split('#')[0]
   }
   // 进行签名的时候  Android 不用使用之前的链接， ios 需要
   window.signLink =  /(Android)/i.test(navigator.userAgent) ? location.href.split('#')[0] : window.entryUrl;
+  alert(window.signLink)
 }
 
 
