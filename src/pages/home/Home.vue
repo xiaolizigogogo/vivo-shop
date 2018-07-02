@@ -71,7 +71,7 @@ export default {
   },
   created(){
     signUrl();
-    getJsTicket({url:window.signLink}).then(res=>{
+    getJsTicket({url:window.location.href}).then(res=>{
       res.data.data.debug=true;
       res.data.data.jsApiList=['onMenuShareTimeline',
         'onMenuShareAppMessage',
