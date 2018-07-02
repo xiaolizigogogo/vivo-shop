@@ -23,7 +23,7 @@
         </div>
 
         <div class="footer">
-            <a @click="btn">保存地址</a>
+            <a @click="submit">保存地址</a>
         </div>
     </div>
 </template>
@@ -31,7 +31,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { Toast } from "mint-ui";
-import {getJsTicket} from '../api/api'
+import {getJsTicket,addAddress} from '../api/api'
 import wx from 'weixin-js-sdk'
 export default {
   name: "add_address",
@@ -66,6 +66,7 @@ export default {
 
       wx.config(res.data.data);
       wx.ready(() => {
+
       });
       wx.error(function (res) {
         console.log('wx err', res);
@@ -75,10 +76,10 @@ export default {
   methods: {
     btn() {
       if (
-        this.name == "" ||
-        this.phone == "" ||
-        this.zone == "" ||
-        this.detail == ""
+        this.submitForm.userName == "" ||
+        this.submitForm.telNumber == "" ||
+        this.submitForm.address == "" ||
+        this.submitForm.detailInfo == ""
       ) {
         Toast({
           message: "信息请填写完整",
@@ -91,7 +92,6 @@ export default {
           zone: this.zone,
           detail: this.detail
         };
-        this.$store.dispatch("setAddress",data)
         this.$router.back();
       }
     },
@@ -104,6 +104,25 @@ export default {
           alert(this.submitForm)
         }
       });
+    },
+    submit(){
+      if (
+        this.submitForm.userName == "" ||
+        this.submitForm.telNumber == "" ||
+        this.submitForm.address == "" ||
+        this.submitForm.detailInfo == ""
+      ) {
+        Toast({
+          message: "信息请填写完整",
+          duration: 950
+        });
+      }
+      else{
+        addAddress(this.submitForm).then(res=>{
+          alert(JSON.stringify(res.data))
+      })
+      }
+
     }
   },
   mounted(){

@@ -8,10 +8,10 @@
             </div>
             <div class="pay-address" v-for="(list,index) in address" :key="index" :class="{active:index===$store.state.nowIndex}" @click="btn(list,index)">
                 <p class="address-box">
-                    <span class="name">收货人：{{list.name}}</span>
-                    <span class="phone">{{list.phone}}</span>
+                    <span class="name">收货人：{{list.userName}}</span>
+                    <span class="phone">{{list.telNumber}}</span>
                 </p>
-                <p class="address-details">收货地址：{{list.zone}}{{list.detail}}</p>
+                <p class="address-details">收货地址：{{list.address}}{{list.detailInfo}}</p>
                 <div class="address-operation">
                     <p class="address-operation-box">
                         <i class="iconfont icon-bianji"></i>
@@ -30,20 +30,19 @@ import {getAddress,addAddress} from '../api/api'
 export default {
     data(){
         return{
-            nowIndex:0
+            nowIndex:0,
+          params:{
+              current:1,
+            size:10
+          },
+          address:[],
+          total:0
         }
     },
     components: {
 
     },
     computed: {
-        address() {
-        return this.$store.state.address;
-        },
-        ...mapGetters(
-            ["this.$store.state.address"],
-            ["this.$store.state.nowIndex"]
-        )
     },
     methods: {
         ...mapMutations(["laji"]),
@@ -55,6 +54,10 @@ export default {
     },
     mounted(){
         document.title = '管理收货地址'
+  getAddress(this.params).then(res=>{
+    this.address=res.data.data.records
+
+  })
     }
 };
 </script>
