@@ -52,7 +52,7 @@ export default {
       res.data.data.jsApiList = ['openAddress', 'checkJsApi','editAddress']
       wx.config(res.data.data);
       wx.ready(() => {
-        wx.editAddress({
+        wx.openAddress({
           success: function (res) {
             alert(JSON.stringify(res));
           }
