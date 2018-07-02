@@ -70,8 +70,9 @@ export default {
     HomeService
   },
   created(){
-    signUrl();
-    getJsTicket({url:window.location.href}).then(res=>{
+    alert(signUrl());
+    alert(window.location.href)
+    getJsTicket({url:signUrl()}).then(res=>{
       res.data.data.debug=true;
       res.data.data.jsApiList=['onMenuShareTimeline',
         'onMenuShareAppMessage',
