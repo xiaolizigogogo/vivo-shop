@@ -6,7 +6,6 @@ const state={
     todos:localStorage["todos"]?JSON.parse(localStorage["todos"]): [],
     address:localStorage["address"]?JSON.parse(localStorage["address"]): [],
     nowIndex:0,
-    userInfo:sessionStorage["userInfo"]?JSON.parse(sessionStorage["userInfo"]): [],
     ces: false
 }
 

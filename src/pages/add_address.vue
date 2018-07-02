@@ -13,7 +13,7 @@
 
              <div class="address-box">
                 <label for="">选择地区：</label>
-                <input type="text" v-model="submitForm.address" placeholder="请选择收货地址">
+                <input type="text" v-model="submitForm.address" placeholder="请选择收货地址" @click="add">
             </div>
 
              <div class="address-box">
@@ -66,11 +66,6 @@ export default {
 
       wx.config(res.data.data);
       wx.ready(() => {
-        wx.openAddress({
-          success: function (res) {
-            alert(JSON.stringify(res));
-          }
-        });
       });
       wx.error(function (res) {
         console.log('wx err', res);
@@ -104,7 +99,9 @@ export default {
       wx.openAddress({
         success: function (res) {
             this.submitForm=res;
+            alert(this.submitForm)
             this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
+          alert(this.submitForm)
         }
       });
     }
