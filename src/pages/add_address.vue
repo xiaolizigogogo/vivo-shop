@@ -49,10 +49,10 @@ export default {
   created(){
     getJsTicket({url:window.location.href}).then(res=> {
       res.data.data.debug = true;
-      res.data.data.jsApiList = ['openAddress', 'checkJsApi']
+      res.data.data.jsApiList = ['openAddress', 'checkJsApi','editAddress']
       wx.config(res.data.data);
       wx.ready(() => {
-        wx.openAddress({
+        wx.editAddress({
           success: function (res) {
             alert(JSON.stringify(res));
           }
