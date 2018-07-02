@@ -4,8 +4,8 @@
       <Map-Positioning>
         <div class="all" @click="openLocation">
            <div>
-               <h6>斯卡莱SPA美甲<span>1945km</span></h6>
-               <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>广东省佛山市禅城区福宁路213号</p>
+               <h6>斯卡莱日式美甲美睫<span></span></h6>
+               <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>辽宁省大连市中山区人民路43号新世界名泷1008</p>
            </div>
            <div>
                <h5><i class="iconfont icon-diliweizhi iconfontBig"></i></h5>
@@ -37,7 +37,7 @@ import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
 import axios from 'axios';
 import wx from 'weixin-js-sdk'
-import { getProductTypes, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
+import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
 import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
@@ -108,16 +108,6 @@ export default {
         'openCard']
       wx.config(res.data.data);
       wx.ready(()=>{
-    //  wx.getLocation({
-    //   type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-    //   success: function (res) {
-    //     console.log(res)
-    //      this.latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-    //     this.longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-    //     var speed = res.speed; // 速度，以米/每秒计
-    //     var accuracy = res.accuracy; // 位置精度
-    //   }
-    // });
   });
     wx.error(function(res){
       console.log('wx err',res);
@@ -135,11 +125,15 @@ export default {
     if(code){
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
-      })
-      getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
-        sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+        getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
+          sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
+        })
       })
     }
+
+    getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+      sessionStorage.setItem("user",JSON.stringify(res.data.data))
+    })
     /**
      * 获取产品信息
      */
@@ -177,8 +171,8 @@ export default {
       wx.openLocation({
         latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
         longitude: this.longitude, // 经度，浮点数，范围为180 ~ -180。
-        name: 'TIT 创意园', // 位置名
-        address: '广州市海珠区新港中路 397 号', // 地址详情说明
+        name: '斯卡莱日式美甲美睫', // 位置名
+        address: '辽宁省大连市中山区人民路43号新世界名泷1008', // 地址详情说明
         scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
         infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
       })

@@ -31,6 +31,8 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { Toast } from "mint-ui";
+import {getJsTicket} from '../api/api'
+import wx from 'weixin-js-sdk'
 export default {
   name: "add_address",
   data() {
@@ -42,7 +44,24 @@ export default {
     };
   },
   components: {
-    
+
+  },
+  created(){
+    getJsTicket({url:window.location.href}).then(res=>{
+      res.data.data.debug=true;
+      res.data.data.jsApiList=['onMenuShareTimeline','openAddress']
+      wx.config(res.data.data);
+        wx.ready(function () {
+          wx.openAddress({
+            success: function (res) {
+              alert(JSON.stringify(res));
+            }
+          });
+      wx.error(function(res){
+        console.log('wx err',res);
+        //可以更新签名
+      });
+    })
   },
   methods: {
     btn() {

@@ -32,7 +32,7 @@ export default {
         }
     },
     components: {
-        
+
     },
     computed: {
         address() {
@@ -60,11 +60,9 @@ export default {
 
 <style lang="stylus" scoped>
 .active{
-   
+
 }
 .Address-box {
-    padding-top: 1.45rem;
-
     .address-one {
         width: 100%;
         height: 1.6rem;
