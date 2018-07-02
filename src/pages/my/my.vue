@@ -49,6 +49,9 @@ export default {
     const  code=this.$route.query.code
 
     if(code){
+      if(window.signLink==undefined||window.signLink==''){
+        window.signLink=window.location.href
+      }
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
         getWechatUserInfo({"openid":res.data.data.openId,"lang":"zh_CN"}).then(res=>{
