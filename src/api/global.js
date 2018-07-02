@@ -90,10 +90,10 @@ function signUrl(){
       return;
   }
   if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
-    window.entryUrl = location.href.split('#')[0]
+    window.entryUrl = window.location.href
   }
   // 进行签名的时候  Android 不用使用之前的链接， ios 需要
-  window.signLink =  /(Android)/i.test(navigator.userAgent) ? location.href.split('#')[0] : window.entryUrl;
+  window.signLink =  /(Android)/i.test(navigator.userAgent) ?  window.location.href : window.entryUrl;
   alert(window.signLink)
 }
 
