@@ -1,6 +1,6 @@
 <template>
     <div class="my">
-        <My-Container :user="user"></My-Container>
+        <My-Container  :name="name" :header_url="header_url" :coupons="coupons" :encourage="encourage" :integration="integration"></My-Container>
         <v-footer></v-footer>
     </div>
 </template>
@@ -8,7 +8,8 @@
 <script>
 import footer from '../../pages/footer'
 import MyContainer from './component/MyContainer'
-import {getWechatOpenid,getWechatUserInfo} from '../../api/api'
+import {getWechatOpenid,getWechatUserInfo,getUserInfoByOpenId} from '../../api/api'
+import {fmoney} from '../../api/global'
 export default {
   name:"my",
   data(){
@@ -21,7 +22,12 @@ export default {
           coupons:'10',
           encourage:'10',
           integration:'10'
-        }
+        },
+        name:"游客",
+        header_url:'https://yanxuan.nosdn.127.net/14938092956370380.jpg',
+        coupons:'10',
+        encourage:'10',
+        integration:'10'
       }
   },
   create(){
@@ -41,18 +47,28 @@ export default {
   mounted(){
     document.title = '我的'
     const  code=this.$route.query.code
+
     if(code){
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        alert("获取token成功:"+JSON.stringify(res.data.data))
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
         getWechatUserInfo({"openid":res.data.data.openId,"lang":"zh_CN"}).then(res=>{
-          alert("获取用户信息成功:"+JSON.stringify(res.data.data))
           sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
           this.user = res.data.data
         })
       })
-
     }
+    else{
+      getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+        sessionStorage.setItem("user",JSON.stringify(res.data.data))
+        const user=JSON.parse( sessionStorage.getItem("user"));
+        this.name=user.nickname;
+        this.header_url=user.avatar
+        this.coupons=fmoney(user.restMoney,2)
+        this.encourage=fmoney(user.purchaseMoney,2)
+        this.integration=fmoney(user.rechargeMoney,2)
+      })
+    }
+
   }
 }
 </script>

@@ -100,6 +100,7 @@ export default {
         userNumber:'',
         openid:'',
         productUrl:'',
+        adminName:'',
       },
       userInfo:{
 
@@ -265,6 +266,7 @@ export default {
       this.submitForm.userId=124
       this.submitForm.openid=''
       this.submitForm.adminId=this.adminId
+      this.submitForm.adminName=this.item.nickname;
       this.submitForm.productUrl=this.item.avatar
       addSubscribes(this.submitForm).then(res=>{
         if(res.data.status==200){

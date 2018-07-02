@@ -265,6 +265,13 @@ const getProductTypes=(params)=>{
       params: params
     })
   }
+const getUserInfoByOpenId=(params)=>{
+  return request({
+    url: '/shop/users/'+params.openid,
+    method: 'get',
+    params: params
+  })
+}
 
 
 export {
@@ -293,5 +300,6 @@ export {
   getAdminAilviliableInfo,
     getJsTicket,
   unifiedOrder,
-  getProductTypes
+  getProductTypes,
+  getUserInfoByOpenId
 }
