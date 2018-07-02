@@ -109,13 +109,13 @@ const router =  new Router({
   // }
 
 })
-// router.beforeEach((to, from, next) => {
-//   if(!store.state.user && to.path != '/author'){
-//     // 第一次进入项目
-//     holdno.cookie.set('beforeLoginUrl', to.fullPath) // 保存用户进入的url
-//     next('/author')
-//     return false
-//   }
-//   next()
-// })
+router.beforeEach((to, from, next) => {
+
+  setTimeout(function () {
+
+    window.location = window.location;
+
+  }, 500);
+
+});
 export default router
