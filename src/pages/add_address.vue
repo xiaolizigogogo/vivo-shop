@@ -62,7 +62,7 @@ export default {
         //可以更新签名
       });
     })
-  },
+  })},
   methods: {
     btn() {
       if (
@@ -95,7 +95,6 @@ export default {
 
 <style lang="stylus" scoped>
 .address {
-    padding-top: 1.45rem;
 
     .address-box {
         width: 100%;
