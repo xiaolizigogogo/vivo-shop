@@ -47,22 +47,22 @@ export default {
 
   },
   created(){
-    getJsTicket({url:window.location.href}).then(res=>{
-      res.data.data.debug=true;
-      res.data.data.jsApiList=['onMenuShareTimeline','openAddress']
+    getJsTicket({url:window.location.href}).then(res=> {
+      res.data.data.debug = true;
+      res.data.data.jsApiList = ['openAddress', 'checkJsApi']
       wx.config(res.data.data);
-        wx.ready(function () {
-          wx.openAddress({
-            success: function (res) {
-              alert(JSON.stringify(res));
-            }
-          });
-      wx.error(function(res){
-        console.log('wx err',res);
+      wx.ready(() => {
+        wx.openAddress({
+          success: function (res) {
+            alert(JSON.stringify(res));
+          }
+        });
+      });
+      wx.error(function (res) {
+        console.log('wx err', res);
         //可以更新签名
       });
-    })
-  })},
+    })},
   methods: {
     btn() {
       if (
