@@ -3,22 +3,22 @@
         <div class="address">
             <div class="address-box">
                 <label for="">收货人：</label>
-                <input type="text" v-model="name" placeholder="收货人姓名">
+                <input type="text" v-model="submitForm.userName" placeholder="收货人姓名">
             </div>
 
              <div class="address-box">
                 <label for="">手机号码：</label>
-                <input type="text" v-model="phone" placeholder="收货人的手机号码">
+                <input type="text" v-model="submitForm.telNumber" placeholder="收货人的手机号码">
             </div>
 
              <div class="address-box">
                 <label for="">选择地区：</label>
-                <input type="text" v-model="zone" placeholder="请选择收货地址">
+                <input type="text" v-model="submitForm.address" placeholder="请选择收货地址">
             </div>
 
              <div class="address-box">
                 <label for="">详细地址：</label>
-                <input type="text" v-model="detail" placeholder="详细街道地址">
+                <input type="text" v-model="submitForm.detailInfo" placeholder="详细街道地址">
             </div>
         </div>
 
@@ -40,17 +40,30 @@ export default {
       name: "",
       phone: "",
       zone: "",
-      detail: ""
+      detail: "",
+      submitForm:{
+        userName:'',
+        telNumber:'',
+        nationalCode:0,
+        postalCode:0,
+        provinceName:'',
+        cityName:'',
+        countryName:'',
+        detailInfo:'',
+        address:''
+      }
     };
   },
   components: {
 
   },
   created(){
-    getJsTicket({url:window.location.href}).then(res=> {
-      res.data.data.debug = true;
-      res.data.data.jsApiList = ['openAddress', 'checkJsApi','editAddress']
+    getJsTicket({url:window.location.href}).then(res => {
+
+      res.data.data.debug = true
+      res.data.data.jsApiList = ['checkJsApi','editAddress']
       alert(JSON.stringify(res.data.data))
+
       wx.config(res.data.data);
       wx.ready(() => {
         wx.openAddress({
@@ -86,6 +99,14 @@ export default {
         this.$store.dispatch("setAddress",data)
         this.$router.back();
       }
+    },
+    add(){
+      wx.openAddress({
+        success: function (res) {
+            this.submitForm=res;
+            this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
+        }
+      });
     }
   },
   mounted(){

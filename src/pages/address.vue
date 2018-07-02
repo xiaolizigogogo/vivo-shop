@@ -3,7 +3,7 @@
         <div class="Address-box">
             <div class="address-one">
                 <p class="left">配送地址</p>
-                <p class="right" @click="goAdd_address">+添加地址</p>
+                <a class="right" href="/add_address">+添加地址</a>
             </div>
             <div class="pay-address" v-for="(list,index) in address" :key="index" :class="{active:index===$store.state.nowIndex}" @click="btn(list,index)">
                 <p class="address-box">
