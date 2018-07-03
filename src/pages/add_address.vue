@@ -42,15 +42,15 @@ export default {
       zone: "",
       detail: "",
       submitForm:{
-        userName:'',
-        telNumber:'',
-        nationalCode:0,
-        postalCode:0,
-        provinceName:'',
-        cityName:'',
-        countryName:'',
-        detailInfo:'',
-        address:''
+        userName:undefined,
+        telNumber:undefined,
+        nationalCode:undefined,
+        postalCode:undefined,
+        provinceName:undefined,
+        cityName:undefined,
+        countryName:undefined,
+        detailInfo:undefined,
+        address:undefined
       }
     };
   },
