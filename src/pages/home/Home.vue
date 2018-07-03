@@ -72,6 +72,11 @@ export default {
   created(){
     if(window.signLink==undefined||window.signLink==''){
       window.signLink=window.location.href
+      const  code=this.$route.query.code
+      if(!code){
+        alert("请从公众号入口进入")
+        return 
+      }
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
         this.openid=res.data.data.openId;
