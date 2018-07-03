@@ -158,7 +158,7 @@ export default {
     )
   },
   mounted() {
-    
+
     if (this.$store.state.carts != undefined) {
       this.cartlength = this.$store.state.carts.length;
     }
@@ -170,22 +170,6 @@ export default {
       _this.goodDetails.push({...res.data.data, homeValue: 1})
       console.log(res)
     })
-    // axios.get("/static/ceshi.json").then(res => {
-    //   for (var i = 0; i < res.data.data.home.length;i++){
-    //     if (res.data.data.home[i].id == id ) {
-    //         _this.goodDetails.push(res.data.data.home[i]);
-    //     }
-    //   }
-    // });
-    //
-    // axios.get("/static/ceshi.json").then(res => {
-    //   for (var i = 0; i < res.data.data.set.length;i++){
-    //     if (res.data.data.set[i].id == id ) {
-    //         _this.goodDetails.push(res.data.data.set[i]);
-    //     }
-    //   }
-    // });
-
   },
 
   methods: {
@@ -590,7 +574,7 @@ table td {
     .paramKey{
         width: 3rem;
         padding-left: 0.3rem;
-        
+
     }
     .paramValue{
         flex: 1;

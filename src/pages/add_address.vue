@@ -59,17 +59,13 @@ export default {
   },
   created(){
     getJsTicket({url:window.signLink}).then(res => {
-
-      res.data.data.debug = true
       res.data.data.jsApiList = ['checkJsApi','editAddress']
       alert(JSON.stringify(res.data.data))
-
       wx.config(res.data.data);
       wx.ready(() => {
-
       });
       wx.error(function (res) {
-        console.log('wx err', res);
+        alert('wx err', res);
         //可以更新签名
       });
     })},
@@ -97,9 +93,11 @@ export default {
     },
     add(){
       wx.openAddress({
+        trigger: function (res) {
+          alert('用户开始拉出地址');
+        },
         success: function (res) {
-          alert("11111")
-          alert(res)
+          alert('拉出地址成功');
             this.submitForm.userName=res.userName;
           this.submitForm.telNumber=res.telNumber;
           this.submitForm.nationalCode=res.nationalCode;
@@ -108,8 +106,14 @@ export default {
           this.submitForm.cityName=res.cityName;
           this.submitForm.countryName=res.countryName;
           this.submitForm.detailInfo=res.detailInfo;
-            this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
+          this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
           alert(this.submitForm)
+        },
+        cancel: function (res) {
+          alert('用户取消拉出地址');
+        },
+        fail: function (res) {
+          alert('拉出地址失败');
         }
       });
     },
