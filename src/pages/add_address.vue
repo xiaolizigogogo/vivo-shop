@@ -97,15 +97,16 @@ export default {
           alert('用户开始拉出地址');
         },
         success: function (res) {
-          alert('拉出地址成功');
-            this.submitForm.userName=res.data.data.userName;
-          this.submitForm.telNumber=res.data.data.telNumber;
-          this.submitForm.nationalCode=res.data.data.nationalCode;
-          this.submitForm.postalCode=res.data.data.postalCode;
-          this.submitForm.provinceName=res.data.data.provinceName;
-          this.submitForm.cityName=res.data.data.cityName;
-          this.submitForm.countryName=res.data.data.countryName;
-          this.submitForm.detailInfo=res.data.data.detailInfo;
+          alert('拉出地址成功'+res);
+            const info=JSON.parse(res);
+            this.submitForm.userName=info.userName;
+          this.submitForm.telNumber=info.telNumber;
+          this.submitForm.nationalCode=info.nationalCode;
+          this.submitForm.postalCode=info.postalCode;
+          this.submitForm.provinceName=info.provinceName;
+          this.submitForm.cityName=info.cityName;
+          this.submitForm.countryName=info.countryName;
+          this.submitForm.detailInfo=info.detailInfo;
           this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
           alert(this.submitForm)
         },
