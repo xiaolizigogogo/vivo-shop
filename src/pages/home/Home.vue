@@ -75,12 +75,12 @@ export default {
       const  code=this.$route.query.code
       if(!code){
         alert("请从公众号入口进入")
-        return 
+        return
       }
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
         sessionStorage.setItem("token",JSON.stringify(res.data.data))
         this.openid=res.data.data.openId;
-        getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+        getUserInfoByOpenId({"openid":this.openid}).then(res=>{
           sessionStorage.setItem("user",JSON.stringify(res.data.data))
           const user=JSON.parse( sessionStorage.getItem("user"));
           this.name=user.nickname;
