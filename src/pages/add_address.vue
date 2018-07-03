@@ -42,7 +42,7 @@ export default {
       zone: "",
       detail: "",
       submitForm:{
-        userName:undefined,
+        userName:'1231231',
         telNumber:undefined,
         nationalCode:undefined,
         postalCode:undefined,

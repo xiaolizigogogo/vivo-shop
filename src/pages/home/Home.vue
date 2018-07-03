@@ -72,6 +72,19 @@ export default {
   created(){
     if(window.signLink==undefined||window.signLink==''){
       window.signLink=window.location.href
+      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+        sessionStorage.setItem("token",JSON.stringify(res.data.data))
+        this.openid=res.data.data.openId;
+        getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+          sessionStorage.setItem("user",JSON.stringify(res.data.data))
+          const user=JSON.parse( sessionStorage.getItem("user"));
+          this.name=user.nickname;
+          this.header_url=user.avatar
+          this.coupons=fmoney(user.restMoney,2)
+          this.encourage=fmoney(user.purchaseMoney,2)
+          this.integration=fmoney(user.rechargeMoney,2)
+        })
+      })
     }
     getJsTicket({url:window.signLink}).then(res=>{
       res.data.data.debug=true;
@@ -122,22 +135,6 @@ export default {
   mounted:function(){
     document.title = '斯卡莱SPA美甲'
     this.getData()
-    const  code=this.$route.query.code
-    /**
-     * 获取用户信息
-     */
-    if(code){
-      getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        sessionStorage.setItem("token",JSON.stringify(res.data.data))
-        getWechatUserInfo({"openid":this.openid,"lang":"zh_CN"}).then(res=>{
-          sessionStorage.setItem("userInfo",JSON.stringify(res.data.data))
-        })
-      })
-    }
-
-    getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
-      sessionStorage.setItem("user",JSON.stringify(res.data.data))
-    })
     /**
      * 获取产品信息
      */
