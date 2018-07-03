@@ -98,8 +98,14 @@ export default {
     add(){
       wx.openAddress({
         success: function (res) {
-            this.submitForm=res;
-            alert(this.submitForm)
+            this.submitForm.userName=res.userName;
+          this.submitForm.telNumber=res.telNumber;
+          this.submitForm.nationalCode=res.nationalCode;
+          this.submitForm.postalCode=res.postalCode;
+          this.submitForm.provinceName=res.provinceName;
+          this.submitForm.cityName=res.cityName;
+          this.submitForm.countryName=res.countryName;
+          this.submitForm.detailInfo=res.detailInfo;
             this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
           alert(this.submitForm)
         }
