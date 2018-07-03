@@ -106,8 +106,8 @@ export default {
           this.submitForm.cityName=res.cityName;
           this.submitForm.countryName=res.countryName;
           this.submitForm.detailInfo=res.detailInfo;
-          this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
-          alert(this.submitForm)
+          // this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
+          // alert(this.submitForm)
         },
         cancel: function (res) {
           alert('用户取消拉出地址');

@@ -45,9 +45,9 @@
                             <mt-tab-container-item id="tab-container2">
                                <div class="goodDetailParam">
                                    <ul>
-                                       <li class="goodDetailLi" v-for="(item, index) in 10" :key="index">
-                                           <span class="paramKey fontSize04">paramKey</span>
-                                           <span class="paramValue fontSize03">paramValue</span>
+                                       <li class="goodDetailLi" v-for="(item, index) in goodDetail.attributes" :key="index">
+                                           <span class="paramKey fontSize04">{{item.id}}</span>
+                                           <span class="paramValue fontSize03">{{item.value}}</span>
                                        </li>
                                    </ul>
                                 </div>

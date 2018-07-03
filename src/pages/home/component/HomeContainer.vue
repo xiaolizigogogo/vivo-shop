@@ -37,22 +37,8 @@
             <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
                 <div class="weui-cell__bd">查看更多</div>
                 <span class="weui-cell__ft"></span>
-            </a>    
+            </a>
         </div>
-        <!-- <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
-        <ul>
-
-          <li v-for="(todo,index) in list" :key="todo.id" @click="open(todo.id)">
-            <div class="list">
-              <div class="image">
-                <img v-lazy="todo.listPicUrl" alt="图片">
-              </div>
-              <p class="name">{{todo.name}}</p>
-              <p class="nametwo">{{todo.homeNametwo}}</p>
-              <p class="Price">￥{{todo.retailPrice}}</p>
-            </div>
-          </li>
-        </ul> -->
         </v-loadmore>
       </div>
 
