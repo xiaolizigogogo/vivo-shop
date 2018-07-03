@@ -78,10 +78,10 @@ export default {
         return
       }
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-        sessionStorage.setItem("token",JSON.stringify(res.data.data))
+        localStorage.setItem("token",JSON.stringify(res.data.data))
         this.openid=res.data.data.openId;
         getUserInfoByOpenId({"openid":this.openid}).then(res=>{
-          sessionStorage.setItem("user",JSON.stringify(res.data.data))
+          localStorage.setItem("user",JSON.stringify(res.data.data))
           const user=JSON.parse( sessionStorage.getItem("user"));
           this.name=user.nickname;
           this.header_url=user.avatar

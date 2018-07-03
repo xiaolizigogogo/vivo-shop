@@ -52,11 +52,11 @@ export default {
       const  code=this.$route.query.code
       if(code){
         getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-          sessionStorage.setItem("token",JSON.stringify(res.data.data))
+          localStorage.setItem("token",res.data.data.accesstoken)
           this.openid=res.data.data.openId;
           getUserInfoByOpenId({"openid":this.openid}).then(res=>{
-            sessionStorage.setItem("user",JSON.stringify(res.data.data))
-            const user=JSON.parse( sessionStorage.getItem("user"));
+            localStorage.setItem("user",JSON.stringify(res.data.data))
+            const user=JSON.parse( localStorage.getItem("user"));
             this.name=user.nickname;
             this.header_url=user.avatar
             this.coupons=fmoney(user.restMoney,2)
@@ -67,7 +67,7 @@ export default {
       }
     }
     else{
-      const user=JSON.parse( sessionStorage.getItem("user"));
+      const user=JSON.parse( localStorage.getItem("user"));
       this.name=user.nickname;
       this.header_url=user.avatar
       this.coupons=fmoney(user.restMoney,2)
