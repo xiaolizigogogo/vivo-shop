@@ -98,7 +98,7 @@ const router =  new Router({
       component:serviceDetail
     },
     {
-      path: '/homeContainer/:id',
+      path: '/homeContainer/',
       name:'HomeContainer',
       component:HomeContainer
     },

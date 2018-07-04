@@ -1,76 +1,81 @@
 <template>
     <div>
-        <div to="address" class="pay-address" >
+        <div @click="goaddress" class="pay-address" v-if="address" >
              <p class="address-box">
-                <span class="name">收货人：myfwk</span>
-                <span class="phone">15255460858</span>
+                <span class="name">{{address.userName}}</span>
+                <span class="phone">{{address.mobile}}</span>
             </p>
             <p class="address-details">
-                收货地址：安徽省合肥市蜀山区金寨路立基大厦B座 中科大对面
+                收货地址：{{address.address}} {{address.detailInfo}}
             </p>
         </div>
+      <div @click="goaddress" class="pay-address" v-if="!address" >
+        <p class="address-box">
+            请选择收货地址
+        </p>
+
+      </div>
         <div class="pay-shop" v-for="(list,index) in pay" :key="index">
             <div class="pay-shop-list">
                 <p class="pay-shop-1">商品清单</p>
                 <p class="pay-shop-2">
-                    <img :src="list.homeImg">
+                    <img :src="list.info.listPicUrl">
                     <p class="pay-shop-2-box">
-                        <span class="name">{{list.homeName}}<p>× {{$route.query.value}}</p></span>
+                        <span class="name">{{list.info.name}}<p>× {{$route.query.value}}</p></span>
                         <!-- <span>颜色：冰钻黑</span> -->
-                        <span class="price">¥ {{list.homePrice}}</span>
+                        <span class="price">¥ {{list.info.retailPrice}}</span>
                     </p>
                 </p>
             </div>
 
-            <div class="pay-shop-invoice">
-                <p class="pay-invoice-1">发票信息</p>
-                <div class="pay-invoice-2">
-                    <div class="pay-invoice-2-2">
-                        <div v-show="invoiceIndex===0">
-                            <p>*请输入发票抬头:</p>
-                            <input type="text" id="input" v-model="list.text" placeholder="请输入发票信息">
-                            
-                        </div>
-                    </div>
-                   
-                </div>
-            </div>
+            <!--<div class="pay-shop-invoice">-->
+                <!--<p class="pay-invoice-1">发票信息</p>-->
+                <!--<div class="pay-invoice-2">-->
+                    <!--<div class="pay-invoice-2-2">-->
+                        <!--<div v-show="invoiceIndex===0">-->
+                            <!--<p>*请输入发票抬头:</p>-->
+                            <!--<input type="text" id="input" v-model="list.text" placeholder="请输入发票信息">-->
 
-            <div class="pay-shop-fs">
-                <div class="pay-fs-1">支付方式</div>
-                <div class="pay-fs-2">
-                    <!-- <div class="pay-fs-2-1" v-for="(item,index) in lists" :class="{active:index===ceshi}" @click="btn(index)" >
-                        {{item.name}}
-                    </div> -->
-                    <div class="pay-fs-2-1" >
-                        <div v-for="(list,index) in lists" :class="{active:index===listIndex}" @click="btn(list.name,index)">{{list.name}}</div>
-                    </div>
-                    <div class="pay-fs-2-2">
-                       <div v-show="listIndex===0" class="pay-fs-2-2-1">支持支付宝支付、微信支付、银行卡支付、财付通等</div>
-                       <div v-show="listIndex===1" class="pay-fs-2-2-2">花呗分期是花呗联合天猫淘宝推出的，面向互联网的赊购服务，通过支付宝轻松还款，0首付</div>
-                       <div v-show="listIndex===2" class="pay-fs-2-2-3">货到再付款，支持现金交易</div>
-                    </div>
-                </div>
-                
-            </div>
+                        <!--</div>-->
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="pay-shop-fs">-->
+                <!--<div class="pay-fs-1">支付方式</div>-->
+                <!--<div class="pay-fs-2">-->
+                    <!--&lt;!&ndash; <div class="pay-fs-2-1" v-for="(item,index) in lists" :class="{active:index===ceshi}" @click="btn(index)" >-->
+                        <!--{{item.name}}-->
+                    <!--</div> &ndash;&gt;-->
+                    <!--<div class="pay-fs-2-1" >-->
+                        <!--<div v-for="(list,index) in lists" :class="{active:index===listIndex}" @click="btn(list.name,index)">{{list.name}}</div>-->
+                    <!--</div>-->
+                    <!--<div class="pay-fs-2-2">-->
+                       <!--<div v-show="listIndex===0" class="pay-fs-2-2-1">支持支付宝支付、微信支付、银行卡支付、财付通等</div>-->
+                       <!--<div v-show="listIndex===1" class="pay-fs-2-2-2">花呗分期是花呗联合天猫淘宝推出的，面向互联网的赊购服务，通过支付宝轻松还款，0首付</div>-->
+                       <!--<div v-show="listIndex===2" class="pay-fs-2-2-3">货到再付款，支持现金交易</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
             <div class="pay-shop-liuyan">
                 <p class="pay-liuyan-1">订单留言</p>
                 <div class="pay-liuyan-2">
                     <textarea v-model="list.ly" rows="5" placeholder="限300字（若有特殊需求，请联系商城在线客服)" maxlength="300"></textarea>
-                    <p>商品总金额：¥{{$route.query.value*list.homePrice}}</p>
+                    <p>商品总金额：¥{{$route.query.value*list.info.retailPrice}}</p>
                     <p>运费：0.00</p>
                     <p>优惠：¥0.00</p>
-                    <p>赠送积分：{{$route.query.value*list.homePrice}}</p>
-                   
+                    <p>赠送积分：{{$route.query.value*list.info.retailPrice}}</p>
+
                 </div>
             </div>
-           
+
             <!-- <span>{{list.id}}</span>
             <span>{{list.homeName}}</span> -->
 
             <div class="pay-shop-footer">
-                <p class="price">订单总金额：<span>¥{{$route.query.value*list.homePrice}}</span></p>
+                <p class="price">订单总金额：<span>¥{{$route.query.value*list.info.retailPrice}}</span></p>
                 <a class="order" @click="addOrder(list,index)">立即结算</a>
             </div>
         </div>
@@ -84,10 +89,8 @@
 
 .pay-address {
     width: 100%;
-    height: 4.3rem;
     background: url('https://shopstatic.vivo.com.cn/vivoshop/wap/dist/images/prod/bg-addr-box-line_d380baa.png') #fff left bottom repeat-x; // shopstatic.vivo.com.cn/vivoshop/wap/dist/images/prod/bg-addr-box-line_d380baa.png) #fff left bottom repeat-x;
     background-size: 1.6rem;
-    padding-top: 1.45rem;
     display: block;
 
     .address-box {
@@ -387,11 +390,12 @@ export default {
         }
       ],
       text: "",
-      ly: ""
+      ly: "",
+      address:undefined
     };
   },
   components: {
-    
+
   },
   //    computed: {
   //         address() {
@@ -408,13 +412,16 @@ export default {
     invoiceClick(index) {
       this.invoiceIndex = index;
     },
+    goaddress(){
+      this.$router.push({path:"/address"})
+    },
     addOrder(id, index) {
-      if (id.text == undefined) {
-        Toast({
-          message: "请输入发票抬头",
-          duration: 950
-        });
-      } else {
+      // if (id.text == undefined) {
+      //   Toast({
+      //     message: "请输入发票抬头",
+      //     duration: 950
+      //   });
+      // } else {
         var data = {
           id: id.id,
           name: id.homeName,
@@ -425,38 +432,34 @@ export default {
           listname: this.lists[index].name,
           value: this.$route.query.value
         };
-        this.$store.dispatch("setOrders", data);
+
         var _this = this;
-        var time = setInterval(function() {
-          _this.$router.push({
-            path: "success"
-          });
-          clearInterval(time);
-        }, 1000);
+      axios.post("/shop/orders/",data).then(function(res) {
+        console.log(res)
+      })
+        // var time = setInterval(function() {
+        //   _this.$router.push({
+        //     path: "success"
+        //   });
+        //   clearInterval(time);
+        // }, 1000);
       }
-    }
+    // }
   },
   created() {
     var _this = this;
     var id = this.$route.query.id;
     var value = this.$route.query.value;
-    axios.get("/static/ceshi.json").then(function(res) {
-      for (var i = 0; i < res.data.data.set.length; i++) {
-        if (res.data.data.set[i].id == id) {
-          _this.pay.push(res.data.data.set[i]);
-        }
-      }
-    });
-    axios.get("/static/ceshi.json").then(function(res) {
-      for (var i = 0; i < res.data.data.home.length; i++) {
-        if (res.data.data.home[i].id == id) {
-          _this.pay.push(res.data.data.home[i]);
-        }
-      }
-    });
+    axios.get("/shop/goods/"+id).then(function(res) {
+          _this.pay.push(res.data.data);
+      })
+    },mounted(){
+    document.title = '结算'
   },
   mounted(){
-    document.title = '结算'
+    if(sessionStorage.getItem("address")!=undefined){
+      this.address=JSON.parse(sessionStorage.getItem("address"))
+    }
   }
 };
 </script>

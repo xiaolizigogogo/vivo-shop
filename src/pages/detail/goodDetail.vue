@@ -46,7 +46,7 @@
                                <div class="goodDetailParam">
                                    <ul>
                                        <li class="goodDetailLi" v-for="(item, index) in goodDetail.attributes" :key="index">
-                                           <span class="paramKey fontSize04">{{item.id}}</span>
+                                           <span class="paramKey fontSize04">{{item.name}}</span>
                                            <span class="paramValue fontSize03">{{item.value}}</span>
                                        </li>
                                    </ul>
@@ -90,7 +90,7 @@
                                 <a href="javascript:void(0);" @click="add(goodDetail)">加入购物车</a>
                             </div>
                             <div class="purchase">
-                                <a href="javascript:void(0);" @click="pay(goodDetail.id,goodDetail.homeValue)">提交订单</a>
+                                <a href="javascript:void(0);" @click="pay(goodDetail.info.id,goodDetail.homeValue)">提交订单</a>
                             </div>
                         </div>
 
@@ -227,9 +227,9 @@ export default {
       this.$router.go(-1);
     },
     pay: function(id,value) {
-        console.log(value)
+        console.log(id,value)
         this.$router.push({
-            path:"pay",
+            path:"/pay",
             query:{
                 id:id,
                 value:value

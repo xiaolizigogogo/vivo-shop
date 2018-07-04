@@ -50,11 +50,16 @@ export default {
             this.$router.push({
                 path: "add_address"
             });
-        }
+        },
+  btn(list,index){
+          console.log(list)
+          sessionStorage.setItem("address",JSON.stringify(list))
+          this.$router.go(-1)
+  }
     },
     mounted(){
         document.title = '管理收货地址'
-  getAddress(this.params).then(res=>{
+      getAddress(this.params).then(res=>{
     this.address=res.data.data.records
 
   })

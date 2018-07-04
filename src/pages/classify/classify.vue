@@ -78,9 +78,8 @@ export default {
 
     },
     goDetails(id) {
-      console.log(id);
       this.$router.push({
-        path: `/homeContainer/${id}`
+        path: `/homeContainer/`,query:{id:id}
       });
     }
   }

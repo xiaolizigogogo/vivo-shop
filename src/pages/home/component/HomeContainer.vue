@@ -109,6 +109,7 @@
       }
       ,
       loadPageList:function (flag) {
+        this.params.categoryId=this.$route.query.id
         // 查询数据
         getGoods(this.params).then((res) => {
           if(flag){
