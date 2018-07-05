@@ -187,7 +187,10 @@ export default {
           checked:true,
           listPicUrl:index.info.listPicUrl,
           marketPrice:index.info.retailPrice,
-          retailPrice:index.info.retailPrice
+          retailPrice:index.info.retailPrice,
+          goodsSpecifitionIds:"1",
+          goodsSpecifitionNameValue:"1",
+          sessionId:"1"
         };
         axios.post("/shop/carts",data).then(res=>{
               if(res.data.status==200){
