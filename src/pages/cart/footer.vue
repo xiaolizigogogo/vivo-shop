@@ -101,7 +101,7 @@ export default {
 
   .footer-result {
     p {
-      .fz(font-size,24);
+      .fz(font-size,16);
       color: #999;
     }
 
@@ -117,12 +117,14 @@ export default {
   .footer-goon {
     background-color: #f4f4f4;
     line-height: 16vw;
+    font-size: 16px
   }
 
   .footer-pay {
     background-color: @cl;
     line-height: 16vw;
     color: #fff;
+    font-size: 16px
   }
 }
 </style>
