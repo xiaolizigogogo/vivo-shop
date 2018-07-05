@@ -89,9 +89,9 @@
                             <div class="add">
                                 <a href="javascript:void(0);" @click="add(goodDetail)">加入购物车</a>
                             </div>
-                            <div class="purchase">
-                                <a href="javascript:void(0);" @click="pay(goodDetail.info.id,goodDetail.homeValue)">提交订单</a>
-                            </div>
+                            <!--<div class="purchase">-->
+                                <!--<a href="javascript:void(0);" @click="pay(goodDetail.info.id,goodDetail.homeValue)">提交订单</a>-->
+                            <!--</div>-->
                         </div>
 
                     </div>
@@ -158,18 +158,10 @@ export default {
     )
   },
   mounted() {
-
-    if (this.$store.state.carts != undefined) {
-      this.cartlength = this.$store.state.carts.length;
-    }
+  this.init();
   },
   created() {
-    var _this = this;
-    var id = this.$route.params.id;
-    getGoodDetail({"goodsId":id}).then(res=>{
-      _this.goodDetails.push({...res.data.data, homeValue: 1})
-      console.log(res)
-    })
+
   },
 
   methods: {
@@ -198,13 +190,16 @@ export default {
           retailPrice:index.info.retailPrice
         };
         axios.post("/shop/carts",data).then(res=>{
-
-        });
+              if(res.data.status==200){
         Toast({
           message: "加入购物车成功！",
           iconClass: "iconfont icon-goumaichenggong-copy",
           duration: 950
         });
+        this.init();
+              }
+        });
+
     },
     jia: function(index) {
       this.goodDetails[index].homeValue++;
@@ -248,6 +243,14 @@ export default {
     //   };
     //   this.$store.commit("addorder", data);
     // }
+    },
+    init(){
+      var id = this.$route.params.id;
+      getGoodDetail({"goodsId":id}).then(res=>{
+        this.goodDetails.push({...res.data.data, homeValue: 1})
+      console.log(res)
+      })
+
     }
   }
 };
@@ -453,7 +456,7 @@ export default {
         .add {
             a {
                 display: block;
-                width: 50%;
+                width: 100%;
                 height: 1.2rem;
                 line-height: 1.2rem;
                 text-align: center;
