@@ -106,7 +106,7 @@
 import { Toast,MessageBox,Navbar,TabItem,TabContainer,TabContainerItem } from "mint-ui";
 import { mapGetters, mapMutations } from "vuex";
 import DetailLayer from "./component/DetailLayer";
-import {getGoodDetail} from '../../api/api'
+import {getGoodDetail,getCartCount} from '../../api/api'
 import axios from "axios";
 export default {
   name: "goodDetail",
@@ -251,9 +251,10 @@ export default {
       var id = this.$route.params.id;
       getGoodDetail({"goodsId":id}).then(res=>{
         this.goodDetails.push({...res.data.data, homeValue: 1})
-      console.log(res)
       })
-
+      getCartCount({"userId":JSON.parse(localStorage.getItem("user")).id}).then(res=>{
+        this.cartlength=res.data.data;
+    })
     }
   }
 };

@@ -279,6 +279,13 @@ const getUserInfoByOpenId=(params)=>{
     params: params
   })
 }
+const getCartCount=(params)=>{
+  return request({
+    url: '/shop/carts/count',
+    method: 'get',
+    params: params
+  })
+}
 
 
 export {
@@ -309,5 +316,6 @@ export {
   unifiedOrder,
   getProductTypes,
   getUserInfoByOpenId,
-  addAddress
+  addAddress,
+  getCartCount
 }
