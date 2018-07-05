@@ -8,8 +8,6 @@
                         <i class="iconfont icon-xuanzekuangmoren"   v-show="!cart.checked"></i>
                         <i class="iconfont icon-xuanzekuangxuanzhong" v-show="cart.checked" style="color:#25b5fe"></i>
                     </div>
-
-
                     <!-- 购物车商品信息 -->
                      <div class="cartImage">
                         <img :src="cart.listPicUrl" >
@@ -20,20 +18,15 @@
                         </div>
                         <p class="cartPrice">￥{{cart.marketPrice}}</p>
                     </div>
-
                     <!-- 购物车商品数量 -->
                     <div class="cartNumber">
                         <a href="javascript:;" @click="reduce(index)" class="add">-</a>
                         <input type="text"   v-model="cart.number" readonly="readonly"/>
                         <a href="javascript:;" @click="add(index)" class="reduce">+</a>
                     </div>
-
-
                 </li>
             </ul>
         </div>
-
-
         <div class="cartImg" v-if="!carts.length">
             <img src="/static/img/gouwuche.png" alt="购物车图片">
             <h1>购物车是空的哦，快去购物吧</h1>
@@ -45,21 +38,12 @@
                 <i class="iconfont icon-xuanzekuangxuanzhong" v-show="qx" style="color:#25b5fe"></i>
                 <span>全选</span>
             </div>
-
-            <div class="Total">合计：<span style="font-size: 0.54rem;color:#E3211E">￥{{sum}}</span></div>
-
-                <div class="Settlement">
-                    <a href="javascript:void(0);" @click="settlement">结算 {{sumValue}}</a>
-                </div>
-                <!-- <div class="Settlementtwo">
-                    <router-link :to="{name:'Home'}" >继续购物</router-link>
-                </div> -->
         </div>
-
+      <v-footer :count="sumValue" :allpay="sum"/>
     </div>
-
 </template>
 <script>
+  import Footer from './footer'
 import { Toast } from "mint-ui";
 import { mapState, mapMutations, mapGetters } from "vuex";
 import {getCarts} from '../../api/api'
@@ -89,7 +73,8 @@ export default {
     };
   },
   components: {
-    HomeFooter
+    HomeFooter,
+    'v-footer':Footer
   },
   mounted:function(){
     getCarts(this.params).then(res=>{
@@ -119,27 +104,22 @@ export default {
     }
   },
   methods: {
-    // ...mapMutations(["shanchu"  , "reduce", "settlement"]),
     add(cart){
       let item=this.carts[cart]
       item.number++
-      console.log(item);
       updateCart(item)
     },
     reduce(cart){
       let item=this.carts[cart]
       item.number--
-      console.log(item);
       updateCart(item)
     },
     shanchu(cart){
       let item=this.carts[cart]
-      console.log(item);
       this.carts.splice(cart,1)
       deleteCart(item)
     },
     danxuan(cart) {
-      console.log(cart);
       cart.checked = !cart.checked;
       updateCart(cart)
       if (!cart.checked) {

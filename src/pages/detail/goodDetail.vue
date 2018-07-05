@@ -185,31 +185,26 @@ export default {
     },
     // 点击按钮时，首先判断该商品是否在购物车已存在，如果存在则不再加入
     add: function(index) {
-        console.log(index)
-      var idExist = this.$store.state.carts.find(todo => {
-        return todo.id == index.id;
-      });
+      console.log(index)
 
-      if (!idExist) {
         var data = {
-          id:index.id,
-          name:index.homeName,
-          price:index.homePrice,
-          value:index.homeValue,
-          img:index.homeImg,
-          danx1uan: ""
+          goodsId:index.info.id,
+          productId:index.info.id,
+          userId:JSON.parse(localStorage.getItem("user")).id,
+          number:1,
+          checked:true,
+          listPicUrl:index.info.listPicUrl,
+          marketPrice:index.info.retailPrice,
+          retailPrice:index.info.retailPrice
         };
-        this.$store.dispatch('setCart', data);
-        // this.$store.commit("SET_CARTS",data);
-        this.cartlength = this.$store.state.carts.length;
+        axios.post("/shop/carts",data).then(res=>{
+
+        });
         Toast({
           message: "加入购物车成功！",
           iconClass: "iconfont icon-goumaichenggong-copy",
           duration: 950
         });
-      } else {
-        MessageBox("提示", "商品已存在购物车");
-      }
     },
     jia: function(index) {
       this.goodDetails[index].homeValue++;
