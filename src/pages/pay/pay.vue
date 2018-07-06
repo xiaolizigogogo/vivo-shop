@@ -19,15 +19,15 @@
             <div class="pay-shop-list">
                 <p class="pay-shop-1">商品清单</p>
                 <p class="pay-shop-2">
-                    <img :src="list.info.listPicUrl">
+                    <img :src="list.listPicUrl">
                     <p class="pay-shop-2-box">
-                        <span class="name">{{list.info.name}}<p>× {{$route.query.value}}</p></span>
+                        <span class="name">{{list.goodsName}}<p>× {{list.number}}</p></span>
                         <!-- <span>颜色：冰钻黑</span> -->
-                        <span class="price">¥ {{list.info.retailPrice}}</span>
+                        <span class="price">¥ {{list.retailPrice}}</span>
                     </p>
                 </p>
             </div>
-
+        </div>
             <!--<div class="pay-shop-invoice">-->
                 <!--<p class="pay-invoice-1">发票信息</p>-->
                 <!--<div class="pay-invoice-2">-->
@@ -62,11 +62,11 @@
             <div class="pay-shop-liuyan">
                 <p class="pay-liuyan-1">订单留言</p>
                 <div class="pay-liuyan-2">
-                    <textarea v-model="list.ly" rows="5" placeholder="限300字（若有特殊需求，请联系商城在线客服)" maxlength="300"></textarea>
-                    <p>商品总金额：¥{{$route.query.value*list.info.retailPrice}}</p>
+                    <textarea v-model="ly" rows="5" placeholder="限300字（若有特殊需求，请联系商城在线客服)" maxlength="300"></textarea>
+                    <p>商品总金额：¥{{this.order.orderPrice}}</p>
                     <p>运费：0.00</p>
                     <p>优惠：¥0.00</p>
-                    <p>赠送积分：{{$route.query.value*list.info.retailPrice}}</p>
+                    <p>赠送积分：{{this.order.orderPrice}}</p>
 
                 </div>
             </div>
@@ -75,11 +75,10 @@
             <span>{{list.homeName}}</span> -->
 
             <div class="pay-shop-footer">
-                <p class="price">订单总金额：<span>¥{{$route.query.value*list.info.retailPrice}}</span></p>
-                <a class="order" @click="addOrder(list,index)">立即结算</a>
+                <p class="price">订单总金额：<span>¥{{this.order.orderPrice}}</span></p>
+                <a class="order" @click="addOrder(this.order)">立即结算</a>
             </div>
         </div>
-    </div>
 </template>
 <style lang="stylus" scoped>
 .active {
@@ -374,7 +373,8 @@ export default {
     return {
       listIndex: 0,
       invoiceIndex: 0,
-      pay: [],
+      pay: undefined,
+      order:undefined,
       lists: [
         {
           id: "1",
@@ -397,14 +397,6 @@ export default {
   components: {
 
   },
-  //    computed: {
-  //         address() {
-  //         return this.$store.state.address;
-  //         },
-  //         ...mapGetters(
-  //             ["this.$store.state.address"],
-  //         )
-  //     },
   methods: {
     btn(id, index) {
       this.listIndex = index;
@@ -443,23 +435,29 @@ export default {
         //   });
         //   clearInterval(time);
         // }, 1000);
-      }
+      },
+    init(){
+      var _this = this;
+      axios.get("/shop/orders/preOrder",{userId:125}).then(function(res) {
+        _this.pay=res.data.data.orderGoods
+        _this.order=res.data.data.order
+      })
+    }
     // }
   },
   created() {
     var _this = this;
     var id = this.$route.query.id;
     var value = this.$route.query.value;
-    axios.get("/shop/goods/"+id).then(function(res) {
-          _this.pay.push(res.data.data);
-      })
-    },mounted(){
-    document.title = '结算'
-  },
+
+    },
   mounted(){
+    this.init()
+    document.title = '结算'
     if(sessionStorage.getItem("address")!=undefined){
       this.address=JSON.parse(sessionStorage.getItem("address"))
     }
+
   }
 };
 </script>

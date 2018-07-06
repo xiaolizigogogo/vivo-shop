@@ -61,11 +61,8 @@ export default {
     goPay () {
 
       // 如果有选择商品才能跳转
-      if (this.$store.getters.selectedList.length) {
-        // 保存+缓存选择的商品 ,在支付页能用到
-        this.$store.dispatch('setSelectedList')
-        this.$router.push({ name: '支付页' })
-
+      if (this.count) {
+        this.$router.push({ path: '/pay' })
       } else {
 
         alert('你还没选择商品')
