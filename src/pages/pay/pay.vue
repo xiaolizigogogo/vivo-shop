@@ -223,6 +223,9 @@ export default {
         };
       axios.post("/shop/orders/",data).then(function(res) {
         if(res,data.status==200){
+          this.params.totalFee=res.data.data.order.orderPrice*100;
+          this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
+          this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
           this.pay();
         }
         else{
@@ -245,9 +248,6 @@ export default {
       }
     },
     pay(){
-      this.params.totalFee=this.params.money*100;
-      this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
-      this.params.attach=JSON.stringify({orderType:"TRADE_ONLINE_PAY"})
       let params=this.params
       // alert(JSON.stringify(params))
       unifiedOrder(params).then(res=>{
