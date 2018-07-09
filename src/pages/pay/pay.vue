@@ -185,6 +185,7 @@ export default {
       pay: [],
       order:{orderPrice:0},
       confirm:false,
+      params:{},
       lists: [
         {
           id: "1",
