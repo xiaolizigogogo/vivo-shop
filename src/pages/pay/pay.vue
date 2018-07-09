@@ -221,7 +221,7 @@ export default {
         var data = {
           orderSn:_this.order.orderSn
         };
-      axios.post("/shop/orders/",data).then(function(res) {
+      axios.post("/gateway/shop/orders/",data).then(function(res) {
         if(res,data.status==200){
           this.params.totalFee=res.data.data.order.orderPrice*100;
           this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
@@ -235,7 +235,7 @@ export default {
       },
     init(){
       var _this=this
-      axios.get("/shop/orders/preOrder",{userId:125}).then(function(res) {
+      axios.get("/gateway/shop/orders/preOrder",{userId:125}).then(function(res) {
         _this.order=res.data.data.order
         _this.pay=res.data.data.orderGoods
       })
