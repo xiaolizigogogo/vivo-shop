@@ -221,6 +221,13 @@ const addOrder = (params) => {
       data: params
     })
 }
+const preOrder = (params) => {
+  return request({
+    url: '/shop/orders/preOrder',
+    method: 'get',
+    params: params
+  })
+}
 const getAdmins=(params) => {
   return request({
     url: '/shop/admins/',
@@ -228,6 +235,8 @@ const getAdmins=(params) => {
     params: params
   })
 }
+
+
 const addSubscribes=(params)=>{
   return request({
     url: '/shop/subscribes',
@@ -286,6 +295,14 @@ const getCartCount=(params)=>{
     params: params
   })
 }
+const getCartCount=(params)=>{
+  return request({
+    url: '/shop/carts/count',
+    method: 'get',
+    params: params
+  })
+}
+
 
 
 export {
