@@ -1,365 +1,171 @@
 <template>
-    <div>
-        <div @click="goaddress" class="pay-address" v-if="address" >
-             <p class="address-box">
-                <span class="name">{{address.userName}}</span>
-                <span class="phone">{{address.mobile}}</span>
-            </p>
-            <p class="address-details">
-                收货地址：{{address.address}} {{address.detailInfo}}
-            </p>
-        </div>
-      <div @click="goaddress" class="pay-address" v-if="!address" >
-        <p class="address-box">
-            请选择收货地址
-        </p>
-
+  <div class="pay">
+    <div class="pay-address" @click="goaddress"  v-if="address">
+      <div>
+        <p class="main-address-per">收货人:<span>王先生</span></p>
+        <p class="main-address-tel">15985698749</p>
       </div>
-        <div class="pay-shop" v-for="(list,index) in pay" :key="index">
-            <div class="pay-shop-list">
-                <p class="pay-shop-1">商品清单</p>
-                <p class="pay-shop-2">
-                    <img :src="list.listPicUrl">
-                    <p class="pay-shop-2-box">
-                        <span class="name">{{list.goodsName}}<p>× {{list.number}}</p></span>
-                        <!-- <span>颜色：冰钻黑</span> -->
-                        <span class="price">¥ {{list.retailPrice}}</span>
-                    </p>
-                </p>
+      <p>收货地址:<span>河南省郑州市中原区秦岭路8号院59号单元28层15号东户第三家</span></p>
+    </div>
+    <div @click="goaddress" class="pay-address" v-if="!address" >
+      <p class="address-box">
+        请选择收货地址
+      </p>
+    </div>
+
+    <div class="pay-product">
+      <ul v-if="!confirm">
+        <li  v-for="(list,index) in pay" :key="index">
+          <a>
+            <img :src="list.listPicUrl" alt="">
+            <div>
+              <h2><span style="color:#ee7150">{{list.goodsName}}</span>× {{list.number}}</h2>
+              <p>¥ {{list.retailPrice}}</p>
             </div>
-        </div>
-            <!--<div class="pay-shop-invoice">-->
-                <!--<p class="pay-invoice-1">发票信息</p>-->
-                <!--<div class="pay-invoice-2">-->
-                    <!--<div class="pay-invoice-2-2">-->
-                        <!--<div v-show="invoiceIndex===0">-->
-                            <!--<p>*请输入发票抬头:</p>-->
-                            <!--<input type="text" id="input" v-model="list.text" placeholder="请输入发票信息">-->
+          </a>
+        </li>
+      </ul>
 
-                        <!--</div>-->
-                    <!--</div>-->
+      <!-- 支付成功后的提示 -->
+      <div class="pay-confirm" v-else>
+        支付成功!!!</br>
+        当页面数据清空</br>
+        购物车列表重新设置
+      </div>
+    </div>
+    <h3 class="pay-allpay">
+      商品总金额 : <i>￥</i><span>{{order.orderPrice}}</span><br>
+      运费 : <i>￥</i><span>{{order.orderPrice}}</span><br>
+      优惠 : <i>￥</i><span>{{order.orderPrice}}</span><br>
+      赠送积分 : <i>￥</i><span>{{order.orderPrice}}</span><br>
+      总需要支付 : <i>￥</i><span>{{order.orderPrice}}</span>
+    </h3>
+    <footer class="pay-footer" ontouchstrat="" @click="payConfirm">
+      <span>立即支付</span>
+    </footer>
 
-                <!--</div>-->
-            <!--</div>-->
 
-            <!--<div class="pay-shop-fs">-->
-                <!--<div class="pay-fs-1">支付方式</div>-->
-                <!--<div class="pay-fs-2">-->
-                    <!--&lt;!&ndash; <div class="pay-fs-2-1" v-for="(item,index) in lists" :class="{active:index===ceshi}" @click="btn(index)" >-->
-                        <!--{{item.name}}-->
-                    <!--</div> &ndash;&gt;-->
-                    <!--<div class="pay-fs-2-1" >-->
-                        <!--<div v-for="(list,index) in lists" :class="{active:index===listIndex}" @click="btn(list.name,index)">{{list.name}}</div>-->
-                    <!--</div>-->
-                    <!--<div class="pay-fs-2-2">-->
-                       <!--<div v-show="listIndex===0" class="pay-fs-2-2-1">支持支付宝支付、微信支付、银行卡支付、财付通等</div>-->
-                       <!--<div v-show="listIndex===1" class="pay-fs-2-2-2">花呗分期是花呗联合天猫淘宝推出的，面向互联网的赊购服务，通过支付宝轻松还款，0首付</div>-->
-                       <!--<div v-show="listIndex===2" class="pay-fs-2-2-3">货到再付款，支持现金交易</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <div class="pay-shop-liuyan">
-                <p class="pay-liuyan-1">订单留言</p>
-                <div class="pay-liuyan-2">
-                    <textarea v-model="ly" rows="5" placeholder="限300字（若有特殊需求，请联系商城在线客服)" maxlength="300"></textarea>
-                    <p>商品总金额：¥{{this.order.orderPrice}}</p>
-                    <p>运费：0.00</p>
-                    <p>优惠：¥0.00</p>
-                    <p>赠送积分：{{this.order.orderPrice}}</p>
-
-                </div>
-            </div>
-
-            <!-- <span>{{list.id}}</span>
-            <span>{{list.homeName}}</span> -->
-
-            <div class="pay-shop-footer">
-                <p class="price">订单总金额：<span>¥{{this.order.orderPrice}}</span></p>
-                <a class="order" @click="addOrder(this.order)">立即结算</a>
-            </div>
-        </div>
+  </div>
 </template>
-<style lang="stylus" scoped>
-.active {
-    border: 1px solid #444;
-    color: red;
-}
-
-.pay-address {
+  <style lang="less" scoped>
+  @import "../../assets/fz.less";
+  .pay {
     width: 100%;
-    background: url('https://shopstatic.vivo.com.cn/vivoshop/wap/dist/images/prod/bg-addr-box-line_d380baa.png') #fff left bottom repeat-x; // shopstatic.vivo.com.cn/vivoshop/wap/dist/images/prod/bg-addr-box-line_d380baa.png) #fff left bottom repeat-x;
-    background-size: 1.6rem;
+    background-color: #f7f7f7;
+
+    .pay-address {
+      background-color: #fff;
+      border-bottom: 1 * 10vw/75 solid #dedede;
+      padding: 30 * 10vw/75;
+
+      > div {
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          color: #868686;
+  .fz(font-size,32px);
+  }
+  }
+
+  > p {
+  .fz(font-size,28px);
+  color: #868686;
+  padding-top: 30 * 10vw/75;
+  letter-spacing: 3 * 10vw/75;
+  line-height: 45 * 10vw/75;
+  }
+  }
+  .pay-product {
+    background-color: #fff;
+    height:120vw;
+    overflow: auto;
+
+    li {
+      a {
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: flex;
+        box-sizing: border-box;
+        padding: 20 * 10vw/75 30 * 10vw/75;
+        color: #4d4d4d;
+  .fz(font-size,30px);
+  border-bottom: 1 * 10vw/75 solid #dedede;
+
+  > img {
     display: block;
+    width: 2.5 * 10vw;
+    height: 2.5 * 10vw;
+  }
 
-    .address-box {
-        width: 87%;
-        margin: auto;
-        font-size: 0.4rem;
-        padding-top: 0.3rem;
-        padding-bottom: 0.3rem;
-
-        .phone {
-            float: right;
-        }
+  > div {
+    box-sizing: border-box;
+    padding-left: 50 * 10vw/75;
+    width: 70%;
+    h2 {
+      padding-top: 0.09 * 10vw;
+      overflow: hidden;
+      word-break: normal;
+      /*white-space: nowrap;*/
+      text-overflow: ellipsis;
     }
 
-    .address-details {
-        width: 87%;
-        margin: auto;
-        color: #666;
-        font-size: 0.38rem;
-    }
-}
+    p {
+      text-align: right;
+  .fz(font-size,24px);
+  padding-top: 1.4 * 10vw;
+  }
+  }
+  }
+  }
+  }
 
-.pay-shop {
-    width: 100%;
-    margin-bottom: 1.5rem;
+  .pay-allpay {
+    text-align: right;
+    margin-top: 6vw;
+    padding: 4vw 5vw;
+  .fz(font-size,32px);
+  color: #999999;
+  background-color: #fff;
+  i,
+  span {
+    color: @cl;
+  }
+  }
 
-    .pay-shop-invoice {
-        width: 100%;
-        height: 4.3rem;
-        background: #fff;
-        margin-bottom: 10px;
-        margin-top: 10px;
-
-        .pay-invoice-1 {
-            width: 100%;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            border-bottom: 1px solid #eaeaea;
-            font-size: 0.4rem;
-            padding-left: 0.7rem;
-        }
-
-        .pay-invoice-2 {
-            width: 100%;
-            height: 4rem;
-
-            .pay-invoice-2-1 {
-                width: 100%;
-                height: 30%;
-
-                div {
-                    display: block;
-                    width: 2.88rem;
-                    height: 0.9rem;
-                    line-height: 0.9rem;
-                    border: 1px solid #d1d1d1;
-                    border-radius: 3px;
-                    margin: 0.1rem 0.3rem;
-                    float: left;
-                    text-align: center;
-                }
-            }
-
-            .pay-invoice-2-2 {
-                width: 92%;
-                height: 70%;
-                margin: auto;
-                font-size 0.35rem
-
-                p {
-                    margin-top: 10px;
-                    margin-bottom: 10px;
-                }
-
-                input {
-                    width: 100%;
-                    height: 1.18rem;
-                    border: 1px solid #d1d1d1;
-                    border-radius: 3px;
-                    padding-left: 0.2rem;
-                }
-            }
-        }
-    }
-
-    .pay-shop-list {
-        width: 100%;
-        height: 4.5rem;
-        margin-top: 0.3rem;
-        background: #fff;
-
-        .pay-shop-1 {
-            width: 100%;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            border-bottom: 1px solid #eaeaea;
-            font-size: 0.4rem;
-            padding-left: 0.7rem;
-        }
-
-        .pay-shop-2 {
-            float: left;
-
-            img {
-                width: 2.5rem;
-                margin: 0.2rem;
-            }
-        }
-
-        .pay-shop-2-box {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
-
-            .name {
-                font-size: 0.4rem;
-                margin-top: 0.3rem;
-                height: 0.6rem;
-
-                p {
-                    float: right;
-                    margin-right: 0.5rem;
-                }
-            }
-
-            .price {
-                color: red;
-                font-size: 0.35rem;
-                font-weight: 500;
-                height: 0.6rem;
-            }
-        }
-    }
-
-    .pay-shop-liuyan {
-        width: 100%;
-        height: 6.5rem;
-        background: #fff;
-        margin-top: 0.3rem;
-        margin-bottom: 0.3rem;
-
-        .pay-liuyan-1 {
-            width: 100%;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            border-bottom: 1px solid #eaeaea;
-            font-size: 0.4rem;
-            padding-left: 0.7rem;
-        }
-
-        .pay-liuyan-2 {
-            width: 90%;
-            margin: auto;
-
-            textarea {
-                width: 100%;
-                height: 2rem;
-                border: 1px solid #d1d1d1;
-                border-radius: 3px;
-                padding: 0.15rem 0.2rem;
-                margin: 0.3rem auto;
-                display: block;
-            }
-
-            p {
-                color: #888;
-                height: 0.48rem;
-                font-size: 0.34rem;
-            }
-        }
-    }
-
-    .pay-shop-fs {
-        width: 100%;
-        height: 5rem;
-        background: #ffffff;
-
-        .pay-fs-1 {
-            width: 100%;
-            height: 1.5rem;
-            line-height: 1.5rem;
-            border-bottom: 1px solid #eaeaea;
-            font-size: 0.4rem;
-            padding-left: 0.7rem;
-        }
-
-        .pay-fs-2 {
-            width: 100%;
-            height: 3.5rem;
-            background: #ffffff;
-
-            .pay-fs-2-1 {
-                width: 100%;
-                height: 40%;
-                font-size: 0.35rem;
-                // background yellow
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                div {
-                    display: block;
-                    width: 2.88rem;
-                    height: 0.9rem;
-                    line-height: 0.9rem;
-                    border: 1px solid #d1d1d1;
-                    border-radius: 3px;
-                    margin: 0.1rem;
-                    float: left;
-                    text-align: center;
-                }
-            }
-
-            .pay-fs-2-2 {
-                width: 100%;
-                height: 60%;
-                font-size: 0.35rem;
-
-                // background red
-                div {
-                    width: 90%;
-                    height: 1.3rem;
-                    border-radius: 3px;
-                    border: 1px solid #d1d1d1;
-                    margin: auto;
-                    padding: 0.3rem;
-                }
-
-                .pay-fs-2-2-2 {
-                    height: 1.56rem;
-                }
-            }
-        }
-    }
-}
-
-.pay-shop-footer {
-    width: 100%;
-    height: 1.5rem;
-    border-top: 1px solid #eaeaea;
-    background: white;
+  .pay-footer {
     position: fixed;
     bottom: 0;
-
-    .price {
-        float: left;
-        line-height: 1.5rem;
-        font-size: 0.43rem;
-        color: #666;
-        padding-left: 0.3rem;
-
-        span {
-            color: red;
-        }
+    left: 0;
+    width: 100%;
+    padding-bottom: 4vw;
+    span {
+      display: block;
+      width: 85%;
+      background-color: #fd729c;
+      border-radius: 1.3vw;
+      color: #fff;
+      font-size: 17px;
+      padding: 4vw;
+      margin: 0 auto;
+      text-align: center;
+      &:active {
+        background-color: @cl;
+      }
     }
+  }
 
-    .order {
-        width: 3.3rem;
-        height: 0.9rem;
-        line-height: 0.9rem;
-        font-size: 0.35rem;
-        margin-top: 0.3rem;
-        margin-right: 0.3rem;
-        border-radius: 30px;
-        text-align: center;
-        color: #fff;
-        background: #f81200;
-        float: right;
-    }
-}
+  .pay-confirm {
+    padding: 20px 0;
+    background-color: @cl;
+    text-align: center;
+    color: #fff;
+    line-height: 30px;
+  .fz(font-size,40);
+  }
+  }
 </style>
 
 
@@ -367,6 +173,9 @@
 import { Toast } from "mint-ui";
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
+import { MessageBox } from 'mint-ui';
+import wexinPay from '../pay/wxPayComponent'
+import {unifiedOrder} from '../../api/api'
 export default {
   name: "pay",
   data() {
@@ -407,56 +216,57 @@ export default {
     goaddress(){
       this.$router.push({path:"/address"})
     },
-    addOrder(id, index) {
-      // if (id.text == undefined) {
-      //   Toast({
-      //     message: "请输入发票抬头",
-      //     duration: 950
-      //   });
-      // } else {
+    addOrder() {
+      var _this = this;
         var data = {
-          id: id.id,
-          name: id.homeName,
-          price: id.homePrice,
-          text: id.text,
-          ly: id.ly,
-          img: id.homeImg,
-          listname: this.lists[index].name,
-          value: this.$route.query.value
+          orderSn:_this.order.orderSn
         };
-
-        var _this = this;
       axios.post("/shop/orders/",data).then(function(res) {
-        console.log(res)
+        if(res,data.status==200){
+          this.pay();
+        }
+        else{
+          alert("创建订单失败")
+        }
       })
-        // var time = setInterval(function() {
-        //   _this.$router.push({
-        //     path: "success"
-        //   });
-        //   clearInterval(time);
-        // }, 1000);
       },
     init(){
-      var _this = this;
+      var _this=this
       axios.get("/shop/orders/preOrder",{userId:125}).then(function(res) {
-        _this.pay=res.data.data.orderGoods
         _this.order=res.data.data.order
+        _this.pay=res.data.data.orderGoods
       })
-    }
-    // }
+    },
+    payConfirm () {
+      if (this.pay) { //还未提交了订单,数据还未清空
+        MessageBox.confirm(`确定支付${this.order.orderPrice}元`).then(action => {this.addOrder()},function (err) {});
+      }else { //提交了订单,数据清空
+        alert('请勿重复提交订单')
+      }
+    },
+    pay(){
+      this.params.totalFee=this.params.money*100;
+      this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
+      this.params.attach=JSON.stringify({orderType:"TRADE_ONLINE_PAY"})
+      let params=this.params
+      // alert(JSON.stringify(params))
+      unifiedOrder(params).then(res=>{
+        // alert(JSON.stringify(res))
+        wexinPay(res.data.data,this.success(),this.error())
+      })
+    },
   },
   created() {
-    var _this = this;
     var id = this.$route.query.id;
     var value = this.$route.query.value;
-
-    },
-  mounted(){
     this.init()
     document.title = '结算'
     if(sessionStorage.getItem("address")!=undefined){
       this.address=JSON.parse(sessionStorage.getItem("address"))
     }
+    },
+  mounted(){
+
 
   }
 };
