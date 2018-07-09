@@ -295,14 +295,6 @@ const getCartCount=(params)=>{
     params: params
   })
 }
-const getCartCount=(params)=>{
-  return request({
-    url: '/shop/carts/count',
-    method: 'get',
-    params: params
-  })
-}
-
 
 
 export {
@@ -334,5 +326,6 @@ export {
   getProductTypes,
   getUserInfoByOpenId,
   addAddress,
-  getCartCount
+  getCartCount,
+  preOrder
 }

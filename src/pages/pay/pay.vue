@@ -80,7 +80,7 @@
   }
   .pay-product {
     background-color: #fff;
-    height:120vw;
+    height:60vw;
     overflow: auto;
 
     li {
@@ -182,8 +182,9 @@ export default {
     return {
       listIndex: 0,
       invoiceIndex: 0,
-      pay: undefined,
-      order:undefined,
+      pay: [],
+      order:{orderPrice:0},
+      confirm:false,
       lists: [
         {
           id: "1",
@@ -226,7 +227,7 @@ export default {
           this.params.totalFee=res.data.data.order.orderPrice*100;
           this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
           this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
-          this.pay();
+          this.payOrder();
         }
         else{
           alert("创建订单失败")
@@ -236,9 +237,15 @@ export default {
     init(){
       var _this=this
       preOrder({userId:125}).then(function(res) {
-        _this.order=res.data.data.order
-        _this.pay=res.data.data.orderGoods
-      })
+        if(res.data.status==200) {
+          _this.order = res.data.data.order
+          _this.pay = res.data.data.orderGoods
+        }
+        else{
+          _this.pay=[]
+          alert(res.data.exception)
+        }
+        })
     },
     payConfirm () {
       if (this.pay) { //还未提交了订单,数据还未清空
@@ -247,7 +254,7 @@ export default {
         alert('请勿重复提交订单')
       }
     },
-    pay(){
+    payOrder(){
       let params=this.params
       // alert(JSON.stringify(params))
       unifiedOrder(params).then(res=>{
