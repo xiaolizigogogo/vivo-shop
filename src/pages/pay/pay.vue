@@ -185,7 +185,13 @@ export default {
       pay: [],
       order:{orderPrice:0},
       confirm:false,
-      params:{},
+      params:{
+        openid:"",
+        totalFee:"1",
+        body:"订单支付",
+        tradeType:"JSAPI",
+        money:undefined
+      },
       lists: [
         {
           id: "1",
@@ -228,7 +234,7 @@ export default {
           _this.params.totalFee=res.data.data.order.orderPrice*100;
           _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
           _this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
-          this.payOrder();
+          _this.payOrder();
         }
         else{
           alert("创建订单失败")
@@ -255,14 +261,15 @@ export default {
         alert('请勿重复提交订单')
       }
     },
-    payOrder(){
-      let params=this.params
-      // alert(JSON.stringify(params))
-      unifiedOrder(params).then(res=>{
+    payOrder(params){
+      var _this=this
+      unifiedOrder( _this.params).then(res=>{
         // alert(JSON.stringify(res))
-        wexinPay(res.data.data,this.success(),this.error())
+        wexinPay(res.data.data,_this.success(),_this.error())
       })
     },
+    success(){},
+    error(){},
   },
   created() {
     var id = this.$route.query.id;
