@@ -226,7 +226,7 @@ export default {
       addOrder(data).then(function(res) {
         if(res.data.status==200){
           _this.params.totalFee=res.data.data.order.orderPrice*100;
-          _this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
+          _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
           _this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
           this.payOrder();
         }
