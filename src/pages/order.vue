@@ -260,6 +260,7 @@
             }
           }
           .order-btn-group {
+            border-bottom: 4px solid #eee;
             @include flexbox(flex-end,
               center,
               row,

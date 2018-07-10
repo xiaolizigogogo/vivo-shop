@@ -82,7 +82,7 @@
                                 <img src="http://p6563v2ck.bkt.clouddn.com/%E5%BA%97%E9%93%BA_2.png" >
                                 <!-- <i class="iconfont icon-xuanzekuangxuanzhong" v-show="!$store.state.collection"></i>
                                 <i class="iconfont icon-xuanzekuangxuanzhong" v-show="$store.state.collection" style="color:red"></i> -->
-                                <span>店铺</span>
+                                <span @click="home">首页</span>
                             </div>
                         </div>
                         <div class="rigth">
@@ -165,6 +165,10 @@ export default {
   },
 
   methods: {
+    home(){
+      this.$router.push({path:"/home"})
+    }
+    ,
     addCollection(index) {
       this.$store.state.ces=!this.$store.state.ces
        var data={
