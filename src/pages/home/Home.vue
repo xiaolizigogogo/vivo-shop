@@ -75,6 +75,15 @@ export default {
       const  code=this.$route.query.code
       if(!code){
         alert("请从公众号入口进入")
+        getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+          localStorage.setItem("user",JSON.stringify(res.data.data))
+          const user=JSON.parse( sessionStorage.getItem("user"));
+          this.name=user.nickname;
+          this.header_url=user.avatar
+          this.coupons=fmoney(user.restMoney,2)
+          this.encourage=fmoney(user.purchaseMoney,2)
+          this.integration=fmoney(user.rechargeMoney,2)
+        })
         return
       }
       getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
