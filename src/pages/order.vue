@@ -1,264 +1,530 @@
+<!-- orderList -->
+<style lang="scss" scoped>
+  @import '../assets/common/css/mixin.scss';
+  .paymentLoading {
+    position: fixed;
+    @include flexbox(center,
+      center,
+      row,
+      nowrap);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    img {
+      background: rgba(0, 0, 0, .6);
+      width: 3rem;
+    }
+  }
+
+  .paymentContainer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .4);
+    @include flexbox(center,
+      center,
+      row,
+      nowrap);
+    .content {
+      width: 85%;
+      background: #fff;
+      border-radius: 10px;
+      >button {
+        width: 60%;
+        margin: 20px auto;
+        background: $red;
+      }
+      >a {
+        margin: 5px 0;
+        padding: 0 15px;
+      }
+      .title {
+        @include flexbox(center,
+          center,
+          row,
+          nowrap);
+        position: relative;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        strong {
+          font-size: 20px;
+        }
+        .closeIcon {
+          display: block;
+          background: url('../assets/jd/images/product-detail-sprites-mjs.png') no-repeat;
+          width: 25px;
+          height: 25px;
+          background-position: -38px -19px;
+          background-size: 150px;
+          vertical-align: -8px;
+          position: absolute;
+          left: 10px;
+        }
+      }
+      .paymentInfo {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        @include flexbox(flex-start,
+          center,
+          column,
+          wrap);
+        font-size: 20px;
+        span {}
+        strong {
+          font-size: 40px;
+          font-weight: 400;
+          margin: 10px 0 0;
+        }
+      }
+    }
+  }
+
+  .my-order {
+    .my-header {
+      padding: $padding;
+      background: #fff;
+      position: relative;
+      z-index: 1;
+      @include flexbox(space-between,
+        center,
+        row,
+        nowrap);
+      border-bottom: 1px solid #eee;
+      .back {
+        display: block;
+        width: .65rem;
+        height: .65rem;
+        background: url('../assets/jd/images/arrow-left.png') no-repeat;
+        background-size: 100%;
+      }
+      strong {
+        font-size: 18px;
+        font-weight: normal;
+        color: #333;
+      }
+      .myMsg {
+        display: block;
+        background: url('../assets/jd/images/searchIcon.png') no-repeat;
+        background-size: 600% 100%;
+        height: .65rem;
+        width: .65rem;
+        background-position: -2.6rem 0;
+      }
+    }
+    .topnav {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin: 0;
+      z-index: 111;
+      position: relative;
+      #loadingbar {
+        position: absolute;
+        transition: .4s;
+        width: calc((100%/8));
+        background: red;
+        bottom: 0;
+        height: 2px;
+      }
+      >span {
+        width: 33.33%;
+        padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        background: #fff;
+      }
+      .active {
+        color: red;
+      }
+    }
+    .order-container {
+      height: auto;
+      ._v-container {
+        // background: #fff;
+      }
+      .order-nomore-tip {
+        margin-top: 50px;
+        @include flexbox(space-between,
+          center,
+          column,
+          wrap);
+        i {
+          display: block;
+          width: 60px;
+          height: 60px;
+          background: url('../assets/jd/images/order.png') no-repeat;
+          background-size: 100%;
+        }
+        span {
+          font-size: 17px;
+          font-weight: normal;
+          padding: 30px 0;
+          color: $gray;
+        }
+      }
+      .all-order {
+        background: #f5f5f5;
+      }
+      .order-list {
+        background: #fff;
+        margin-top: $margin;
+        .order-item {
+          margin-top: 10px;
+          .order-top {
+            padding: $padding;
+            @include flexbox(space-between,
+              center,
+              row,
+              nowrap);
+            .left {
+              text-align: left;
+              img {
+                width: 15px;
+                height: 15px;
+                vertical-align: bottom;
+              }
+              span {
+                font-size: $subtitle;
+                color: #333;
+                margin-left: 5px;
+              }
+            }
+            .right {
+              .order-status {
+                color: $red;
+                font-size: $subtitle;
+              }
+            }
+          }
+          .order-product-list {
+            @include flexbox(flex-start,
+              flex-start,
+              column,
+              wrap);
+            .order-product-item {
+              padding: $padding;
+              width: 100%;
+              >div {
+                @include flexbox(flex-start,
+                  flex-start,
+                  row,
+                  nowrap);
+                width: 100%;
+                img {
+                  max-width: 80px;
+                  max-height: 80px;
+                  border: 1px solid #eee;
+                }
+                .product-info {
+                  margin-left: $margin;
+                  .prod-price {
+                    font-size: 14px;
+                    strong {
+                      font-size: 15px;
+                      color: $red;
+                    }
+                    @include flexbox(space-between,
+                      center,
+                      row,
+                      nowrap);
+                  }
+                  p {
+                    @include textoverflow(3);
+                    font-size: $subtitle;
+                    margin: $margin 0;
+                    color: #333;
+                  }
+                }
+              }
+            }
+          }
+          .order-sku {
+            background: #fff;
+            padding: 8px $padding;
+            text-align: right;
+            font-size: $subtitle;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            strong {
+              font-size: 17px;
+              color: $red;
+            }
+          }
+          .order-btn-group {
+            @include flexbox(flex-end,
+              center,
+              row,
+              nowrap);
+            padding: 5px $padding;
+            >span {
+              padding: 5px 20px;
+              color: $red;
+              font-size: $subtitle;
+              border: 1px solid $red;
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+</style>
+
 <template>
-  <div class="order" id="transition">
-        <div class="orderMain">
-            <div  class="order-box">
-                <p  v-for="(c,index) in t"
-                @click="btn(index)"
-                >
-                    <a :class="{active:index===nowIndex}">{{c.item}}</a>
-                </p>
-            </div>
-            <div class="order-box2" >
-               <div v-show="nowIndex===0">
-                     <div v-for="(list,index) in orders" :key="index" class="orders">
-                        <div class="_order">
-                            <p class="left">
-                                <i class="iconfont icon-qijiandian"></i>
-                                {{shopName}}
-                            </p>
-                            <p class="right">{{orderStatus[list.orderStatus]}}</p>
-                        </div>
-                        <div class="order" >
-                            <img :src="list.img">
-
-                            <div class="order-div">
-                                <h3>{{list.orderSn}}</h3>
-                                <!-- <p class="order-div-color">颜色:黑</p> -->
-                                <p class="order-div-price">￥{{list.orderPrice}}</p>
-                            </div>
-                            <div class="order-div-2">
-                                × {{list.value}}
-                            </div>
-                        </div>
-                        <div class="order-2">
-                            <div class="order-2-box">
-                                <p class="order-2-zero">共计<span>{{list.value}}</span>件商品</p>
-                                <p class="order-2-one">总计：<span>￥{{list.actualPrice}}</span></p>
-                                <p class="order-2-two">(含运费：¥{{list.freightPrice}}优惠：¥{{list.couponPrice}})</p>
-                            </div>
-                        </div>
-                        <div class="order-3">
-                             <a @click.stop="odetails(list)">查看详情</a>
-                            <a @click.stop="odefault(index)">订单删除</a>
-                        </div>
+  <div class="my-order">
+    <div class="my-header">
+      <i class="back" @click="$router.go(-1)"></i>
+      <strong>我的订单</strong>
+      <i class="myMsg"></i>
+    </div>
+    <div class="topnav">
+      <span @click.stop.prevent="switchTabs(0)" :class="{'active':active===0}">全部</span>
+      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">待付款</span>
+      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">待收货</span>
+      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">已完成</span>
+      <span @click.stop.prevent="switchTabs(4)" :class="{'active':active===4}">已取消</span>
+      <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
+    </div>
+    <div class="order-container">
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :topMethod="onRefreshCallback"
+                 :loadMoreIconVisible="false" ref="orderLoadmore">
+        <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
+              slot="refresh-spinner">更新中...</span>
+        <!-- 全部订单 -->
+        <div class="all-order" v-if="orderList!=''">
+          <div class="order-list">
+            <div class="order-item" v-for="(item,index) in orderList" :key="index">
+              <div class="order-top">
+                <div class="left">
+                  <!--<img src="../assets/jd/images/applist (5).png" alt="">-->
+                  <span>订单编号：{{item.order.orderSn}}</span>
+                </div>
+                <div class="right">
+                  <div class="order-status">
+                    <span v-if="item.order.payStatus === 0 && item.order.orderStatus < 3">等待付款</span>
+                    <span v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 2">等待收货</span>
+                    <span v-if="item.order.orderStatus === 3">已完成</span>
+                    <span v-if="item.order.orderStatus === -1">已取消</span>
+                  </div>
+                </div>
+              </div>
+              <div class="order-product-list">
+                <div class="order-product-item" v-for="(prod,prodindex) in item.orderGoods" :key="prodindex">
+                  <div>
+                    <img :src="prod.listPicUrl" alt="">
+                    <div class="product-info">
+                      <p class="prod-name">{{prod.goodsName}}</p>
+                      <p class="prod-price">
+                        <strong>&yen;{{prod.retailPrice * prod.number}}</strong>
+                        <span>x {{prod.number}}</span>
+                      </p>
                     </div>
-               </div>
-
-               <div  v-show="nowIndex===1">
-                   这里是第待付款
-               </div>
+                  </div>
+                </div>
+              </div>
+              <div class="order-sku">
+                <span>共{{item.orderGoods.length}}件商品&nbsp;需支付：</span>
+                <strong>&yen;&nbsp;{{item.order.orderPrice}}</strong>
+              </div>
+              <div class="order-btn-group">
+                <span class="payment" v-if="item.order.orderStatus === 1 && item.order.payStatus === 0" @click="payment(item)">去支付</span>
+                <span class="payment" v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 2"
+                      @click="finishOrder(item)">确认收货</span>
+                <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="cancelOrder(item)">取消</span>
+                <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
+                      <!--@click="commitMessage(item)">去评论</span>-->
+              </div>
             </div>
+          </div>
+
         </div>
+        <!-- 全部订单 -->
+
+        <!-- 没有订单 -->
+        <div class="order-nomore-tip" v-if="orderList==''">
+          <i></i>
+        </div>
+        <!-- 没有订单 -->
+      </load-more>
+      <div class="paymentLoading" v-if="visiblePopup.paymentLoadingVisible">
+        <img src="../assets/jd/images/paymentloading.gif" />
+      </div>
+      <div class="paymentContainer" v-if="visiblePopup.paymentContainerVisible">
+        <div class="content">
+          <div class="title">
+            <i class="closeIcon" @click="()=>visiblePopup.paymentContainerVisible=false"></i>
+            <strong>请输入支付密码</strong>
+          </div>
+          <div class="paymentInfo">
+            <span>订单付款</span>
+            <strong>&yen;{{currentOrder.total_fee}}</strong>
+          </div>
+          <mt-field placeholder="请输入支付密码" type="password" v-model="paymentPassword"></mt-field>
+          <mt-button size="large" type="primary" @click="payByWallet">确认支付</mt-button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations, mapGetters } from "vuex";
-import {getOrders} from '../api/api';
-export default {
-  name: "orders",
-  data() {
-    return {
-      nowIndex: 0,
-      t: [
-        {
-          item: "全部"
+  import {
+    getOrders
+  } from '../api/api';
+  import LoadMore from '../components/common/loadMore';
+  import {
+    Toast
+  } from 'mint-ui'
+  import {fmoney} from '../api/global'
+  export default {
+    data() {
+      return {
+        commad: getOrders,
+        visiblePopup: {
+          paymentLoadingVisible: false,
+          paymentContainerVisible: false
         },
-        {
-          item: "待付款"
+        paymentPassword: null, //支付密码
+        currentOrder: {}, //当前订单
+        params: {
+          pageSize: 10,
+          pageIndex: 1,
+          current:1,
+          cancel_status: null,
+          confirm_status: null,
+          pay_status: null,
+          finish_status: null
         },
-        {
-          item: "待收货"
-        },
-        {
-          item: "待评价"
-        }
-      ],
-      orderStatus:{
-        "0":"待支付"
+        orderList: [],
+        active: null
+      };
+    },
+
+    watch: {},
+
+    components: {
+      LoadMore
+    },
+
+    computed: {},
+
+    methods: {
+      payment(item) {
+        this.visiblePopup.paymentLoadingVisible = true;
+        setTimeout(() => {
+          this.visiblePopup.paymentLoadingVisible = false;
+          this.visiblePopup.paymentContainerVisible = true;
+          this.currentOrder = item;
+        }, 2000)
       },
-      orders:[],
-      params:{
-        current:1,
-        size:10,
-        userId:14
-      }
-    };
-  },
-  components: {
-    
-  },
-  mounted:function(){
-    getOrders(this.params).then(res=>{
-        console.log(res)
-        this.orders=res.data.data.records
-  })
-    document.title = '我的订单'
-  },
-  computed: {
-    // orders() {
-    //   return this.$store.state.orders;
-    // }
-    shopName(){
-      return "官方旗舰店"
-    }
-  },
-  methods: {
-    ...mapMutations(["odefault"]),
-    btn(num) {
-      this.nowIndex = num;
-    },
-    odetails(list){
-        this.$router.push({
-            path: "OrderDetails",
-            query:{
-                id:list.id,
-                text:list.text,
-                ly:list.ly,
-                listname:list.listname,
-                value:list.value
-            }
+      finishOrder(item) { //确认收货
+        this.$store.dispatch('FinishOrder', {
+          OrderNo: item.OrdertNo
+        }).then(response => {
+          Toast({
+            message: response.Message
+          })
+          this.onRefreshCallback()
         })
-        console.log(list)
-    },
-    refresh(done) {
-      setTimeout(() => {
-        var start = this.top - 1
-        for (var i = start; i > start - 10; i--) {
-          this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
+      },
+      commitMessage(item) { //评论
+        this.$router.push(`/review/${item.OrdertNo}`)
+      },
+      cancelOrder(item) { //取消订单
+        this.$store.dispatch('CancelOrder', {
+          orderId: item.order.id
+        }).then(response => {
+          Toast({
+            message: response.Message
+          })
+          this.onRefreshCallback()
+        })
+      },
+      async onRefreshCallback() { //下拉刷新
+        this.params.pageSize = 10;
+        this.params.pageIndex = 1;
+        this.params.current = 1;
+        this.orderList = [];
+        this.$refs.orderLoadmore.onTopLoaded(this.$refs.orderLoadmore.uuid);
+      },
+      switchTabs(Id) {
+        if (this.active === Number(Id)) return;
+        this.active = Id;
+        switch (Number(this.active)) {
+          case 0: //全部订单
+            this.params.shippingStatus = null;
+            this.params.payStatus = null;
+            this.params.orderStatus = null;
+            break;
+          case 1: //待付款
+            this.params.orderStatus = 0;
+            this.params.payStatus = 0;
+            this.params.shippingStatus = 0;
+            break;
+          case 2: //待收货
+            this.params.orderStatus = 2;
+            this.params.payStatus = 1;
+            this.params.shippingStatus = 1;
+            break;
+          case 3: //已完成
+            this.params.shippingStatus = 2;
+            this.params.payStatus = null;
+            this.params.orderStatus = 3;
+            break;
+          case 4: //已取消
+            this.params.orderStatus = -1;
+            break;
+          default: //其他
+            throw new Error('未知TabId')
+            break
         }
-        this.top = this.top - 10
-        done()
-      }, 1500)
-    },
-    infinite(done) {
-      setTimeout(() => {
-        var start = this.bottom + 1
-        for (var i = start; i < start + 10; i++) {
-          this.items.push(i + ' - keep walking, be 2 with you.')
+        this.onRefreshCallback();
+      },
+      payByWallet() {
+        this.$store.dispatch('PayByWallet', {
+          PaymentNo: this.currentOrder.OrdertNo,
+          PaymentPassword: this.paymentPassword
+        }).then(response => {
+          if (response.Code === 0) {
+            Toast({
+              message: response.Message
+            });
+            this.visiblePopup.paymentContainerVisible = false;
+            this.visiblePopup.paymentLoadingVisible = false;
+            setTimeout(() => {
+              this.onRefreshCallback();
+            }, 1000)
+          }
+        })
+      },
+      async infiniteCallback(response) { //加载更多订单
+        console.log(response)
+        if (response.data.data.records.length > 0) {
+          response.data.data.records.map(i => {
+            i.orderPrice = fmoney(i.orderPrice)
+            this.orderList.push(i)
+          })
         }
-        this.bottom = this.bottom + 10
-        done()
-      }, 1500)
+      },
+    },
+    mounted: function () {
+      if (this.$route.params.tab != null) return this.switchTabs(Number(this.$route.params.tab))
+      this.switchTabs(0)
     }
   }
-};
+
 </script>
+<style lang='scss' scoped>
 
-
-<style lang="stylus" scoped>
-.orderMain
-    padding-top 1.3rem
-.order-box
-    height 1rem
-    background white
-    position fixed
-    width 100%
-    border-bottom 1px solid #f0f0f0
-    .active
-        color #199cfe
-        border-bottom 2px solid #199cfe
-    p
-        width 25%
-        height 100%
-        line-height 1rem
-        float left
-        text-align center
-
-        a
-            width 50%
-            height 100%
-            font-size .36rem
-            display block
-            margin auto
-.order-box2
-    width 100%
-    margin-top 1rem
-.orders
-    margin-top 10px
-    ._order
-        width 100%
-        height 1.3rem
-        line-height 1.3rem
-        background #ffffff
-        .left
-            float left
-            color #666
-            margin-left .5rem
-            font-size .35rem
-            i
-                font-size .4rem
-                color #666
-        .right
-            float right
-            color rgb(0, 172, 255)
-            margin-right .3rem
-            font-size .35rem
-    .order
-        width 100%
-        height 3rem
-        background white
-        border-bottom 1px solid #f0f0f0
-        border-top 1px solid #f0f0f0
-        img
-            float left
-            margin .3rem
-            height 2.5rem
-        .order-div
-            width 4rem
-            margin .3rem
-            line-height .7rem
-            float left
-            h3
-                font-size .5rem
-            .order-div-price
-                color red
-                font-size .4rem
-        .order-div-2
-            display inline-block
-            float right
-            margin .3rem .6rem
-            font-size .4rem
-    .order-2
-        width 100%
-        height 1.7rem
-        background white
-        .order-2-box
-            width 50%
-            float right
-            text-align right
-            margin .2rem .4rem
-            .order-2-zero
-                float left
-                font-size .35rem
-                margin-left .5rem
-                span
-                    color red
-            .order-2-one
-                font-size .35rem
-                span
-                    color red
-            .order-2-two
-                color #666
-                padding-top .2rem
-                font-size .35rem
-    .order-3
-        width 100%
-        height 1.1rem
-        background white
-        a
-            width 2.8rem
-            height .7rem
-            line-height .7rem
-            border 1px solid red
-            border-radius 3px
-            text-align center
-            display block
-            float right
-            margin-right .3rem
-            margin-top .1rem
-            border 1px solid #dcdcdc
-            font-size .3rem
 
 </style>
-

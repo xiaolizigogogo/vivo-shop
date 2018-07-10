@@ -77,6 +77,7 @@ export default {
     'v-footer':Footer
   },
   mounted:function(){
+    this.params.userId=JSON.parse(localStorage.getItem("user")).id
     getCarts(this.params).then(res=>{
       this.carts=res.data.data
     })
