@@ -34,12 +34,12 @@
     </router-link>
     <div class="box">
 
-      <mt-cell
-        title="我的收藏"
-        to="/MyCollection"
-        is-link>
-        <i class="iconfont icon-collection" slot="icon"></i>
-      </mt-cell>
+      <!--<mt-cell-->
+        <!--title="我的收藏"-->
+        <!--to="/MyCollection"-->
+        <!--is-link>-->
+        <!--<i class="iconfont icon-collection" slot="icon"></i>-->
+      <!--</mt-cell>-->
       <mt-cell
         title="我的收货地址"
         to="/address"

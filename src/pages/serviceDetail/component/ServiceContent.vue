@@ -263,8 +263,8 @@ export default {
         alert("请选择服务时间")
         return
       }
-      this.submitForm.userId=124
-      this.submitForm.openid=''
+      this.submitForm.userId=JSON.parse(localStorage.getItem("user")).id
+      this.submitForm.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid
       this.submitForm.adminId=this.adminId
       this.submitForm.adminName=this.item.nickname;
       this.submitForm.productUrl=this.item.avatar

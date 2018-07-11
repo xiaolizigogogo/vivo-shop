@@ -248,7 +248,7 @@ const addSubscribes=(params)=>{
     return request({
       url: '/shop/subscribes',
       method: 'get',
-      data: params
+      params: params
     })
   }
  const getAdminAilviliableInfo=(params)=>

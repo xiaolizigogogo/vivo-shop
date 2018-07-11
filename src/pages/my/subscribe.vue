@@ -1,301 +1,524 @@
-<template>
+<!-- orderList -->
+<style lang="scss" scoped>
+  @import '../../assets/common/css/mixin.scss';
+  .paymentLoading {
+    position: fixed;
+    @include flexbox(center,
+      center,
+      row,
+      nowrap);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    img {
+      background: rgba(0, 0, 0, .6);
+      width: 3rem;
+    }
+  }
 
-  <div class="main" >
-    <div>
-      <div class="weui-search-bar" id="search_bar">
-        <form class="weui-search-bar__form">
-          <div class="weui-search-bar__box">
-            <i class="weui-icon-search fontSize04"></i>
-            <input type="search" class="weui-search-bar__input fontSize04" id="search_input" placeholder="搜索" ref="searchValue" />
-            <a href="javascript:" class="weui-icon-clear fontSize04" id="search_clear" @click="handleClear"></a>
+  .paymentContainer {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .4);
+    @include flexbox(center,
+      center,
+      row,
+      nowrap);
+    .content {
+      width: 85%;
+      background: #fff;
+      border-radius: 10px;
+      >button {
+        width: 60%;
+        margin: 20px auto;
+        background: $red;
+      }
+      >a {
+        margin: 5px 0;
+        padding: 0 15px;
+      }
+      .title {
+        @include flexbox(center,
+          center,
+          row,
+          nowrap);
+        position: relative;
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        strong {
+          font-size: 20px;
+        }
+        .closeIcon {
+          display: block;
+          background: url('../../assets/jd/images/product-detail-sprites-mjs.png') no-repeat;
+          width: 25px;
+          height: 25px;
+          background-position: -38px -19px;
+          background-size: 150px;
+          vertical-align: -8px;
+          position: absolute;
+          left: 10px;
+        }
+      }
+      .paymentInfo {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        @include flexbox(flex-start,
+          center,
+          column,
+          wrap);
+        font-size: 20px;
+        span {}
+        strong {
+          font-size: 40px;
+          font-weight: 400;
+          margin: 10px 0 0;
+        }
+      }
+    }
+  }
+
+  .my-order {
+    .my-header {
+      padding: $padding;
+      background: #fff;
+      position: relative;
+      z-index: 1;
+      @include flexbox(space-between,
+        center,
+        row,
+        nowrap);
+      border-bottom: 1px solid #eee;
+      .back {
+        display: block;
+        width: .65rem;
+        height: .65rem;
+        background: url('../../assets/jd/images/arrow-left.png') no-repeat;
+        background-size: 100%;
+      }
+      strong {
+        font-size: 18px;
+        font-weight: normal;
+        color: #333;
+      }
+      .myMsg {
+        display: block;
+        background: url('../../assets/jd/images/searchIcon.png') no-repeat;
+        background-size: 600% 100%;
+        height: .65rem;
+        width: .65rem;
+        background-position: -2.6rem 0;
+      }
+    }
+    .topnav {
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      margin: 0;
+      z-index: 111;
+      position: relative;
+      #loadingbar {
+        position: absolute;
+        transition: .4s;
+        width: calc((100%/8));
+        background: red;
+        bottom: 0;
+        height: 2px;
+      }
+      >span {
+        width: 33.33%;
+        padding: 12px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        background: #fff;
+      }
+      .active {
+        color: red;
+      }
+    }
+    .order-container {
+      height: auto;
+      ._v-container {
+        // background: #fff;
+      }
+      .order-nomore-tip {
+        margin-top: 50px;
+        @include flexbox(space-between,
+          center,
+          column,
+          wrap);
+        i {
+          display: block;
+          width: 60px;
+          height: 60px;
+          background: url('../../assets/jd/images/order.png') no-repeat;
+          background-size: 100%;
+        }
+        span {
+          font-size: 17px;
+          font-weight: normal;
+          padding: 30px 0;
+          color: $gray;
+        }
+      }
+      .all-order {
+        background: #f5f5f5;
+      }
+      .order-list {
+        background: #fff;
+        margin-top: $margin;
+        .order-item {
+          margin-top: 10px;
+          .order-top {
+            padding: $padding;
+            @include flexbox(space-between,
+              center,
+              row,
+              nowrap);
+            .left {
+              text-align: left;
+              img {
+                width: 15px;
+                height: 15px;
+                vertical-align: bottom;
+              }
+              span {
+                font-size: $subtitle;
+                color: #333;
+                margin-left: 5px;
+              }
+            }
+            .right {
+              .order-status {
+                color: $red;
+                font-size: $subtitle;
+              }
+            }
+          }
+          .order-product-list {
+            @include flexbox(flex-start,
+              flex-start,
+              column,
+              wrap);
+            .order-product-item {
+              padding: $padding;
+              width: 100%;
+              >div {
+                @include flexbox(flex-start,
+                  flex-start,
+                  row,
+                  nowrap);
+                width: 100%;
+                img {
+                  max-width: 80px;
+                  max-height: 80px;
+                  border: 1px solid #eee;
+                }
+                .product-info {
+                  margin-left: $margin;
+                  .prod-price {
+                    font-size: 14px;
+                    strong {
+                      font-size: 15px;
+                      color: $red;
+                    }
+                    @include flexbox(space-between,
+                      center,
+                      row,
+                      nowrap);
+                  }
+                  p {
+                    @include textoverflow(3);
+                    font-size: $subtitle;
+                    margin: $margin 0;
+                    color: #333;
+                  }
+                }
+              }
+            }
+          }
+          .order-sku {
+            background: #fff;
+            padding: 8px $padding;
+            text-align: right;
+            font-size: $subtitle;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            strong {
+              font-size: 17px;
+              color: $red;
+            }
+          }
+          .order-btn-group {
+            border-bottom: 4px solid #eee;
+            @include flexbox(flex-end,
+              center,
+              row,
+              nowrap);
+            padding: 5px $padding;
+            >span {
+              padding: 5px 20px;
+              color: $red;
+              font-size: $subtitle;
+              border: 1px solid $red;
+              border-radius: 2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+</style>
+
+<template>
+  <div class="my-order">
+    <div class="my-header">
+      <i class="back" @click="$router.go(-1)"></i>
+      <strong>我的预约</strong>
+      <i class="myMsg"></i>
+    </div>
+    <div class="topnav">
+      <span @click.stop.prevent="switchTabs(0)" :class="{'active':active===0}">全部</span>
+      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">待确认</span>
+      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">待完成</span>
+      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">已完成</span>
+      <span @click.stop.prevent="switchTabs(4)" :class="{'active':active===4}">已取消</span>
+      <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
+    </div>
+    <div class="order-container">
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :topMethod="onRefreshCallback"
+                 :loadMoreIconVisible="false" ref="orderLoadmore">
+        <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
+              slot="refresh-spinner">更新中...</span>
+        <!-- 全部订单 -->
+        <div class="all-order" v-if="orderList!=''">
+          <div class="order-list">
+            <div class="order-item" v-for="(item,index) in orderList" :key="index">
+              <div class="order-top">
+                <div class="left">
+                  <!--<img src="../../assets/jd/images/applist (5).png" alt="">-->
+                  <span>预约编号：{{item.subscribeId}}</span>
+                </div>
+                <div class="right">
+                  <div class="order-status">
+                    <span v-if="item.subscribeStatus === 0">等待付款</span>
+                    <span v-if="item.subscribeStatus === 1">等待收货</span>
+                    <span v-if="item.subscribeStatus === 2">已完成</span>
+                    <span v-if="item.subscribeStatus === 2">已取消</span>
+                  </div>
+                </div>
+              </div>
+              <div class="order-product-list">
+                <div class="order-product-item" >
+                  <div>
+                    <img :src="item.productUrl" alt="">
+                    <div class="product-info">
+                      <p class="prod-name">{{item.subscribeDay}} {{ item.subscribeTime}} 时</p>
+                      <p class="prod-price">
+                        <strong>{{item.productName}}</strong>
+                        <span>x {{item.userNumber}}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="order-sku">-->
+                <!--<span>共{{item.id}}件商品&nbsp;需支付：</span>-->
+                <!--<strong>&yen;&nbsp;{{item.id}}</strong>-->
+              <!--</div>-->
+              <div class="order-btn-group">
+                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 0" @click="payment(item)">去支付</span>
+                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 1 && item.subscribeStatus=== 2"
+                      @click="finishOrder(item)">确认收货</span>
+                <span class="payment" v-if="item.subscribeStatus === 0 && item.subscribeStatus === 0" @click="cancelOrder(item)">取消</span>
+                <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
+                <!--@click="commitMessage(item)">去评论</span>-->
+              </div>
+            </div>
           </div>
-          <label for="search_input" class="weui-search-bar__label" id="search_text" @click="handleClick" v-show="isShow">
-            <i class="weui-icon-search fontSize04"></i>
-            <span class="fontSize04">搜索</span>
-          </label>
-        </form>
-        <a href="javascript:" id="search_cancel" @click="handleCancel" v-show="!isShow">取消</a>
+
+        </div>
+        <!-- 全部订单 -->
+
+        <!-- 没有订单 -->
+        <div class="order-nomore-tip" v-if="orderList==''">
+          <i></i>
+        </div>
+        <!-- 没有订单 -->
+      </load-more>
+      <div class="paymentLoading" v-if="visiblePopup.paymentLoadingVisible">
+        <img src="../../assets/jd/images/paymentloading.gif" />
+      </div>
+      <div class="paymentContainer" v-if="visiblePopup.paymentContainerVisible">
+        <div class="content">
+          <div class="title">
+            <i class="closeIcon" @click="()=>visiblePopup.paymentContainerVisible=false"></i>
+            <strong>请输入支付密码</strong>
+          </div>
+          <div class="paymentInfo">
+            <span>订单付款</span>
+            <strong>&yen;{{currentOrder.total_fee}}</strong>
+          </div>
+          <mt-field placeholder="请输入支付密码" type="password" v-model="paymentPassword"></mt-field>
+          <mt-button size="large" type="primary" @click="payByWallet">确认支付</mt-button>
+        </div>
       </div>
     </div>
-
-    <div class="main_box" :style="{'-webkit-overflow-scrolling': scrollMode}">
-      <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
-        <div class="weui-panel__bd" v-for="todo in list" :key="todo.id" @click="open(todo.id)">
-          <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-            <div class="weui-media-box__hd">
-              <img class="weui-media-box__thumb" v-lazy="todo.productUrl" alt="图片">
-            </div>
-            <div class="weui-media-box__bd">
-              <h4 class="weui-media-box__title fontSize04" style="font-weight:bold"><span class="promotionDesc colorRed">{{todo.subscribeDay}} {{todo.subscribeTime}}点</span><span class="color98499C">{{todo.name}}</span></h4>
-              <p class="weui-media-box__desc fontSize03">预约项目&nbsp;{{todo.productName}}</p>
-              <p class="weui-media-box__desc fontSize03">预约状态&nbsp;<span class="colorRed" v-if="todo.subscribeStatus === '0'">待确认</span><span class="colorRed" v-if="todo.subscribeStatus === '1'">已确认</span><span class="colorRed" v-if="todo.subscribeStatus === '2'">已取消</span></p>
-              <p class="weui-media-box__desc fontSize03 retailPrice colorRed">完成状态&nbsp;<span v-if="todo.finishStatus=='0'">未完成</span><span v-if="todo.finishStatus=='1'">已完成</span></p>
-            </div>
-          </a>
-        </div>
-        <div class="weui-panel__ft">
-          <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
-            <div class="weui-cell__bd">查看更多</div>
-            <span class="weui-cell__ft"></span>
-          </a>
-        </div>
-      </v-loadmore>
-    </div>
-
   </div>
-
-
 </template>
 
 <script>
-  import {mapState, mapMutations, mapGetters} from "vuex";
-  import {getGoods,getSubscribes} from '../../api/api'
-  import {Loadmore} from 'mint-ui';
+  import {
+    getOrders,getSubscribes
+  } from '../../api/api';
+  import LoadMore from '../../components/common/loadMore';
+  import {
+    Toast
+  } from 'mint-ui'
+  import {fmoney} from '../../api/global'
   export default {
-    name: "mysubscribe",
     data() {
       return {
-        params: {
-          current: 1,
-          size: 20,
-          descs: ['id'],
-          isAsc:false
+        commad: getSubscribes,
+        visiblePopup: {
+          paymentLoadingVisible: false,
+          paymentContainerVisible: false
         },
-        noData: true,
-        list: [],
-        allLoaded: false, //是否可以上拉属性，false可以上拉，true为禁止上拉，就是不让往上划加载数据了
-        scrollMode: "touch", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
-        items: [],
-        isShow: true
-      }
+        paymentPassword: null, //支付密码
+        currentOrder: {}, //当前订单
+        params: {
+          pageSize: 10,
+          pageIndex: 1,
+          current:1,
+          cancel_status: null,
+          confirm_status: null,
+          pay_status: null,
+          finish_status: null,
+          userId:JSON.parse(localStorage.getItem("user")).id
+        },
+        orderList: [],
+        active: null
+      };
     },
 
-    props: {
-      todos: Array
+    watch: {},
+
+    components: {
+      LoadMore
+    },
+
+    computed: {},
+
+    methods: {
+      payment(item) {
+        this.visiblePopup.paymentLoadingVisible = true;
+        setTimeout(() => {
+          this.visiblePopup.paymentLoadingVisible = false;
+          this.visiblePopup.paymentContainerVisible = true;
+          this.currentOrder = item;
+        }, 2000)
+      },
+      finishOrder(item) { //确认收货
+        this.$store.dispatch('FinishOrder', {
+          OrderNo: item.OrdertNo
+        }).then(response => {
+          Toast({
+            message: response.Message
+          })
+          this.onRefreshCallback()
+        })
+      },
+      commitMessage(item) { //评论
+        this.$router.push(`/review/${item.OrdertNo}`)
+      },
+      cancelOrder(item) { //取消订单
+        this.$store.dispatch('CancelOrder', {
+          orderId: item.order.id
+        }).then(response => {
+          Toast({
+            message: response.Message
+          })
+          this.onRefreshCallback()
+        })
+      },
+      async onRefreshCallback() { //下拉刷新
+        this.params.pageSize = 10;
+        this.params.pageIndex = 1;
+        this.params.current = 1;
+        this.orderList = [];
+        this.$refs.orderLoadmore.onTopLoaded(this.$refs.orderLoadmore.uuid);
+      },
+      switchTabs(Id) {
+        if (this.active === Number(Id)) return;
+        this.active = Id;
+        switch (Number(this.active)) {
+          case 0: //全部订单
+            this.params.subscribeStatus = null;
+            break;
+          case 1: //待付款
+            this.params.subscribeStatus = 0;
+            break;
+          case 2: //待收货
+            this.params.subscribeStatus = 1;
+            break;
+          case 3: //已完成
+            this.params.subscribeStatus = 2;
+            break;
+          case 4: //已取消
+            this.params.subscribeStatus = -1;
+            break;
+          default: //其他
+            throw new Error('未知TabId')
+            break
+        }
+        this.onRefreshCallback();
+      },
+      payByWallet() {
+        this.$store.dispatch('PayByWallet', {
+          PaymentNo: this.currentOrder.OrdertNo,
+          PaymentPassword: this.paymentPassword
+        }).then(response => {
+          if (response.Code === 0) {
+            Toast({
+              message: response.Message
+            });
+            this.visiblePopup.paymentContainerVisible = false;
+            this.visiblePopup.paymentLoadingVisible = false;
+            setTimeout(() => {
+              this.onRefreshCallback();
+            }, 1000)
+          }
+        })
+      },
+      async infiniteCallback(response) { //加载更多订单
+        console.log(response)
+        if (response.data.data.records.length > 0) {
+          response.data.data.records.map(i => {
+            i.orderPrice = fmoney(i.orderPrice)
+            this.orderList.push(i)
+          })
+        }
+      },
     },
     mounted: function () {
-      this.loadPageList();
-      for (var i = 1; i <= 20; i++) {
-        this.items.push(i + ' - keep walking, be 2 with you.')
-      }
-      this.top = 1
-      this.bottom = 20
-    },
-    components:{
-      'v-loadmore': Loadmore
-    },
-    methods: {
-      handleClear(){
-        this.$refs.searchValue.value = '';
-      },
-      handleCancel(){
-        this.isShow = true
-      },
-      handleClick(){
-        this.isShow = false
-      },
-      open: function (id) {
-        this.$router.push({path: `/goodDetail/${id}`});
-      },
-      loadTop:function () { //组件提供的下拉触发方法
-        //下拉加载
-        this.loadPageList();
-        this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
-      }
-      ,
-      loadBottom:function () {
-        // 上拉加载
-        this.more();// 上拉触发的分页查询
-        this.$refs.loadmore.onBottomLoaded();// 固定方法，查询完要调用一次，用于重新定位
-      }
-      ,
-      loadPageList:function (flag) {
-        // 查询数据
-        getSubscribes(this.params).then((res) => {
-          if(flag){
-            this.list.push(res.data.data.records)
-          }
-          else{
-            this.list=res.data.data.records
-          }
-          // 是否还有下一页，加个方法判断，没有下一页要禁止上拉
-          if(this.params.current==res.data.data.pages){
-            this.isHaveMore(false);
-          }
-          else{
-            this.isHaveMore(true);
-          }
-          this.$nextTick(function () {
-            // 原意是DOM更新循环结束时调用延迟回调函数，大意就是DOM元素在因为某些原因要进行修改就在这里写，要在修改某些数据后才能写，
-            // 这里之所以加是因为有个坑，iphone在使用-webkit-overflow-scrolling属性，就是移动端弹性滚动效果时会屏蔽loadmore的上拉加载效果，
-            // 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好
-            this.scrollMode = "touch";
-          });
-        })
-        ;
-      }
-      ,
-      more:function () {
-        // 分页查询
-        this.params.current++;
-        this.loadPageList(true);
-        ;
-      }
-      ,
-      isHaveMore:function (isHaveMore) {
-        // 是否还有下一页，如果没有就禁止上拉刷新
-        this.allLoaded = true; //true是禁止上拉加载
-        if (isHaveMore) {
-          this.allLoaded = false;
-        }
-      }
-    },
-  }
-</script>
-
-<style lang="stylus" scoped>
-  .main h2 {
-    display: block;
-    height: 1.3rem;
-    background: white;
-    font-size: 0.35rem;
-    line-height: 1.3rem;
-    padding-left: 0.3rem;
-  }
-
-  .main_box {
-    height: 339px;
-  }
-
-  .list {
-    height: 4.7rem;
-    background: white;
-    float: left;
-    width: 50%;
-    border-right: 1px solid #f4f4f4;
-    border-top: 1px solid #f4f4f4;
-  }
-
-  .list span {
-    display: block;
-    color: red;
-    padding-left: 0.5rem;
-    padding-top: 0.1rem;
-  }
-
-  .main_box ul {
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-  }
-
-  ul li {
-    list-style: none;
-  }
-
-  .Price {
-    font-size: 0.33rem;
-    color: red;
-    margin: auto;
-    text-align: center;
-    font-size: 0.3rem;
-  }
-
-  .name {
-    width: 80%;
-    height: 0.5rem;
-    line-height: 0.5rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin: auto;
-    font-size: 0.29rem;
-    font-weight: 800;
-    text-align: center;
-  }
-
-  .nametwo {
-    height: 0.48rem;
-    font-size: 0.1rem;
-    text-align: center;
-  }
-
-  .image {
-    width: 100%;
-    background: white;
-
-    img {
-      width: 2.5rem;
-      height: 2.3rem;
-      display: block;
-      margin: auto;
-      margin-top: .5rem;
-      margin-bottom .2rem
+      if (this.$route.params.tab != null) return this.switchTabs(Number(this.$route.params.tab))
+      this.switchTabs(0)
     }
   }
-  html, body {
-    margin: 0;
-  }
-  * {
-    box-sizing: border-box;
-  }
-  .row {
-    width: 100%;
-    height: 50px;
-    padding: 10px 0;
-    font-size: 16px;
-    line-height: 30px;
-    text-align: center;
-    color: #444;
-    background-color: #fff;
-  }
-  .grey-bg {
-    background-color: #eee;
-  }
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 44px;
-    width: 100%;
-    box-shadow: 0 2px 10px 0 rgba(0,0,0,0.1);
-    background-color: #fff;
-    z-index: 1000;
-    color: #666;
-  }
-  .header > .title {
-    font-size: 16px;
-    line-height: 44px;
-    text-align: center;
-    margin: 0 auto;
-  }
-  .scroller {
-    position: relative;
-  }
-  .weui-search-bar__label{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .weui-search-bar__box{
-    padding-left: 1rem;
-  }
-  .weui-search-bar__input{
-    height: 1rem;
-  }
-  #search_cancel{
-    font-size: 0.4rem;
-    text-align: center;
-    color: #98499C;
-    padding-left: 0.1rem;
-  }
-  .promotionDesc{
-    border: 1px solid red;
-    padding: 0 0.1rem;
-    font-size: 0.3rem;
-    margin-right: 0.1rem;
-  }
-  .weui-panel__bd{
-    margin-top: 0.1rem;
-    background-color: #ffffff;
-  }
+
+</script>
+<style lang='scss' scoped>
+
+
 </style>
