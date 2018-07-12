@@ -77,14 +77,14 @@ const getDate = function(){
   let date = dateNow.getDate()
   return [year, month, date]
 }
-import {addSubscribes} from '../../../api/api'
+import {addSubscribes,getAdminAilviliableInfo} from '../../../api/api'
 export default {
   data(){
     return {
       year: '',
       month: '',
       date: '',
-      time: '9:00',
+      time: '请选择',
       productTypes:[],
       submitForm:{
         productId:undefined,
@@ -106,6 +106,10 @@ export default {
 
       },
       timeArray:[
+        {
+          label:'请选择',
+          value:0
+        },
         {
           label: '9:00',
           value: 9
@@ -150,19 +154,15 @@ export default {
           label: '20:00',
           value: 20,
         }
-      ]
+      ],
+      unAvilTime:[],
+      item:{},
+      adminId:undefined,
+      today:undefined
     }
   },
   props:{
-    item:{
 
-    },
-    adminId:{
-      type:String
-    },
-    unAvilTime:{
-      type:Array
-    }
   },
   mounted(){
     let arr = getDate()
@@ -177,22 +177,12 @@ export default {
     }else{
       this.date = arr[2]
     }
-    //初始化
-    this.submitForm.adminId=this.item.id
-  },
-  created(){
     this.productTypes=JSON.parse(sessionStorage.getItem("productTypes"));
-    this.timeArray.forEach(item=>{
-      if(this.unAvilTime.includes(item.value)){
-        item.disabled=true
-      }
-      const date=new Date()
-      if(date.getHours()>=item.value){
-        item.disabled=true
-      }
-    })
-  }
-  ,
+    this.submitForm.subscribeDay=this.year+"-"+this.month+"-"+this.date
+    this.today=this.year+"-"+this.month+"-"+this.date
+    //初始化
+    this.init()
+  },
   methods:{
     handleReservationsClick(e){
       console.log(e)
@@ -231,6 +221,7 @@ export default {
             that.month = result[1].value;
             that.date = result[2].value;
             that.submitForm.subscribeDay=that.year+"-"+that.month+"-"+that.date
+            that.init()
         },
         id: 'datePicker'
     });
@@ -265,17 +256,37 @@ export default {
       }
       this.submitForm.userId=JSON.parse(localStorage.getItem("user")).id
       this.submitForm.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid
-      this.submitForm.adminId=this.adminId
+      this.submitForm.adminId=this.item.id
       this.submitForm.adminName=this.item.nickname;
       this.submitForm.productUrl=this.item.avatar
       addSubscribes(this.submitForm).then(res=>{
         if(res.data.status==200){
           alert("预约成功")
+          this.$router.push({path:"/mysubscribe"})
         }
         else{
           alert(res.data.exception)
         }
       });
+    },
+    initTime(){
+      this.timeArray.forEach(item=>{
+        item.disabled=false
+        if(this.unAvilTime.includes(item.value)){
+          item.disabled=true
+        }
+        const date=new Date()
+        if(this.today==this.submitForm.subscribeDay&&date.getHours()>=item.value){
+          item.disabled=true
+        }
+      })
+    },
+    init(){
+      getAdminAilviliableInfo({adminId:this.$route.query.id,subscribeDay:this.submitForm.subscribeDay}).then(res=>{
+        this.item=res.data.data.userInfo
+        this.unAvilTime=res.data.data.unailviliableTime
+        this.initTime();
+      })
     }
   }
 }

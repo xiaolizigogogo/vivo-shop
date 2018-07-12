@@ -1,7 +1,7 @@
 <template>
     <div class="serviceDetail">
        <Bg-Header :item="item"></Bg-Header>
-       <Service-Content :item="item" :unAvilTime="unAvilTime" :adminId="item.id"></Service-Content>
+       <Service-Content></Service-Content>
     </div>
 
 </template>
