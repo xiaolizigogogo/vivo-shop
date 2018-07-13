@@ -2,10 +2,10 @@
   <div class="pay">
     <div class="pay-address" @click="goaddress"  v-if="address">
       <div>
-        <p class="main-address-per">收货人:<span>王先生</span></p>
-        <p class="main-address-tel">15985698749</p>
+        <p class="main-address-per">收货人:<span>{{submitForm.userName}}</span></p>
+        <p class="main-address-tel">{{submitForm.mobile}}</p>
       </div>
-      <p>收货地址:<span>河南省郑州市中原区秦岭路8号院59号单元28层15号东户第三家</span></p>
+      <p>收货地址:<span>{{submitForm.address}}</span></p>
     </div>
     <div @click="goaddress" class="pay-address" v-if="!address" >
       <p class="address-box">
@@ -228,21 +228,16 @@ export default {
     goaddress(){
         wx.openAddress({
           trigger: function (res) {
-            alert('用户开始拉出地址');
           },
           success: function (res) {
-            alert(res.userName+","+res.telNumber);
             this.submitForm.userName=res.userName;
-            // this.submitForm.telNumber=res.telNumber;
-            // this.submitForm.nationalCode=res.nationalCode;
-            // this.submitForm.postalCode=res.postalCode;
-            // this.submitForm.provinceName=res.provinceName;
-            // this.submitForm.cityName=res.cityName;
-            // this.submitForm.countryName=res.countryName;
-            // this.submitForm.detailInfo=res.detailInfo;
-            // this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
-            // alert(this.submitForm)
-            alert('拉出地址成功'+JSON.stringify(res)+''+res.userName);
+            this.submitForm.mobile=res.telNumber;
+            this.submitForm.province=res.provinceName;
+            this.submitForm.city=res.cityName;
+            this.submitForm.country=res.countryName;
+            this.submitForm.district=res.detailInfo;
+            this.submitForm.address=res.provinceName+" "+res.cityName+" "+res.countryName+" "+res.detailInfo;
+            this.address=this.submitForm.address;
           },
           cancel: function (res) {
             alert('用户取消拉出地址');
