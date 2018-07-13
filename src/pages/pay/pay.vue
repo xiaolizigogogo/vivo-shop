@@ -175,7 +175,7 @@ import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 import { MessageBox } from 'mint-ui';
 import wexinPay from '../pay/wxPayComponent'
-import {unifiedOrder,addOrder,preOrder} from '../../api/api'
+import {unifiedOrder,addOrder,preOrder,getJsTicket} from '../../api/api'
 export default {
   name: "pay",
   data() {
@@ -191,6 +191,9 @@ export default {
         body:"订单支付",
         tradeType:"JSAPI",
         money:undefined
+      },
+      submitForm:{
+
       },
       lists: [
         {
@@ -222,7 +225,31 @@ export default {
       this.invoiceIndex = index;
     },
     goaddress(){
-      this.$router.push({path:"/address"})
+        wx.openAddress({
+          trigger: function (res) {
+            alert('用户开始拉出地址');
+          },
+          success: function (res) {
+            alert(res.userName+","+res.telNumber);
+            this.submitForm.userName=res.userName;
+            // this.submitForm.telNumber=res.telNumber;
+            // this.submitForm.nationalCode=res.nationalCode;
+            // this.submitForm.postalCode=res.postalCode;
+            // this.submitForm.provinceName=res.provinceName;
+            // this.submitForm.cityName=res.cityName;
+            // this.submitForm.countryName=res.countryName;
+            // this.submitForm.detailInfo=res.detailInfo;
+            // this.submitForm.address=this.submitForm.provinceName+" "+this.submitForm.cityName+" "+this.submitForm.countryName
+            // alert(this.submitForm)
+            alert('拉出地址成功'+JSON.stringify(res)+''+res.userName);
+          },
+          cancel: function (res) {
+            alert('用户取消拉出地址');
+          },
+          fail: function (res) {
+            alert('拉出地址失败');
+          }
+        });
     },
     addOrder() {
       var _this = this;
@@ -279,6 +306,17 @@ export default {
     if(sessionStorage.getItem("address")!=undefined){
       this.address=JSON.parse(sessionStorage.getItem("address"))
     }
+    getJsTicket({url:window.signLink}).then(res => {
+      res.data.data.jsApiList = ['checkJsApi','editAddress']
+      alert(JSON.stringify(res.data.data))
+      wx.config(res.data.data);
+      wx.ready(() => {
+      });
+      wx.error(function (res) {
+        alert('wx err', res);
+        //可以更新签名
+      });
+    })
     },
   mounted(){
 
