@@ -226,18 +226,19 @@ export default {
       this.invoiceIndex = index;
     },
     goaddress(){
+      var _this = this;
         wx.openAddress({
           trigger: function (res) {
           },
           success: function (res) {
-            this.submitForm.userName=res.userName;
-            this.submitForm.mobile=res.telNumber;
-            this.submitForm.province=res.provinceName;
-            this.submitForm.city=res.cityName;
-            this.submitForm.country=res.countryName;
-            this.submitForm.district=res.detailInfo;
-            this.submitForm.address=res.provinceName+" "+res.cityName+" "+res.countryName+" "+res.detailInfo;
-            this.address=this.submitForm.address;
+            _this.submitForm.userName=res.userName;
+            _this.submitForm.mobile=res.telNumber;
+            _this.submitForm.province=res.provinceName;
+            _this.submitForm.city=res.cityName;
+            _this.submitForm.country=res.countryName;
+            _this.submitForm.district=res.detailInfo;
+            _this.submitForm.address=res.provinceName+" "+res.cityName+" "+res.countryName+" "+res.detailInfo;
+            _this.address=_this.submitForm.address;
           },
           cancel: function (res) {
             alert('用户取消拉出地址');
