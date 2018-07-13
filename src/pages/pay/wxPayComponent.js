@@ -30,6 +30,7 @@ signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入
 paySign: paySign, // 支付签名
 success: function(res) {
 // 支付成功后的回调函数
+  this.$router.push({path:"/mytrade"})
 cb(res);
 },
 fail:function(res){
