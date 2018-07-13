@@ -239,6 +239,7 @@ export default {
             _this.submitForm.district=res.detailInfo;
             _this.submitForm.address=res.provinceName+" "+res.cityName+" "+res.countryName+" "+res.detailInfo;
             _this.address=_this.submitForm.address;
+            alert(JSON.stringify(_this.submitForm));
           },
           cancel: function (res) {
             alert('用户取消拉出地址');
