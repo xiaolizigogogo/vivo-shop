@@ -239,7 +239,6 @@ export default {
             _this.submitForm.district=res.detailInfo;
             _this.submitForm.address=res.provinceName+" "+res.cityName+" "+res.countryName+" "+res.detailInfo;
             _this.address=_this.submitForm.address;
-            alert(JSON.stringify(_this.submitForm));
           },
           cancel: function (res) {
             alert('用户取消拉出地址');
@@ -251,10 +250,11 @@ export default {
     },
     addOrder() {
       var _this = this;
-        var data = {
-          orderSn:_this.order.orderSn
-        };
-      addOrder(data).then(function(res) {
+      if(_this.submitForm.address==null){
+        alert("请选择收获地址");
+        return
+      }
+      addOrder(_this.submitForm).then(function(res) {
         if(res.data.status==200){
           _this.params.totalFee=res.data.data.order.orderPrice*100;
           _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
