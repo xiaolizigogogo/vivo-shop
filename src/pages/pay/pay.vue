@@ -261,7 +261,7 @@ export default {
         if(res.data.status==200){
           _this.params.totalFee=res.data.data.order.orderPrice*100;
           // _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
-          _this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
+          _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:res.data.data.order.orderSn})
           _this.payOrder();
         }
         else{
