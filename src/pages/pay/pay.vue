@@ -176,6 +176,7 @@ import axios from "axios";
 import { MessageBox } from 'mint-ui';
 import wexinPay from '../pay/wxPayComponent'
 import {unifiedOrder,addOrder,preOrder,getJsTicket} from '../../api/api'
+import wx from 'weixin-js-sdk'
 export default {
   name: "pay",
   data() {
