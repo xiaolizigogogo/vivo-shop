@@ -187,6 +187,7 @@ export default {
       order:{orderPrice:0},
       confirm:false,
       params:{
+        userId:"",
         openid:"",
         totalFee:"1",
         body:"订单支付",
@@ -231,6 +232,8 @@ export default {
           trigger: function (res) {
           },
           success: function (res) {
+            _this.submitForm.userId=_this.params.userId
+            _this.submitForm.openid=_this.params.openid
             _this.submitForm.userName=res.userName;
             _this.submitForm.mobile=res.telNumber;
             _this.submitForm.province=res.provinceName;
@@ -257,7 +260,7 @@ export default {
       addOrder(_this.submitForm).then(function(res) {
         if(res.data.status==200){
           _this.params.totalFee=res.data.data.order.orderPrice*100;
-          _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
+          // _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
           _this.params.attach=JSON.stringify({orderType:"TRADE_ORDER_PAY",orderNo:res.data.data.order.orderSn})
           _this.payOrder();
         }
@@ -304,6 +307,8 @@ export default {
     if(sessionStorage.getItem("address")!=undefined){
       this.address=JSON.parse(sessionStorage.getItem("address"))
     }
+    this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
+    this.params.userId=JSON.parse(localStorage.getItem("user")).id;
     getJsTicket({url:window.signLink}).then(res => {
       res.data.data.jsApiList = ['checkJsApi','editAddress']
       alert(JSON.stringify(res.data.data))
