@@ -3,7 +3,7 @@
     <div class="weui-tab">
     <div class="weui-navbar">
         <div class="weui-navbar__item weui-bar__item_on" @click="handleClick('0',$event)">
-            在线买单
+            在线充值
         </div>
         <div class="weui-navbar__item" @click="handleClick('1',$event)">
             交易记录

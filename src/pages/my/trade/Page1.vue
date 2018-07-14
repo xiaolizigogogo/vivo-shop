@@ -56,8 +56,8 @@
     methods:{
       pay(){
         this.params.totalFee=this.params.money*100;
-        this.params.openid=JSON.parse(sessionStorage.getItem("userInfo")).openId;
-        this.params.attach=JSON.stringify({orderType:"TRADE_ONLINE_PAY"})
+        this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenId;
+        this.params.attach=JSON.stringify({orderType:"在线充值"})
         let params=this.params
         // alert(JSON.stringify(params))
         unifiedOrder(params).then(res=>{

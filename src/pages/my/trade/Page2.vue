@@ -285,10 +285,10 @@
   <div class="my-order">
     <div class="topnav">
       <span @click.stop.prevent="switchTabs(0)" :class="{'active':active===0}">全部</span>
-      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">待确认</span>
-      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">待完成</span>
-      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">已完成</span>
-      <span @click.stop.prevent="switchTabs(4)" :class="{'active':active===4}">已取消</span>
+      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">在线充值</span>
+      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">线下消费</span>
+      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">线下充值</span>
+      <span @click.stop.prevent="switchTabs(4)" :class="{'active':active===4}">订单支付</span>
       <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
     </div>
     <div class="order-container">
@@ -303,14 +303,14 @@
               <div class="order-top">
                 <div class="left">
                   <!--<img src="../../../assets/jd/images/applist (5).png" alt="">-->
-                  <span>预约编号：{{item.subscribeId}}</span>
+                  <span>交易编号：{{item.cardNo}}</span>
                 </div>
                 <div class="right">
                   <div class="order-status">
-                    <span v-if="item.subscribeStatus === 0">等待付款</span>
-                    <span v-if="item.subscribeStatus === 1">等待收货</span>
-                    <span v-if="item.subscribeStatus === 2">已完成</span>
-                    <span v-if="item.subscribeStatus === 2">已取消</span>
+                    <span v-if="item.tradeType === 0">等待付款</span>
+                    <span v-if="item.tradeType === 1">等待收货</span>
+                    <span v-if="item.tradeType === 2">已完成</span>
+                    <span v-if="item.tradeType === 2">已取消</span>
                   </div>
                 </div>
               </div>
@@ -375,7 +375,7 @@
 
 <script>
   import {
-    getOrders,getSubscribes
+    getOrders,getSubscribes,getTrades
   } from '../../../api/api';
   import LoadMore from '../../../components/common/loadMore';
   import {
@@ -385,7 +385,7 @@
   export default {
     data() {
       return {
-        commad: getSubscribes,
+        commad: getTrades,
         visiblePopup: {
           paymentLoadingVisible: false,
           paymentContainerVisible: false
