@@ -66,7 +66,7 @@
                             <div class="cart">
                                 <div class="cartlength">{{cartlength}}</div>
                                 <img src="http://p6563v2ck.bkt.clouddn.com/%E8%B4%AD%E7%89%A9%E8%BD%A6.png" >
-                                <span>购物车</span>
+                                <span @click="gocart">购物车</span>
                             </div>
                             <div class="collection" >
                                 <div class="collection-box" @click="addCollection(goodDetail)"  v-show="!$store.state.ces">
@@ -167,8 +167,7 @@ export default {
   methods: {
     home(){
       this.$router.push({path:"/home"})
-    }
-    ,
+    },
     addCollection(index) {
       this.$store.state.ces=!this.$store.state.ces
        var data={
@@ -259,6 +258,9 @@ export default {
       getCartCount({"userId":JSON.parse(localStorage.getItem("user")).id}).then(res=>{
         this.cartlength=res.data.data;
     })
+    },
+    gocart(){
+        this.$router.push({path:"/cart"})
     }
   }
 };
