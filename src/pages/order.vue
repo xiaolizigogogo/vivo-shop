@@ -88,6 +88,7 @@
       padding: $padding;
       background: #fff;
       position: relative;
+      overflow: hidden;
       z-index: 1;
       @include flexbox(space-between,
         center,
@@ -148,6 +149,7 @@
     }
     .order-container {
       height: auto;
+      overflow: hidden;
       ._v-container {
         // background: #fff;
       }
@@ -357,23 +359,6 @@
         </div>
         <!-- 没有订单 -->
       </load-more>
-      <div class="paymentLoading" v-if="visiblePopup.paymentLoadingVisible">
-        <img src="../assets/jd/images/paymentloading.gif" />
-      </div>
-      <div class="paymentContainer" v-if="visiblePopup.paymentContainerVisible">
-        <div class="content">
-          <div class="title">
-            <i class="closeIcon" @click="()=>visiblePopup.paymentContainerVisible=false"></i>
-            <strong>请输入支付密码</strong>
-          </div>
-          <div class="paymentInfo">
-            <span>订单付款</span>
-            <strong>&yen;{{currentOrder.total_fee}}</strong>
-          </div>
-          <mt-field placeholder="请输入支付密码" type="password" v-model="paymentPassword"></mt-field>
-          <mt-button size="large" type="primary" @click="payByWallet">确认支付</mt-button>
-        </div>
-      </div>
     </div>
   </div>
 </template>
