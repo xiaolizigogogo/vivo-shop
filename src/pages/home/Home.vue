@@ -89,7 +89,6 @@ export default {
       })
     }
     getJsTicket({url:window.signLink}).then(res=>{
-      res.data.data.debug=false;
       res.data.data.jsApiList=['onMenuShareTimeline',
         'onMenuShareAppMessage',
         'onMenuShareQQ',

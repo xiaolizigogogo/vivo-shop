@@ -312,7 +312,6 @@ export default {
     this.params.userId=JSON.parse(localStorage.getItem("user")).id;
     getJsTicket({url:window.signLink}).then(res => {
       res.data.data.jsApiList = ['checkJsApi','editAddress']
-      alert(JSON.stringify(res.data.data))
       wx.config(res.data.data);
       wx.ready(() => {
       });

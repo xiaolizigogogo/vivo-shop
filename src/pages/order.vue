@@ -340,8 +340,8 @@
                 <strong>&yen;&nbsp;{{item.order.orderPrice}}</strong>
               </div>
               <div class="order-btn-group">
-                <span class="payment" v-if="item.order.orderStatus === 1 && item.order.payStatus === 0" @click="payment(item)">去支付</span>
-                <span class="payment" v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 2"
+                <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="payment(item)">去支付</span>
+                <span class="payment" v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 1"
                       @click="finishOrder(item)">确认收货</span>
                 <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="cancelOrder(item)">取消</span>
                 <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->

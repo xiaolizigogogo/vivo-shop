@@ -90,7 +90,7 @@ export default {
         productId:undefined,
         subscribeTime:0,
         phoneNumber:'',
-        username:'',
+        userName:'',
         subscribeTimeValue:'',
         userId:undefined,
         adminId:0,

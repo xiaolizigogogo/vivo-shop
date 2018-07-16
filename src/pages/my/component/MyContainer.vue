@@ -8,15 +8,15 @@
     <div class="container-integral">
       <p>
         <span class="mainColor">{{coupons}}</span>
-        <span>优惠券</span>
-      </p>
-      <p>
-        <span class="mainColor">{{encourage}}</span>
         <span>余额</span>
       </p>
       <p>
+        <span class="mainColor">{{encourage}}</span>
+        <span>累计消费</span>
+      </p>
+      <p>
         <span class="mainColor">{{integration}}</span>
-        <span>积分</span>
+        <span>累计充值</span>
       </p>
     </div>
 
@@ -40,13 +40,13 @@
         <!--is-link>-->
         <!--<i class="iconfont icon-collection" slot="icon"></i>-->
       <!--</mt-cell>-->
-      <mt-cell
-        title="我的收货地址"
-        to="/address"
-        is-link
-        >
-        <i class="iconfont icon-shouhuodizhi" slot="icon"></i>
-      </mt-cell>
+      <!--<mt-cell-->
+        <!--title="我的收货地址"-->
+        <!--to="/address"-->
+        <!--is-link-->
+        <!--&gt;-->
+        <!--<i class="iconfont icon-shouhuodizhi" slot="icon"></i>-->
+      <!--</mt-cell>-->
       <mt-cell
         title="我的购物车"
         to="/cart"
@@ -55,7 +55,7 @@
         <i class="iconfont icon-gouwuche" slot="icon"></i>
       </mt-cell>
       <mt-cell
-        title="在线买单"
+        title="在线充值"
         to="/mytrade"
         is-link
         >
