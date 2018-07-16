@@ -271,7 +271,7 @@ export default {
       },
     init(){
       var _this=this
-      preOrder({userId:this.params.userId}).then(function(res) {
+      preOrder({userId:JSON.parse(localStorage.getItem("user")).id}).then(function(res) {
         if(res.data.status==200) {
           _this.order = res.data.data.order
           _this.pay = res.data.data.orderGoods
