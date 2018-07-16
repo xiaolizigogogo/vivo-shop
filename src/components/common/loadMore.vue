@@ -452,6 +452,6 @@
 .loadmore-content{
   min-height: 100vh;
   margin-bottom: 5px;
-  overflow: auto;
+  overflow-x: auto;
 }
 </style>
