@@ -294,6 +294,7 @@ export default {
       unifiedOrder( _this.params).then(res=>{
         // alert(JSON.stringify(res))
         wexinPay(res.data.data,_this.success(),_this.error())
+        this.$router.push({path:"/order"})
       })
     },
     success(){},
