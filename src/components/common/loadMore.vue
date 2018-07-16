@@ -4,6 +4,7 @@
         v-infinite-scroll="onloadMoreScroll"
         :infinite-scroll-disabled="LoadMoreLoading"
         :infinite-scroll-distance="0"
+        infinite-scroll-immediate-check="false"
         v-if="!LoadMoreError"
     >
     <div class="loadmore-content" :class="{ 'is-dropped': topDropped || bottomDropped}" :style="{ 'transform': 'translate3d(0, ' + translate + 'px, 0)' }">
@@ -451,5 +452,6 @@
 .loadmore-content{
   min-height: 100vh;
   margin-bottom: 5px;
+  overflow: auto;
 }
 </style>
