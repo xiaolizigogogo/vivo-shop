@@ -11,7 +11,7 @@
         <div class="loadmore-top" v-if="topMethod">
           <div v-if="topStatus !== 'loading'" :class="topStatus === 'drop' ? 'drop' : 'pull'">
                 <icon v-if="loadMoreIconVisible" :class="['arrow-down',topStatus === 'drop'? 'arrow-drop':'arrow-pull']" name="long-arrow-down" scale="1.1"></icon>
-                <span>{{topStatus === 'drop' ? '释放更新' : '下拉刷新'}}</span>
+                <!--<span>{{topStatus === 'drop' ? '释放更新' : '下拉刷新'}}</span>-->
             </div>
             <div v-if="topStatus === 'loading'">
                 <mt-spinner :size="20" type="fading-circle"></mt-spinner>
@@ -80,7 +80,7 @@
   }
   @component-namespace mint {
     @component loadmore {
-      overflow: auto;
+      overflow: hidden;
       @descendent content {
         @when dropped {
           transition: .2s;
