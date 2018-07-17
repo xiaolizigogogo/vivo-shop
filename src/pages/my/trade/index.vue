@@ -5,13 +5,13 @@
         <div class="weui-navbar__item weui-bar__item_on" @click="handleClick('0',$event)">
             在线充值
         </div>
-        <div class="weui-navbar__item" @click="handleClick('1',$event)">
-            交易记录
-        </div>
+        <!--<div class="weui-navbar__item" @click="handleClick('1',$event)">-->
+            <!--交易记录-->
+        <!--</div>-->
     </div>
     <div class="weui-tab__panel">
         <div class="page"><Page1 /></div>
-        <div class="page" style="display:none"><Page2 /></div>
+        <!--<div class="page" style="display:none"><Page2 /></div>-->
     </div>
 </div>
   </div>

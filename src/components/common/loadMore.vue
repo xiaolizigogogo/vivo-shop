@@ -260,7 +260,7 @@
           });
 
           try {
-            if(response.data.data.length<=0 ||response.data.data.records<=0 ){
+            if(response.data.data.length<=0 ||response.data.data.records<=0||response.data.data.trades.records<=0 ){
                 this.AllLoaded = true;
                 return this.LoadMoreLoading = false;
             };

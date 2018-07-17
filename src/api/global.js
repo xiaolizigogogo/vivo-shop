@@ -12,6 +12,22 @@ function formatDate(date){
     // return y + '' + m + '' + d;
   return y + '-' + m + '-' + d;
 }
+function formatDateTime(date){
+  if (!date) return;
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? '0' + m : m;
+  var d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? '0' + h : h;
+  var mm = date.getMinutes();
+  mm = mm < 10 ? '0' +mm : mm;
+  var ss = date.getSeconds()
+  ss = ss < 10 ? '0' + ss : ss;
+  // return y + '' + m + '' + d;
+  return y + '年' + m + '月' + d +'日'+" "+h+":"+mm+":"+ss;
+}
 
 
 function formatNativeDate(date, fmt) {
@@ -105,5 +121,6 @@ export
   fmoney,
   deepClone,
   actionCode,
-  signUrl
+  signUrl,
+  formatDateTime
 }

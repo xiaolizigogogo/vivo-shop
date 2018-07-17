@@ -288,6 +288,11 @@
 
 <template>
   <div class="my-order">
+    <div class="my-header">
+      <i class="back" @click="$router.go(-1)"></i>
+      <strong>我的交易</strong>
+      <i class="myMsg"></i>
+    </div>
     <div class="topnav">
       <span @click.stop.prevent="switchTabs(0)" :class="{'active':active===0}">全部</span>
       <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">在线充值</span>
@@ -306,28 +311,23 @@
           <div class="order-list">
             <div class="order-item" v-for="(item,index) in orderList" :key="index">
               <div class="order-top">
-                <div class="left">
-                  <!--<img src="../../../assets/jd/images/applist (5).png" alt="">-->
-                  <span>交易编号：{{item.cardNo}}</span>
-                </div>
-                <div class="right">
-                  <div class="order-status">
-                    <span v-if="item.tradeType === 0">等待付款</span>
-                    <span v-if="item.tradeType === 1">等待收货</span>
-                    <span v-if="item.tradeType === 2">已完成</span>
-                    <span v-if="item.tradeType === 2">已取消</span>
-                  </div>
+              <div class="left">
+                <!--<img src="../../../assets/jd/images/applist (5).png" alt="">-->
+                <span>交易编号：{{item.cardNo}}</span>
+              </div>
+              <div class="right">
+                <div class="order-status">
+                  {{item.tradeType}}
                 </div>
               </div>
+            </div>
               <div class="order-product-list">
                 <div class="order-product-item" >
                   <div>
-                    <img :src="item.productUrl" alt="">
                     <div class="product-info">
-                      <p class="prod-name">{{item.subscribeDay}} {{ item.subscribeTime}} 时</p>
+                      <p class="prod-name">交易时间: {{item.gmtCreate}}</p>
                       <p class="prod-price">
-                        <strong>{{item.productName}}</strong>
-                        <span>x {{item.userNumber}}</span>
+                        <strong>交易金额: {{item.tradeMoney}}元</strong>
                       </p>
                     </div>
                   </div>
@@ -338,10 +338,10 @@
               <!--<strong>&yen;&nbsp;{{item.id}}</strong>-->
               <!--</div>-->
               <div class="order-btn-group">
-                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 0" @click="payment(item)">去支付</span>
-                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 1 && item.subscribeStatus=== 2"
+                <span class="payment" v-if="item.tradeType === 1 && item.tradeType === 0" @click="payment(item)">去支付</span>
+                <span class="payment" v-if="item.tradeType === 1 && item.tradeType === 1 && item.tradeType=== 2"
                       @click="finishOrder(item)">确认收货</span>
-                <span class="payment" v-if="item.subscribeStatus === 0 && item.subscribeStatus === 0" @click="cancelOrder(item)">取消</span>
+                <span class="payment" v-if="item.tradeType === 0 && item.tradeType === 0" @click="cancelOrder(item)">取消</span>
                 <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
                 <!--@click="commitMessage(item)">去评论</span>-->
               </div>
@@ -386,7 +386,7 @@
   import {
     Toast
   } from 'mint-ui'
-  import {fmoney} from '../../../api/global'
+  import {fmoney,formatDate,formatDateTime} from '../../../api/global'
   export default {
     data() {
       return {
@@ -464,19 +464,19 @@
         this.active = Id;
         switch (Number(this.active)) {
           case 0: //全部订单
-            this.params.subscribeStatus = null;
+            this.params.tradeType = null;
             break;
           case 1: //待付款
-            this.params.subscribeStatus = 0;
+            this.params.tradeType = "在线充值";
             break;
           case 2: //待收货
-            this.params.subscribeStatus = 1;
+            this.params.tradeType ="线下消费";
             break;
           case 3: //已完成
-            this.params.subscribeStatus = 2;
+            this.params.tradeType = "线下充值";
             break;
           case 4: //已取消
-            this.params.subscribeStatus = -1;
+            this.params.tradeType = "订单支付";
             break;
           default: //其他
             throw new Error('未知TabId')
@@ -502,10 +502,10 @@
         })
       },
       async infiniteCallback(response) { //加载更多订单
-        console.log(response)
-        if (response.data.data.records.length > 0) {
-          response.data.data.records.map(i => {
-            i.orderPrice = fmoney(i.orderPrice)
+        if (response.data.data.trades.records.length > 0) {
+          response.data.data.trades.records.map(i => {
+            i.tradeMoney = fmoney(i.tradeMoney)
+            i.gmtCreate = formatDateTime(new Date(i.gmtCreate))
             this.orderList.push(i)
           })
         }

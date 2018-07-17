@@ -22,6 +22,7 @@ import subscribe from "@/pages/subscribe/subscribe"
 import mysubscribe from "@/pages/my/subscribe"
 import subscribeDetail from "@/pages/subscribe/subscribeDetail"
 import mytrade from "@/pages/my/trade/index"
+import trade from "@/pages/my/trade/Page2"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 import HomeContainer from '@/pages/home/component/HomeContainer'
 import store from '../vuex'
@@ -43,6 +44,11 @@ const router =  new Router({
       path: '/mytrade',
       name:'mytrade',
       component: mytrade
+    },
+    {
+      path: '/trade',
+      name:'trade',
+      component: trade
     },
     {
       path: '/subscribe',
