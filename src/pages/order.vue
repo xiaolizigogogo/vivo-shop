@@ -302,12 +302,11 @@
       <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
     </div>
     <div class="order-container">
-      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params"
-                 :loadMoreIconVisible="true" ref="orderLoadmore">
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :loadMoreIconVisible="true" ref="orderLoadmore">
         <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
               slot="refresh-spinner">更新中...</span>
         <!-- 全部订单 -->
-        <div class="all-order" v-if="orderList!=''">
+        <div class="all-order" v-if="orderList">
           <div class="order-list">
             <div class="order-item" v-for="(item,index) in orderList" :key="index">
               <div class="order-top">
@@ -372,7 +371,7 @@
   } from '../api/api';
   import LoadMore from '../components/common/loadMore';
   import {
-    Toast
+    Toast,MessageBox
   } from 'mint-ui'
   import {fmoney} from '../api/global'
   export default {
@@ -395,6 +394,14 @@
           finish_status: null,
           userId:JSON.parse(localStorage.getItem("user")).id
         },
+        payParams:{
+          userId:"",
+          openid:"",
+          totalFee:"1",
+          body:"订单支付",
+          tradeType:"JSAPI",
+          money:undefined
+        },
         orderList: [],
         active: null
       };
@@ -410,22 +417,43 @@
 
     methods: {
       payment(item) {
-        this.visiblePopup.paymentLoadingVisible = true;
-        setTimeout(() => {
-          this.visiblePopup.paymentLoadingVisible = false;
-          this.visiblePopup.paymentContainerVisible = true;
-          this.currentOrder = item;
-        }, 2000)
+        var _this=this
+        MessageBox.confirm('', {
+          message: '确认去支付？',
+          title: '提示',
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        }).then(action => {
+          if (action == 'confirm') {     //确认的回调
+            _this.params.totalFee=item.order.orderPrice*100;
+            _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:item.order.orderSn})
+            this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
+            this.params.userId=JSON.parse(localStorage.getItem("user")).id;
+            unifiedOrder( _this.payParams).then(res=>{
+              wexinPay(res.data.data,_this.success(),_this.error())
+              this.onRefreshCallback()
+            })
+          }
+        }).catch(err => {
+          if (err == 'cancel') {     //取消的回调
+          }
+        });
+
       },
       finishOrder(item) { //确认收货
-        this.$store.dispatch('FinishOrder', {
-          OrderNo: item.OrdertNo
-        }).then(response => {
-          Toast({
-            message: response.Message
-          })
-          this.onRefreshCallback()
-        })
+        MessageBox.confirm('', {
+          message: '确认收货？',
+          title: '提示',
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        }).then(action => {
+          if (action == 'confirm') {     //确认的回调
+            this.onRefreshCallback()
+          }
+        }).catch(err => {
+          if (err == 'cancel') {     //取消的回调
+          }
+        });
       },
       commitMessage(item) { //评论
         this.$router.push(`/review/${item.OrdertNo}`)
@@ -492,10 +520,13 @@
         })
       },
       async infiniteCallback(response) { //加载更多订单
+        var _this=this
+        console.log(response)
         if (response.data.data.records.length > 0) {
           response.data.data.records.map(i => {
             i.orderPrice = fmoney(i.orderPrice)
-            this.orderList.push(i)
+            _this.orderList.push(i)
+
           })
         }
       },
