@@ -431,7 +431,7 @@
             _this.payParams.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
             _this.payParams.userId=JSON.parse(localStorage.getItem("user")).id;
             unifiedOrder( _this.payParams).then(res=>{
-              wexinPay(res.data.data,_this.success(),_this.error())
+              wexinPay(res.data.data,_this.onRefreshCallback(),_this.error())
               this.onRefreshCallback()
             })
           }
