@@ -426,10 +426,10 @@
           cancelButtonText: '取消'
         }).then(action => {
           if (action == 'confirm') {     //确认的回调
-            _this.params.totalFee=item.order.orderPrice*100;
-            _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:item.order.orderSn})
-            _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
-            _this.params.userId=JSON.parse(localStorage.getItem("user")).id;
+            _this.payParams.totalFee=item.order.orderPrice*100;
+            _this.payParams.attach=JSON.stringify({orderType:"订单支付",orderNo:item.order.orderSn})
+            _this.payParams.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
+            _this.payParams.userId=JSON.parse(localStorage.getItem("user")).id;
             unifiedOrder( _this.payParams).then(res=>{
               wexinPay(res.data.data,_this.success(),_this.error())
               this.onRefreshCallback()
@@ -441,6 +441,8 @@
         });
 
       },
+      success(){},
+      error(){},
       finishOrder(item) { //确认收货
         MessageBox.confirm('', {
           message: '确认收货？',
