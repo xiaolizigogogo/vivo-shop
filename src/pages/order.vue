@@ -302,7 +302,7 @@
       <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
     </div>
     <div class="order-container">
-      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :loadMoreIconVisible="true" ref="orderLoadmore">
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :loadMoreIconVisible="false" ref="orderLoadmore">
         <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
               slot="refresh-spinner">更新中...</span>
         <!-- 全部订单 -->
@@ -367,8 +367,9 @@
 
 <script>
   import {
-    getOrders
+    getOrders,unifiedOrder
   } from '../api/api';
+  import wexinPay from 'pay/wxPayComponent'
   import LoadMore from '../components/common/loadMore';
   import {
     Toast,MessageBox
@@ -427,8 +428,8 @@
           if (action == 'confirm') {     //确认的回调
             _this.params.totalFee=item.order.orderPrice*100;
             _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:item.order.orderSn})
-            this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
-            this.params.userId=JSON.parse(localStorage.getItem("user")).id;
+            _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
+            _this.params.userId=JSON.parse(localStorage.getItem("user")).id;
             unifiedOrder( _this.payParams).then(res=>{
               wexinPay(res.data.data,_this.success(),_this.error())
               this.onRefreshCallback()

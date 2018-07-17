@@ -302,8 +302,7 @@
       <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
     </div>
     <div class="order-container">
-      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params"
-                 :loadMoreIconVisible="false" ref="orderLoadmore">
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :loadMoreIconVisible="false" ref="orderLoadmore">
         <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
               slot="refresh-spinner">更新中...</span>
         <!-- 全部订单 -->
@@ -391,7 +390,7 @@
   import {
     Toast
   } from 'mint-ui'
-  import {fmoney} from '../../api/global'
+  import {fmoney,formatDate,formatDateTime} from '../../api/global'
   export default {
     data() {
       return {
@@ -510,7 +509,7 @@
         console.log(response)
         if (response.data.data.records.length > 0) {
           response.data.data.records.map(i => {
-            i.orderPrice = fmoney(i.orderPrice)
+            // i.orderPrice = fmoney(i.orderPrice)
             this.orderList.push(i)
           })
         }
