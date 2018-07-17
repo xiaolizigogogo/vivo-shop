@@ -316,8 +316,9 @@
                 </div>
                 <div class="right">
                   <div class="order-status">
-                    <span v-if="item.order.orderStatus==0">等待付款</span>
-                    <span v-if="item.order.shippingStatus==2">等待收货</span>
+                    <span v-if="item.order.orderStatus==0">待付款</span>
+                    <span v-if="item.order.orderStatus==1">已付款</span>
+                    <span v-if="item.order.orderStatus==2">已发货</span>
                     <span v-if="item.order.orderStatus === 3">已完成</span>
                     <span v-if="item.order.orderStatus === -1">已取消</span>
                   </div>
