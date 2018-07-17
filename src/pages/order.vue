@@ -317,8 +317,8 @@
                 </div>
                 <div class="right">
                   <div class="order-status">
-                    <span v-if="item.order.payStatus === 0 && item.order.orderStatus < 3">等待付款</span>
-                    <span v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 2">等待收货</span>
+                    <span v-if="item.order.orderStatus==0">等待付款</span>
+                    <span v-if="item.order.shippingStatus==2">等待收货</span>
                     <span v-if="item.order.orderStatus === 3">已完成</span>
                     <span v-if="item.order.orderStatus === -1">已取消</span>
                   </div>
@@ -344,9 +344,9 @@
               </div>
               <div class="order-btn-group">
                 <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="payment(item)">去支付</span>
-                <span class="payment" v-if="item.order.shippingStatus === 1 && item.order.payStatus === 1 && item.order.orderStatus === 1"
+                <span class="payment" v-if="item.order.orderStatus === 2"
                       @click="finishOrder(item)">确认收货</span>
-                <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="cancelOrder(item)">取消</span>
+                <!--<span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="cancelOrder(item)">取消</span>-->
                 <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
                       <!--@click="commitMessage(item)">去评论</span>-->
               </div>
@@ -458,17 +458,11 @@
             break;
           case 1: //待付款
             this.params.orderStatus = 0;
-            this.params.payStatus = 0;
-            this.params.shippingStatus = 0;
             break;
           case 2: //待收货
             this.params.orderStatus = 2;
-            this.params.payStatus = 1;
-            this.params.shippingStatus = 1;
             break;
           case 3: //已完成
-            this.params.shippingStatus = 2;
-            this.params.payStatus = null;
             this.params.orderStatus = 3;
             break;
           case 4: //已取消
