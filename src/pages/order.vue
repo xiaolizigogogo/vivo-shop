@@ -346,7 +346,7 @@
                 <span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="payment(item)">去支付</span>
                 <span class="payment" v-if="item.order.orderStatus === 2"
                       @click="finishOrder(item)">确认收货</span>
-                <!--<span class="payment" v-if="item.order.orderStatus === 0 && item.order.payStatus === 0" @click="cancelOrder(item)">取消</span>-->
+                <span class="payment" v-if="item.order.orderStatus === 2" @click="shipInfo(item)">物流信息</span>
                 <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
                       <!--@click="commitMessage(item)">去评论</span>-->
               </div>
@@ -368,7 +368,7 @@
 
 <script>
   import {
-    getOrders,unifiedOrder
+    getOrders,unifiedOrder,getOrderExpress
   } from '../api/api';
   import wexinPay from './pay/wxPayComponent'
   import LoadMore from '../components/common/loadMore';
@@ -440,7 +440,23 @@
           if (err == 'cancel') {     //取消的回调
           }
         });
-
+      },
+      shipInfo(item){
+        getOrderExpress({orderId:item.id}).then(res=>{
+          MessageBox.confirm('', {
+            message: '快递单号:'+item.logisticCode+'<br>快递公司:'+item.shipperName+"<br>发货时间:"+item.addTime,
+            title: '物流信息',
+            confirmButtonText: '确认',
+            cancelButtonText: '取消'
+          }).then(action => {
+            if (action == 'confirm') {     //确认的回调
+              // this.onRefreshCallback()
+            }
+          }).catch(err => {
+            if (err == 'cancel') {     //取消的回调
+            }
+          });
+        })
       },
       success(){},
       error(){},

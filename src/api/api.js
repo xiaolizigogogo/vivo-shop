@@ -235,7 +235,13 @@ const getAdmins=(params) => {
     params: params
   })
 }
-
+const getOrderExpress=(params) => {
+  return request({
+    url: '/shop/orders/express',
+    method: 'get',
+    params: params
+  })
+}
 
 const addSubscribes=(params)=>{
   return request({
@@ -327,5 +333,6 @@ export {
   getUserInfoByOpenId,
   addAddress,
   getCartCount,
-  preOrder
+  preOrder,
+  getOrderExpress
 }
