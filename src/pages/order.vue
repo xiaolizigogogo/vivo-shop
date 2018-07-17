@@ -303,7 +303,7 @@
     </div>
     <div class="order-container">
       <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :topMethod="onRefreshCallback"
-                 :loadMoreIconVisible="false" ref="orderLoadmore">
+                 :loadMoreIconVisible="true" ref="orderLoadmore">
         <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
               slot="refresh-spinner">更新中...</span>
         <!-- 全部订单 -->

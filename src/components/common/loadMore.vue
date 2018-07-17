@@ -123,7 +123,7 @@
       },
       loadMoreIconVisible: {
         type: Boolean,
-        default: true
+        default: false
       },
       autoFill: {
         type: Boolean,
