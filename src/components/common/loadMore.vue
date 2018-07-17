@@ -81,7 +81,7 @@
   }
   @component-namespace mint {
     @component loadmore {
-      overflow-x: auto;
+      overflow: hidden;
       @descendent content {
         @when dropped {
           transition: .2s;

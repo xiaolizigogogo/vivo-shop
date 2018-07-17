@@ -88,7 +88,6 @@
       padding: $padding;
       background: #fff;
       position: relative;
-      overflow: auto;
       z-index: 1;
       @include flexbox(space-between,
         center,
@@ -149,7 +148,6 @@
     }
     .order-container {
       height: auto;
-      overflow: auto;
       ._v-container {
         // background: #fff;
       }
