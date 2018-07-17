@@ -369,7 +369,7 @@
   import {
     getOrders,unifiedOrder
   } from '../api/api';
-  import wexinPay from 'pay/wxPayComponent'
+  import wexinPay from './pay/wxPayComponent'
   import LoadMore from '../components/common/loadMore';
   import {
     Toast,MessageBox

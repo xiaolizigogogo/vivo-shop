@@ -144,11 +144,6 @@ export default {
       sessionStorage.setItem("productTypes",JSON.stringify(this.productTypes))
     })
     /**
-     * 获取轮播图
-     * */
-    getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
-    })
-    /**
      * 获取员工
      */
     getAdmins(this.params).then((res) => {
