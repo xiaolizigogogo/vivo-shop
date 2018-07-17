@@ -32,13 +32,13 @@
         </div>
         <div class="ReservationsBottom DatePickerBottom">
           <div id="datePicker" @click="handleDatePicker">
-            <span class="chooseDateTop">选择预约日期</span>
-            <span class="myDate">{{year}}-{{month}}-{{date}}</span>
+            <span class="chooseDateTop" style="font-size: 20px">选择预约日期</span>
+            <span class="myDate" style="font-size: 20px">{{year}}-{{month}}-{{date}}</span>
           </div>
           <div class="smallLine"></div>
-          <div id="datePicker" @click="handleSingleLinePicker">
-            <span class="chooseDateTop">选择预约时间</span>
-            <span class="myDate">{{time}}</span>
+          <div id="datePicker" @click="handleSingleLinePicker" >
+            <span class="chooseDateTop" style="font-size: 20px">选择预约时间</span>
+            <span class="myDate" style="font-size: 20px">{{time}}</span>
           </div>
         </div>
       </div>
@@ -273,10 +273,12 @@ export default {
       this.timeArray.forEach(item=>{
         item.disabled=false
         if(this.unAvilTime.includes(item.value)){
+          item.label=item.label+"(不可预约)"
           item.disabled=true
         }
         const date=new Date()
         if(this.today==this.submitForm.subscribeDay&&date.getHours()>=item.value){
+          item.label=item.label+"(不可预约)"
           item.disabled=true
         }
       })
@@ -365,4 +367,7 @@ export default {
     justify-content center
     align-items center
     font-size 0.5rem
+  .weui-picker__item weui-picker__item_disabled{
+    font-size: 20px
+  }
 </style>
