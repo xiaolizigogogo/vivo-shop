@@ -172,7 +172,7 @@
           <div id="loadingbar" :style="active==='tab-container1' ? 'left:0%' : active==='tab-container2' ?  'left:25%' : active==='tab-container3' ?'left:50%' : 'left:75%'"></div>
         </div>
       </div>
-      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :topMethod="onRefreshCallback"
+      <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params"
         :loadMoreIconVisible="false" ref="articleLoadmore">
         <mt-tab-container v-model="active" :swipeable="true">
           <mt-tab-container-item id="tab-container1">
