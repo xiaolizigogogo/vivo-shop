@@ -158,11 +158,11 @@
 <template>
   <div id="articleContainer">
     <div class="content">
-      <div class="my-header">
-        <i class="back" @click="$router.go(-1)"></i>
-        <strong>产品展示</strong>
-        <i class="myMsg"></i>
-      </div>
+      <!--<div class="my-header">-->
+        <!--<i class="back" @click="$router.go(-1)"></i>-->
+        <!--<strong>产品展示</strong>-->
+        <!--<i class="myMsg"></i>-->
+      <!--</div>-->
       <div style="border-bottom:1px solid #eee;background:#fff;">
         <div class="topnav" :class="Status? 'Navfixed': ''">
           <span @click.stop.prevent="switchTabs('tab-container1')" :class="{'active':active==='tab-container1'}">精选</span>
