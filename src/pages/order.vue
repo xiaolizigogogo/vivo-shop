@@ -444,7 +444,7 @@
       shipInfo(item){
         getOrderExpress({orderId:item.id}).then(res=>{
           MessageBox.confirm('', {
-            message: '快递单号:'+item.logisticCode+'<br>快递公司:'+item.shipperName+"<br>发货时间:"+item.addTime,
+            message: '快递单号:'+res.data.data.logisticCode+'<br>快递公司:'+res.data.data.shipperName+"<br>发货时间:"+res.data.data.addTime,
             title: '物流信息',
             confirmButtonText: '确认',
             cancelButtonText: '取消'
