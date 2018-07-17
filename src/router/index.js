@@ -25,6 +25,7 @@ import mytrade from "@/pages/my/trade/index"
 import trade from "@/pages/my/trade/Page2"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 import HomeContainer from '@/pages/home/component/HomeContainer'
+import article from '@/pages/cms/article'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -49,6 +50,11 @@ const router =  new Router({
       path: '/trade',
       name:'trade',
       component: trade
+    },
+    {
+      path: '/article',
+      name:'article',
+      component: article
     },
     {
       path: '/subscribe',
