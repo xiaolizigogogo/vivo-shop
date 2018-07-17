@@ -84,6 +84,11 @@
   }
 
   .my-order {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
     .my-header {
       padding: $padding;
       background: #fff;
@@ -493,7 +498,6 @@
         })
       },
       async infiniteCallback(response) { //加载更多订单
-        console.log(response)
         if (response.data.data.records.length > 0) {
           response.data.data.records.map(i => {
             i.orderPrice = fmoney(i.orderPrice)
