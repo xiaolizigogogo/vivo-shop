@@ -5,21 +5,21 @@
         :infinite-scroll-disabled="LoadMoreLoading"
         :infinite-scroll-distance="0"
         infinite-scroll-immediate-check="false"
-        v-if="!LoadMoreError"
+        v-if="!LoadMoreError" bottom-all-loaded="true"
     >
     <div class="loadmore-content" :class="{ 'is-dropped': topDropped || bottomDropped}" :style="{ 'transform': 'translate3d(0, ' + translate + 'px, 0)' }">
-      <slot name="top">
-        <div class="loadmore-top" v-if="topMethod">
-          <div v-if="topStatus !== 'loading'" :class="topStatus === 'drop' ? 'drop' : 'pull'">
-                <icon v-if="loadMoreIconVisible" :class="['arrow-down',topStatus === 'drop'? 'arrow-drop':'arrow-pull']" name="long-arrow-down" scale="1.1"></icon>
-                <!--<span>{{topStatus === 'drop' ? '释放更新' : '下拉刷新'}}</span>-->
-            </div>
-            <div v-if="topStatus === 'loading'">
-                <mt-spinner :size="20" type="fading-circle"></mt-spinner>
-                <span>{{topText}}</span>
-            </div>
-        </div>
-      </slot>
+      <!--<slot name="top">-->
+        <!--<div class="loadmore-top" v-if="topMethod">-->
+          <!--<div v-if="topStatus !== 'loading'" :class="topStatus === 'drop' ? 'drop' : 'pull'">-->
+                <!--<icon v-if="loadMoreIconVisible" :class="['arrow-down',topStatus === 'drop'? 'arrow-drop':'arrow-pull']" name="long-arrow-down" scale="1.1"></icon>-->
+                <!--&lt;!&ndash;<span>{{topStatus === 'drop' ? '释放更新' : '下拉刷新'}}</span>&ndash;&gt;-->
+            <!--</div>-->
+            <!--<div v-if="topStatus === 'loading'">-->
+                <!--<mt-spinner :size="20" type="fading-circle"></mt-spinner>-->
+                <!--<span>{{topText}}</span>-->
+            <!--</div>-->
+        <!--</div>-->
+      <!--</slot>-->
       <slot></slot>
       <slot name="LoadmoreText">
           <div v-if="!AllLoaded && LoadMoreLoading" class="loadmoreText">
@@ -197,7 +197,7 @@
         containerFilled: false,
         topText: '',
         LoadMoreError:false,
-        topDropped: false,
+        topDropped: true,
         bottomText: '',
         bottomDropped: false,
         bottomReached: false,
