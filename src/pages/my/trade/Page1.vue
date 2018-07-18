@@ -56,7 +56,7 @@
     methods:{
       pay(){
         this.params.totalFee=this.params.money*100;
-        this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenId;
+        this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
         this.params.attach=JSON.stringify({orderType:"在线充值"})
         let params=this.params
         // alert(JSON.stringify(params))
