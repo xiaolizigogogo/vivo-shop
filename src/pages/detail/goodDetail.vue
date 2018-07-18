@@ -570,7 +570,13 @@ table td {
     margin-top: 0.2rem;
     font-size 0.35rem
 }
-
+.goodDetail {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 .goodDetailColor {
     display: none;
 }

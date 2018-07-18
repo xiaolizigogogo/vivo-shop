@@ -301,6 +301,10 @@ const getCartCount=(params)=>{
     params: params
   })
 }
+const       getArticleList=(params)=>{
+  return axios.get("/static/article.json")
+
+}
 
 
 export {
@@ -334,5 +338,6 @@ export {
   addAddress,
   getCartCount,
   preOrder,
-  getOrderExpress
+  getOrderExpress,
+  getArticleList
 }
