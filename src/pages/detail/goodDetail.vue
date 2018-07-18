@@ -63,10 +63,10 @@
 
                     <div class="goodDetailFooter">
                         <div class="left">
-                            <div class="cart">
+                            <div class="cart" this.$route.query.id>
                                 <div class="cartlength">{{cartlength}}</div>
                                 <img src="http://p6563v2ck.bkt.clouddn.com/%E8%B4%AD%E7%89%A9%E8%BD%A6.png" >
-                                <span @click="gocart">购物车</span>
+                                <span >购物车</span>
                             </div>
                             <div class="collection" >
                                 <div class="collection-box" @click="addCollection(goodDetail)"  v-show="!$store.state.ces">
@@ -78,11 +78,11 @@
                                     <span style="color:red">取消</span>
                                 </div>
                             </div>
-                            <div class="shop">
+                            <div class="shop" @click="home">
                                 <img src="http://p6563v2ck.bkt.clouddn.com/%E5%BA%97%E9%93%BA_2.png" >
                                 <!-- <i class="iconfont icon-xuanzekuangxuanzhong" v-show="!$store.state.collection"></i>
                                 <i class="iconfont icon-xuanzekuangxuanzhong" v-show="$store.state.collection" style="color:red"></i> -->
-                                <span @click="home">首页</span>
+                                <span >首页</span>
                             </div>
                         </div>
                         <div class="rigth">
