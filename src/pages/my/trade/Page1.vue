@@ -15,8 +15,8 @@
             <div class="weui-cell__bd">
                 <select class="weui-select" name="select1">
                     <option selected="" value="1">微信</option>
-                    <option value="2">支付宝</option>
-                    <option value="3">银联</option>
+                    <!--<option value="2">支付宝</option>-->
+                    <!--<option value="3">银联</option>-->
                 </select>
             </div>
         </div>
@@ -47,7 +47,7 @@
          params:{
           openid:"",
           totalFee:"1",
-          body:"在线买单",
+          body:"在线充值",
           tradeType:"JSAPI",
            money:undefined
         }

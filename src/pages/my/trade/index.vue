@@ -23,7 +23,7 @@ import '../../../weui/weui.min.js'
   export default {
     name: "mytrade",
     mounted(){
-      document.title = '在线买单'
+      document.title = '在线充值'
     },
     methods:{
       handleClick(num,e){
