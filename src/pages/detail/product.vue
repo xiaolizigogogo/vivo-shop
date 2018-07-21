@@ -145,7 +145,7 @@
           margin-right: 5px;
         }
         strong {
-          font-size: 23px;
+          font-size: 17px;
         }
       }
     }
@@ -612,13 +612,7 @@
       }
       .content {}
     }
-.product {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
+
   }
 
   /* 商品详情 */
@@ -826,11 +820,8 @@
               <p class="product-name-text">{{productInfo.name}}</p>
               <p class="product-summary-text">{{productInfo.goodsBrief}}</p>
 
-              <div class="product-price"  style="text-decoration:line-through;color:#eee">
-                <span>零售价:&yen;</span>
-                <strong>{{productInfo.retailPrice}}</strong>
-              </div>
-              <div class="product-price">
+              <div class="product-price"  >
+                <span style="text-decoration:line-through;color:#333">零售价:&yen; {{productInfo.retailPrice}}</span>
                 <span>优惠价:&yen;</span>
                 <strong>{{productInfo.extraPrice}}</strong>
               </div>
@@ -1133,6 +1124,12 @@
 
 </script>
 <style lang='scss' scoped>
-
+  .product {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
 
 </style>
