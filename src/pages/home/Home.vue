@@ -139,7 +139,7 @@ export default {
     /**
      * 获取产品信息
      */
-    getProductTypes({current:1,size:5}).then(res=>{
+    getProductTypes({current:1,size:10,enable:1,asc:true,ascs:"orderBy"}).then(res=>{
       this.productTypes=res.data.data.records
       sessionStorage.setItem("productTypes",JSON.stringify(this.productTypes))
     })
