@@ -25,7 +25,7 @@
       width: 2rem;
       height: 100%;
       cursor: pointer;
-      background: url('~jd/images/navbar.png') 0 0 no-repeat;
+      background: url('../../assets/jd/images/navbar.png') 0 0 no-repeat;
       background-size: 850% 105%;
     }
     .home {

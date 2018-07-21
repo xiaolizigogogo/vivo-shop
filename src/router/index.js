@@ -27,6 +27,7 @@ import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 import HomeContainer from '@/pages/home/component/HomeContainer'
 import article from '@/pages/cms/article'
 import product from '@/pages/detail/product'
+import index from '@/pages/home/index'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -61,6 +62,11 @@ const router =  new Router({
       path: '/subscribe',
       name:'subscribe',
       component: subscribe
+    },
+    {
+      path: '/index',
+      name:'index',
+      component: index
     },
     {
       path: '/goodDetail/:id',
