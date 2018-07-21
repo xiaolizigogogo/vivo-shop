@@ -17,9 +17,9 @@
                     <!--<h5>-->
                         <!--<span>￥</span>88-->
                     <!--</h5>-->
-                    <p>
-                        预约特惠价
-                    </p>
+                    <!--<p>-->
+                        <!--预约特惠价-->
+                    <!--</p>-->
                 </div>
             </div>
             <div class="serviceMiddle">
@@ -38,9 +38,9 @@
                 <span style="color:red">
                     好评率：{{item.commentPercent}}%
                 </span>
-                <span>
-                    作品数：{{item.productCounts}}
-                </span>
+                <!--<span>-->
+                    <!--作品数：{{item.productCounts}}-->
+                <!--</span>-->
                 <span>
                     已被约：{{item.subscribeTimes}}
                 </span>
@@ -118,7 +118,7 @@
             color #fff;
             letter-spacing 0.08rem;
 .marks
-    width 1.2rem;
+    width 1.7rem;
     height 0.6rem;
     border-radius 1rem;
     background-color  #eee;
