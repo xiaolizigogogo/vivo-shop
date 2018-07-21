@@ -305,7 +305,13 @@ const       getArticleList=(params)=>{
   return axios.get("/static/article.json")
 
 }
-
+const changeOrderStatus=(params)=>{
+  return request({
+    url: '/shop/orders/',
+    method: 'put',
+    data: params
+  })
+}
 
 export {
   getGoods,
@@ -339,5 +345,6 @@ export {
   getCartCount,
   preOrder,
   getOrderExpress,
-  getArticleList
+  getArticleList,
+  changeOrderStatus
 }

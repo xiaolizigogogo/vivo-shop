@@ -461,6 +461,8 @@
         this.params.pageIndex = 1;
         this.params.current = 1;
         this.orderList = [];
+        this.params.asc= false;
+        this.params.descs="id";
         this.$refs.orderLoadmore.onTopLoaded(this.$refs.orderLoadmore.uuid);
       },
       switchTabs(Id) {
