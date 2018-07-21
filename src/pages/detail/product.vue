@@ -612,6 +612,13 @@
       }
       .content {}
     }
+.product {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
   }
 
   /* 商品详情 */
@@ -776,7 +783,7 @@
 </style>
 
 <template>
-  <div style="background:#f8f8f8;">
+  <div style="background:#f8f8f8;" class="product">
     <!-- 顶部导航栏 -->
     <div class="product-header">
       <div class="product-header-container">

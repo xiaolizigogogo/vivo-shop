@@ -16,30 +16,19 @@
       <Home-List></Home-List>
       <Home-Service  v-for="(item,index) in list" :key="index" :item="item" :productTypes="productTypes"/>
       <div style="height:1.75rem"></div>
-      <!-- <HomeProductContainer :todos="todos"></HomeProductContainer>
-      <Home-Container :todos="todos"></Home-Container> -->
       <Home-Footer></Home-Footer>
-      <!-- <mt-button @click.native="openLocation" type="primary" size="large" class="bottom">提交预约</mt-button>
-    <mt-button @click.native="turnPage" type="primary" size="large" class="bottom">试验</mt-button>
-    <mt-button @click.native="testPay" type="primary" size="large" class="bottom">测试支付</mt-button> -->
 
   </div>
 </template>
 
 <script>
-import { mapState,mapMutations,mapGetters  } from 'vuex';
-import { Swipe, SwipeItem } from 'mint-ui';
-import { MessageBox } from 'mint-ui';
 import HomeSwipe from './component/HomeSwipe';
 import HomeList from './component/HomeList';
 import HomeFooter from '../../pages/footer'
 import MapPositioning from './component/MapPositioning'
 import HomeService from './component/HomeService'
-import axios from 'axios';
 import wx from 'weixin-js-sdk'
 import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
-import {signUrl} from '../../api/global'
-import wexinPay from '../pay/wxPayComponent'
 export default {
   name:"Home",
   data(){
@@ -63,9 +52,7 @@ export default {
   components:{
     HomeSwipe,
     HomeList,
-    // HomeContainer,
     HomeFooter,
-    // HomeProductContainer,
     MapPositioning,
     HomeService
   },
@@ -161,9 +148,6 @@ export default {
         this.$refs.loadmore.onTopLoaded();
       })
     },
-    getData:function(){
-
-    },
     openLocation:function () {
       wx.openLocation({
         latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
@@ -177,17 +161,6 @@ export default {
     turnPage(){
       this.$router.push({name:'serviceDetail'})
     },
-    testPay(){
-      let params={
-        "openid":"obWT-0giZxiX-k1MNWMt2kXics5k",
-        "totalFee":"1",
-        "body":"66666666",
-        "tradeType":"JSAPI"
-      }
-      unifiedOrder(params).then(res=>{
-        wexinPay(res.data.data,this.getData(),this.getData())
-      })
-    }
   }
 }
 </script>
