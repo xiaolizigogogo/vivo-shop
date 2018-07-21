@@ -18,6 +18,9 @@ export default {
  @import 'styles/style.css';
  @import './fon/iconfont.css';
  @import './styles/weui.min.css';
+ @import './assets/common/css/theme.scss';
+ /*@import 'normalize.css';*/
+ /*@import 'mint-ui/lib/style.css';*/
 body{
   /* padding-bottom:1.56rem; */
   background: #F4F4F4;
