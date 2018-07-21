@@ -10,7 +10,7 @@
                         {{item.nickName}}
                     </h6>
                     <p>
-                        {{item.prodcutNames}}
+                        {{item.productNames}}
                     </p>
                 </div>
                 <div class="serviceTopRight">
