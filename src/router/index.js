@@ -26,6 +26,7 @@ import trade from "@/pages/my/trade/Page2"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 import HomeContainer from '@/pages/home/component/HomeContainer'
 import article from '@/pages/cms/article'
+import product from '@/pages/detail/product'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -113,6 +114,11 @@ const router =  new Router({
       path: '/homeContainer/',
       name:'HomeContainer',
       component:HomeContainer
+    },
+    {
+      path: '/product/:id',
+      name:'product',
+      component:product
     },
   ],
   //路由切换页面始终回到最顶部

@@ -94,7 +94,7 @@
         this.isShow = false
       },
       open: function (id) {
-        this.$router.push({path: `/goodDetail/${id}`});
+        this.$router.push({path: `/product/${id}`});
       },
       loadTop:function () { //组件提供的下拉触发方法
         //下拉加载

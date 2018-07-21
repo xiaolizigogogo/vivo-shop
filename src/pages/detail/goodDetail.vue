@@ -150,12 +150,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(
-        ["this.$store.state.carts"],
-        ["this.$store.state.todos"],
-        ["this.$store.state.collection"],
-        ["this.$store.state.ces"]
-    )
+
   },
   mounted() {
   this.init();
@@ -163,25 +158,13 @@ export default {
   created() {
 
   },
-
   methods: {
     home(){
       this.$router.push({path:"/home"})
     },
-    addCollection(index) {
-      this.$store.state.ces=!this.$store.state.ces
-       var data={
-           id:index.id,
-           img:index.homeImg,
-           name:index.homeName,
-           price:index.homePrice
-       }
-        this.$store.dispatch("setGoods",data)
-    },
     // 点击按钮时，首先判断该商品是否在购物车已存在，如果存在则不再加入
     add: function(index) {
       console.log(index)
-
         var data = {
           goodsId:index.info.id,
           productId:index.info.id,
@@ -209,7 +192,6 @@ export default {
     },
     jia: function(index) {
       this.goodDetails[index].homeValue++;
-
     },
     jian: function(index) {
       if (this.goodDetails[index].homeValue == 1) {
@@ -221,34 +203,6 @@ export default {
     //返回上一级
     fanhui: function() {
       this.$router.go(-1);
-    },
-    pay: function(id,value) {
-        console.log(id,value)
-        this.$router.push({
-            path:"/pay",
-            query:{
-                id:id,
-                value:value
-            }
-        })
-        // Toast({
-        //     message: `成功支付了${this.paid}元`,
-        //     iconClass: "iconfont icon-goumaichenggong",
-        //     duration: 750
-        // });
-      // alert(`成功支付了${this.paid}元`)
-    //   var data = {
-    //     id: this.goodDetails[index].id,
-    //     name: this.goodDetails[index].homeName,
-    //     price: this.goodDetails[index].homePrice,
-    //     image: this.goodDetails[index].homeImg,
-    //     value: this.goodDetails[index].homeValue,
-        // order: this.goodDetails[index].order,
-        // color: this.goodDetails[index].color,
-        // number: this.goodDetails[index].number
-    //   };
-    //   this.$store.commit("addorder", data);
-    // }
     },
     init(){
       var id = this.$route.params.id;
