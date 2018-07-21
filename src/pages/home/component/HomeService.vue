@@ -7,10 +7,10 @@
             <div class="serviceTop">
                 <div class="serviceTopLeft">
                     <h6>
-                        {{item.username}}
+                        {{item.nickName}}
                     </h6>
                     <p>
-                        {{item.type}}
+                        {{item.prodcutNames}}
                     </p>
                 </div>
                 <div class="serviceTopRight">
