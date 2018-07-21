@@ -122,7 +122,6 @@ export default {
   },
   mounted:function(){
     document.title = '斯卡莱SPA美甲'
-    this.getData()
     /**
      * 获取产品信息
      */
