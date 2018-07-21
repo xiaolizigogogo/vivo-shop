@@ -340,7 +340,7 @@ export default {
 }
 
 .goodDetaiSwipe img {
-    width: 100%;
+    /*width: 100%;*/
     height: 7rem;
     display: block;
     margin: auto;
