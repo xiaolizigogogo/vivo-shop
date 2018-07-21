@@ -5,7 +5,7 @@
            <div class="beautifulHeader">
             <img :src="item.avatar" alt="beautiful">
           </div>
-          <p class="headerName">-&nbsp;&nbsp;{{item.username}}&nbsp;&nbsp;-</p>
+          <p class="headerName">-&nbsp;&nbsp;{{item.nickName}}&nbsp;&nbsp;-</p>
          </div>
        </div>
   </div>
