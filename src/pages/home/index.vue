@@ -11,7 +11,13 @@
       max-height: 100%;
     }
   }
-
+.jd{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
   /* banner */
 
   .appTabscenter {
@@ -443,7 +449,7 @@
 
 </style>
 <template>
-  <div id="jd">
+  <div id="jd" class="jd">
     <!-- 搜索栏 -->
     <!--<search-bar :Status="Status"  v-if="searchBarVisilbe && cmsData" />-->
     <!-- 搜索栏 -->
