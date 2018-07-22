@@ -31,16 +31,16 @@
     width: 100%;
     padding-bottom: .25rem;
     .mint-swipe {
-      padding: .266667rem 0;
+      /*padding: .266667rem 0;*/
       overflow: initial !important;
-      height: 1.5rem;
+      height: 1.8rem;
     }
     .tableTabs {
       @include flexbox(center, center, row, wrap);
       width: 100%;
       height: 100%;
       .table-tabs-item {
-        width: 20%;
+        width: 25%;
         margin: .133333rem 0;
         @include flexbox(center, center, column, wrap);
         flex: initial;
@@ -56,8 +56,8 @@
           font-size:10px
         }
         img {
-          width: 29px;
-          height: 29px;
+          width: 33px;
+          height: 33px;
         }
       }
     }
