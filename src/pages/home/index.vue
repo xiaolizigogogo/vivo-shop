@@ -977,7 +977,8 @@
     getGoodsCategoryList,
     getUserInfoByOpenId,
     getWechatOpenid,
-    getAdPositionDetail
+    getAdPositionDetail,
+    getJsTicket
   } from '../../api/api';
   import marquee from '../../components/common/marquee/marquee';
   import marqueeItem from '../../components/common/marquee/marquee-item';
