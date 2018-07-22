@@ -18,13 +18,14 @@
   top: 0;
   left: 0;
 }
+
   /* banner */
 
   .appTabscenter {
     border-radius: .2rem .2rem 0 0;
     overflow: hidden;
     position: relative;
-    top: -.2rem;
+    //top: -.2rem;
     left: 0;
     background: #f8f8f8;
     z-index: 200;
@@ -449,13 +450,14 @@
         }
       }
     }
+
   }
 
 </style>
 <template>
   <div id="jd" class="jd">
     <!-- 搜索栏 -->
-    <!--<search-bar :Status="Status"  v-if="searchBarVisilbe && cmsData" />-->
+    <search-bar :Status="Status"  v-if="searchBarVisilbe && cmsData" />
     <!-- 搜索栏 -->
     <load-more @translate-change="translateChange" style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="recommendParam"
       :loadMoreIconVisible="false" ref="recommendLoadmore" v-if="cmsData">
@@ -464,39 +466,40 @@
         slot="refresh-spinner">更新中...</span>
       <!-- banner -->
       <mt-swipe :stopPropagation="true" :prevent="true" :auto="5000" class="banner">
-        <mt-swipe-item v-for="(item,index) in cmsData.cmsBanner.image_url" :key="index">
-          <img :src="item.url" :alt="item.name">
+        <mt-swipe-item v-for="(item,index) in swiper" :key="index">
+          <img :src="item.imageUrl" :alt="item.name">
         </mt-swipe-item>
       </mt-swipe>
       <!-- banner -->
       <!-- tabBanner -->
       <div class="appTabscenter">
-        <mt-swipe :speed="200" :continuous="false" :stopPropagation="false" :prevent="true" :auto="0">
+        <mt-swipe :speed="200" :continuous="false" :stopPropagation="false" :prevent="false" :auto="0">
           <mt-swipe-item>
             <ul class="tableTabs">
               <li class="table-tabs-item">
                 <i>
                   <img src="../../assets/jd/images/applist (1).png" alt="">
                 </i>
-                <p>京东超市</p>
+                <p>关于我们</p>
+              </li>
+              <li class="table-tabs-item" >
+                <i>
+                  <img src="../../assets/jd/images/applist (2).png" alt="" @click="$router.push('/subscribe')" >
+                </i>
+                <p>立即预约</p>
+              </li>
+
+              <li class="table-tabs-item">
+                <i>
+                  <img src="../../assets/jd/images/applist (8).png" alt="">
+                </i>
+                <p>领券</p>
               </li>
               <li class="table-tabs-item">
                 <i>
-                  <img src="../../assets/jd/images/applist (2).png" alt="">
+                  <img src="../../assets/jd/images/applist (6).png" alt="">
                 </i>
-                <p>京东服饰</p>
-              </li>
-              <li class="table-tabs-item">
-                <i>
-                  <img src="../../assets/jd/images/applist (3).png" alt="">
-                </i>
-                <p>京东到家</p>
-              </li>
-              <li class="table-tabs-item">
-                <i>
-                  <img src="../../assets/jd/images/applist (4).png" alt="">
-                </i>
-                <p>京东生鲜</p>
+                <p>充值</p>
               </li>
               <!--<li class="table-tabs-item">-->
                 <!--<i>-->
@@ -538,6 +541,18 @@
           </mt-swipe-item>
         </mt-swipe>
       </div>
+      <MapPositioning>
+        <div class="all" @click="openLocation">
+          <div>
+            <h6>斯卡莱日式美甲美睫<span></span></h6>
+            <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>辽宁省大连市中山区人民路43号新世界名泷1008</p>
+          </div>
+          <div>
+            <h5><i class="iconfont icon-diliweizhi iconfontBig"></i></h5>
+            <p>导航到店</p>
+          </div>
+        </div>
+      </MapPositioning>
       <!-- tabBanner -->
       <!-- 底部资讯 -->
       <div class="floor">
@@ -950,6 +965,8 @@
   import FooterView from '../../components/footer/footerView';
   import BackHead from '../../components/common/backHead';
   import axios from 'axios';
+  import MapPositioning from './component/MapPositioning'
+  import wx from 'weixin-js-sdk'
   import {
     showBack
   } from '../../utils/mixin';
@@ -957,7 +974,10 @@
     getRecommend,
     getArticle,
     getArticleList,
-    getGoodsCategoryList
+    getGoodsCategoryList,
+    getUserInfoByOpenId,
+    getWechatOpenid,
+    getAdPositionDetail
   } from '../../api/api';
   import marquee from '../../components/common/marquee/marquee';
   import marqueeItem from '../../components/common/marquee/marquee-item';
@@ -966,7 +986,7 @@
   import {
     Swipe,
     SwipeItem,
-    Lazyload
+    Lazyload,
   } from 'mint-ui';
   import {
     mapGetters,
@@ -984,8 +1004,73 @@
         },
         recommendData: [],
         cmsData: null,
-        searchBarVisilbe: true
+        searchBarVisilbe: true,
+        swiper:[]
       };
+    },
+    created(){
+      if(window.signLink==undefined||window.signLink==''){
+        window.signLink=window.location.href
+        const  code=this.$route.query.code
+        if(!code){
+          alert("请从公众号入口进入")
+          getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+            localStorage.setItem("user",JSON.stringify(res.data.data))
+        })
+          return
+        }
+        getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+          localStorage.setItem("token",JSON.stringify(res.data.data))
+        this.openid=res.data.data.openId;
+        getUserInfoByOpenId({"openid":this.openid}).then(res=>{
+          localStorage.setItem("user",JSON.stringify(res.data.data))
+      })
+      })
+      }
+      getJsTicket({url:window.signLink}).then(res=>{
+        res.data.data.jsApiList=['onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'onMenuShareQZone',
+        'startRecord',
+        'stopRecord',
+        'onVoiceRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'onVoicePlayEnd',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'translateVoice',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard']
+      wx.config(res.data.data);
+      wx.ready(()=>{
+      });
+      wx.error(function(res){
+        console.log('wx err',res);
+        //可以更新签名
+      });
+    })
     },
     watch: {},
     components: {
@@ -997,7 +1082,8 @@
       marqueeItem,
       SearchBar,
       LoadMore,
-      HomeFooter
+      HomeFooter,
+      MapPositioning
     },
     computed: {
     },
@@ -1030,16 +1116,32 @@
         // this.cmsData = Data;
 
       },
+  openLocation:function () {
+    wx.openLocation({
+      latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
+      longitude: this.longitude, // 经度，浮点数，范围为180 ~ -180。
+      name: '斯卡莱日式美甲美睫', // 位置名
+      address: '辽宁省大连市中山区人民路43号新世界名泷1008', // 地址详情说明
+      scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
+      infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
+    })
+  },
        initData() { //初始化数据
     axios.get("/static/index.json").then(res=> {
       this.cmsData = res.data.Data;
     });
+    getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
+      this.swiper=res.data.data
+  })
         // if (!this.indexCmsData) {
         //   this.updatedData();
         // } else {
         //   this.cmsData = this.indexCmsData.Data;
         // }
-      }
+      },
+  goPath(i){
+        this.$router.push(i)
+  }
     },
     beforeDestroy() {},
     mounted: function () {
@@ -1051,3 +1153,70 @@
   }
 
 </script>
+<style lang="stylus" scoped>
+  .Home{
+    position: absolute
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  .Homeheader i{
+    font-size: 0.55rem;
+  }
+  .Homeheader{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    height: 1.3rem;
+    line-height: 1.3rem;
+    font-size: 0.35rem;
+    padding-left: 0.3rem;
+    background: white;
+  }
+  .swipe{
+    height: 6.5rem;
+    margin-top: 1px;
+  }
+  .swipe img{
+    width: 100%;
+    height: 6.5rem;
+  }
+
+  .official{
+    width: 100%;
+    height: 0.8rem;
+    background: white;
+    margin-top: 1.33rem;
+  }
+  .mint-loadmore-top
+    span
+      font-size 0.5rem
+  @import '../../fon/fontHome/iconfont.css'
+  h6
+    font-size 0.4rem;
+    font-weight bold;
+  h5
+    text-align center;
+    line-height 0.6rem;
+  span
+    display inline-block;
+    font-size 0.2rem;
+    font-weight 400;
+    color #909399;
+    padding 0.1rem;
+  p
+    font-size 0.2rem;
+    color #909399;
+    line-height 0.5rem;
+  .iconfontLittle
+    font-size 0.2rem;
+  .iconfontBig
+    font-size 0.5rem;
+    color #67C23A;
+  .all
+    display flex;
+    justify-content space-between;
+    padding 0 0.3rem;
+</style>

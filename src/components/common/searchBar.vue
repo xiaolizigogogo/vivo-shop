@@ -298,7 +298,7 @@
         <slot name="title-icon">
           <div class="search-box">
             <i class="searchIcon searchContentIcon"></i>
-            <span>MacBook Pro 15.4寸</span>
+            <span></span>
           </div>
         </slot>
       </div>

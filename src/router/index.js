@@ -33,7 +33,7 @@ Vue.use(Router)
 const router =  new Router({
   mode: 'history',
   routes: [
-    { path: '/', name: 'Home', component: Home },
+    { path: '/', name: 'index', component: index },
     { path: '/Home', name: 'Home', component: Home },
     { path: '/cart', name: 'cart', component: cart },
     { path: '/my', name: 'my', component: my },
