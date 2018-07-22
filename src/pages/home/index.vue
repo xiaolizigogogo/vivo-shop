@@ -491,7 +491,7 @@
 
               <li class="table-tabs-item">
                 <i>
-                  <img src="../../assets/jd/images/applist (8).png" alt="">
+                  <img src="../../assets/jd/images/applist (8).png" alt="" @click="$router.push('/coupon')">
                 </i>
                 <p>领券</p>
               </li>

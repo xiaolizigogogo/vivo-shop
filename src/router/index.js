@@ -28,6 +28,7 @@ import HomeContainer from '@/pages/home/component/HomeContainer'
 import article from '@/pages/cms/article'
 import product from '@/pages/detail/product'
 import index from '@/pages/home/index'
+import coupon from '@/pages/coupon/index'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -125,6 +126,11 @@ const router =  new Router({
       path: '/product/:id',
       name:'product',
       component:product
+    },
+    {
+      path: '/coupon',
+      name:'coupon',
+      component:coupon
     },
   ],
   //路由切换页面始终回到最顶部
