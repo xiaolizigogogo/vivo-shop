@@ -1000,11 +1000,13 @@
       </div>
     </load-more>
     <!-- 为您推荐 -->
-    <FooterView/>
+    <!--<FooterView/>-->
     <BackHead/>
+    <Home-Footer></Home-Footer>
   </div>
 </template>
 <script>
+  import HomeFooter from '../../pages/footer'
   import FooterView from '../../components/footer/footerView';
   import BackHead from '../../components/common/backHead';
   import axios from 'axios';
@@ -1054,7 +1056,8 @@
       marquee,
       marqueeItem,
       SearchBar,
-      LoadMore
+      LoadMore,
+      HomeFooter
     },
     computed: {
     },
