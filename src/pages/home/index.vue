@@ -453,7 +453,7 @@
     <!-- 搜索栏 -->
     <!--<search-bar :Status="Status"  v-if="searchBarVisilbe && cmsData" />-->
     <!-- 搜索栏 -->
-    <load-more @translate-change="translateChange" style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="recommendParam" :topMethod="onRefreshCallback"
+    <load-more @translate-change="translateChange" style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="recommendParam"
       :loadMoreIconVisible="false" ref="recommendLoadmore" v-if="cmsData">
       <!-- <scroller class="cmsScroll" refreshLayerColor="#999" refreshText="下拉刷新..." :snapping="true" :onRefresh="onRefreshCallback" ref="cmsScroll" width="100%" height="100%"> -->
       <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
