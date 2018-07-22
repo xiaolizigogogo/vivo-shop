@@ -497,7 +497,7 @@
               </li>
               <li class="table-tabs-item">
                 <i>
-                  <img src="../../assets/jd/images/applist (6).png" alt="">
+                  <img src="../../assets/jd/images/applist (6).png" alt="" @click="$router.push('/mytrade')">
                 </i>
                 <p>充值</p>
               </li>
