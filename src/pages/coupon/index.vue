@@ -81,7 +81,7 @@
       <strong>领券大厅</strong>
       <i class="myMsg"></i>
     </div>
-    <couponService  v-for="(item,index) in list" :key="index" :item="item" :productTypes="productTypes"/>
+    <couponService  v-for="(item,index) in coupons" :key="index" :item="item" @click="getCoupons(item)"/>
     <Home-Footer></Home-Footer>
   </div>
 </template>
@@ -89,7 +89,7 @@
 <script>
   import HomeFooter from '../../pages/footer'
   import couponService from './couponService'
-  import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
+  import { getProductTypes,getAdmins,getCoupons,getUserCoupons} from '../../api/api'
   export default {
     name:"Home",
     data(){
@@ -107,7 +107,7 @@
           type:0
         },
         topStatus: '',
-        productTypes:[]
+        coupons:[]
       }
     },
     components:{
@@ -117,20 +117,31 @@
     created(){
     },
     mounted:function(){
-      document.title = '预约'
+      document.title = '领券大厅'
       /**
        * 获取产品信息
        */
-      getProductTypes({current:1,size:10,enable:1,asc:true,ascs:"orderBy"}).then(res=>{
-        this.productTypes=res.data.data.records
-      sessionStorage.setItem("productTypes",JSON.stringify(this.productTypes))
+      getCoupons({current:1,size:100,asc:false,descs:"id"}).then(res1=>{
+       let list1=res1.data.data.records;
+        getUserCoupons(this.params).then((res2) => {
+          let list2=res1.data.data.records;
+          //循环优惠券设置属性
+        for(let i=0;i<list1.length;i++){
+          for(let j=0;j<list2.length;j++){
+            list1[i].status="可领取"
+            //如果已拥有设置已领取
+            if(list1[i].id==list2[j].couponId){
+              list1[i].status="已领取"
+            }
+          }
+        }
+        this.coupons=list1
+        })
     })
       /**
        * 获取员工
        */
-      getAdmins(this.params).then((res) => {
-        this.list=res.data.data.content
-    })
+
     },
     methods:{
       handleTopChange(status) {
@@ -146,6 +157,8 @@
       turnPage(){
         this.$router.push({name:'serviceDetail'})
       },
+      getCoupons(i){
+      }
     }
   }
 </script>

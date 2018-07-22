@@ -8,10 +8,10 @@
                                                                  onerror="__reloadResource(this)"
                                                                  src="/static/img/logo.jpg"
                                                                  loaded="10">
-            <p class="coupon_default_name"><span>手机话费充值商品</span></p> <span class="coupon_default_price"><em>¥50</em>满200可用
+            <p class="coupon_default_name"><span>{{item.name}}</span></p> <span class="coupon_default_price"><em>¥{{item.typeMoney}}</em>满{{item.minGoodsAmount}}可用
                 </span>
             <div class="coupon_default_status coupon_default_status_add"><span
-              class="coupon_default_status_icon status_off">已抢光</span> <i>进场看看</i></div>
+              class="coupon_default_status_icon status_off">{{item.status}}</span> <i>剩余{{item.minAmount}}张</i></div>
           </div>
         </a>
         </div>
@@ -173,15 +173,7 @@ export default {
     }
   },
   methods:{
-      subscribe(){
-        localStorage.setItem("subscribeAdmin",JSON.stringify(this.item))
-        this.$router.push({
-          path:"serviceDetail",
-          query:{
-            id:this.item.id
-          }
-        })
-      }
+
   },
   mounted(){
     console.log('item',this.item)

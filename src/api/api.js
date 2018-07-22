@@ -61,6 +61,7 @@ const getAdPositionDetail = (params) => {
     params: params
   })
 }
+
 /**
  *
  * 不分页
@@ -84,7 +85,17 @@ const getCoupons = (params) => {
     params: params
   })
 }
-
+/**
+ *
+ * 获取优惠券类表
+ */
+const getUserCoupons = (params) => {
+  return request({
+    url: '/shop/coupons/users',
+    method: 'get',
+    params: params
+  })
+}
 /**
  *
  * 获取订单列表
@@ -346,5 +357,6 @@ export {
   preOrder,
   getOrderExpress,
   getArticleList,
-  changeOrderStatus
+  changeOrderStatus,
+  getUserCoupons
 }
