@@ -34,7 +34,7 @@
     .mint-swipe {
       /*padding: .266667rem 0;*/
       overflow: initial !important;
-      height: 1.8rem;
+      height: 2.0rem;
     }
     .tableTabs {
       @include flexbox(center, center, row, wrap);

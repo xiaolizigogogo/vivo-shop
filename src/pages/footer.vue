@@ -1,7 +1,7 @@
 <template>
   <div id="bottom">
     <ul class="bottom-ul">
-      <router-link  to="/home" tag="li">
+      <router-link  to="/index" tag="li">
         <div class="index">
           <i class="iconfont icon-shouye_xuanzhong" style="color:#98499C" v-if="active ==='home'"></i>
           <i class="iconfont icon-shouye2" v-else></i>
