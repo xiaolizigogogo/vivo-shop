@@ -67,7 +67,7 @@
                             <div class="cart" this.$route.query.id>
                                 <div class="cartlength">{{cartlength}}</div>
                                 <img src="http://p6563v2ck.bkt.clouddn.com/%E8%B4%AD%E7%89%A9%E8%BD%A6.png" >
-  
+
                                 <span >购物车</span>
                             </div>
                             <div class="collection" >
@@ -152,7 +152,6 @@ export default {
     }
   },
 
-  },
   mounted() {
   this.init();
   },
@@ -163,7 +162,6 @@ export default {
     home(){
       this.$router.push({path:"/home"})
     },
-
     // 点击按钮时，首先判断该商品是否在购物车已存在，如果存在则不再加入
     add: function(index) {
       console.log(index)

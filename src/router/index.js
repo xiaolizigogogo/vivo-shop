@@ -29,6 +29,7 @@ import article from '@/pages/cms/article'
 import product from '@/pages/detail/product'
 import index from '@/pages/home/index'
 import coupon from '@/pages/coupon/index'
+import myCoupon from '@/pages/coupon/myCoupon'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -132,6 +133,12 @@ const router =  new Router({
       name:'coupon',
       component:coupon
     },
+    {
+      path: '/myCoupon',
+      name:'myCoupon',
+      component:myCoupon
+    },
+
   ],
   //路由切换页面始终回到最顶部
   // scrollBehavior(to, from, savedPosition) {

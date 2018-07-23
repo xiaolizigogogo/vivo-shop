@@ -261,6 +261,13 @@ const addSubscribes=(params)=>{
     data: params
 })
 }
+  const addCoupon=(params)=>{
+  return request({
+    url: '/shop/coupons',
+    method: 'post',
+    data: params
+  })
+}
   const getSubscribes=(params)=>{
     return request({
       url: '/shop/subscribes',
@@ -358,5 +365,6 @@ export {
   getOrderExpress,
   getArticleList,
   changeOrderStatus,
-  getUserCoupons
+  getUserCoupons,
+  addCoupon
 }

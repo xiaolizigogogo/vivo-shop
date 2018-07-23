@@ -40,13 +40,13 @@
         is-link>
         <i class="iconfont icon-collection" slot="icon"></i>
       </mt-cell>
-      <!--<mt-cell-->
-        <!--title="我的收货地址"-->
-        <!--to="/address"-->
-        <!--is-link-->
-        <!--&gt;-->
-        <!--<i class="iconfont icon-shouhuodizhi" slot="icon"></i>-->
-      <!--</mt-cell>-->
+      <mt-cell
+        title="我的优惠券"
+        to="/myCoupon"
+        is-link
+        >
+        <i class="iconfont icon-shouhuodizhi" slot="icon"></i>
+      </mt-cell>
       <mt-cell
         title="我的购物车"
         to="/cart"

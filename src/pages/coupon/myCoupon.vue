@@ -81,7 +81,7 @@
       <strong>我的优惠券</strong>
       <i class="myMsg"></i>
     </div>
-    <couponService  v-for="(item,index) in coupons" :key="index" :item="item" @click="getCoupons(item)"/>
+    <couponService  v-for="(item,index) in coupons" :key="index" :item="item"/>
     <Home-Footer></Home-Footer>
   </div>
 </template>
@@ -125,18 +125,19 @@
       getUserCoupons({current:1,size:100,asc:false,descs:"id",userId:this.userId}).then(res1=>{
        let list1=res1.data.data.records;
        getCoupons({current:1,size:100,asc:false,descs:"id"}).then((res2) => {
-          let list2=res1.data.data.records;
+          let list2=res2.data.data.records;
           //循环优惠券设置属性
         for(let i=0;i<list1.length;i++){
           for(let j=0;j<list2.length;j++){
             //如果已拥有设置已领取
-            if(list1[i].id==list2[j].couponId){
-              if(list[i].orderId==0){
-                list1[i].status="可使用"
+            if(list1[i].couponId==list2[j].id){
+              if(list1[i].orderId==0){
+                list2[j].status="可使用"
               }
               else{
-                list1[i].status="已使用"
+                list2[j].status="已使用"
               }
+              list2[j].pageType="user"
               this.coupons.push(list2[j]);
             }
           }

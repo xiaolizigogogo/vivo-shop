@@ -10,8 +10,10 @@
                                                                  loaded="10">
             <p class="coupon_default_name"><span>{{item.name}}</span></p> <span class="coupon_default_price"><em>¥{{item.typeMoney}}</em>满{{item.minGoodsAmount}}可用
                 </span>
-            <div class="coupon_default_status coupon_default_status_add"><span
-              class="coupon_default_status_icon status_off">{{item.status}}</span> <i>剩余{{item.minAmount}}张</i></div>
+            <div class="coupon_default_status coupon_default_status_add" v-if="item.pageType=='system'" @click="getCoupon(item)"><span
+              class="coupon_default_status_icon status_off">{{item.status}}</span> <i >剩余{{item.maxAmount}}张</i></div>
+            <div class="coupon_default_status coupon_default_status_add" v-if="item.pageType=='user'"  @click="$router.push('/classify')"><span
+              class="coupon_default_status_icon status_off">{{item.status}}</span><i>立即使用</i></div>
           </div>
         </a>
         </div>
@@ -160,6 +162,8 @@
   }
 </style>
 <script>
+  import {addCoupon} from '../../api/api'
+  import{Toast} from 'mint-ui'
 export default {
   data(){
     return {
@@ -173,10 +177,29 @@ export default {
     }
   },
   methods:{
-
+      getCoupon(i){
+           let params={
+                userId:JSON.parse(localStorage.getItem("user")).id,
+                couponId:i.id,
+           }
+          addCoupon(params).then(res=>{
+                if(res.data.status==200) {
+                  Toast({
+                    message: "领取成功",
+                    duration: 950
+                  });
+                  this.item.status="已领取"
+                  this.item.maxAmount=item.maxAmount-1;
+                }else{
+                  Toast({
+                    message: res.data.exception,
+                    duration: 950
+                  });
+                }
+          })
+      }
   },
   mounted(){
-    console.log('item',this.item)
   }
 }
 </script>

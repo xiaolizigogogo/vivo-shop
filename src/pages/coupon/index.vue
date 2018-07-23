@@ -81,7 +81,7 @@
       <strong>领券大厅</strong>
       <i class="myMsg"></i>
     </div>
-    <couponService  v-for="(item,index) in coupons" :key="index" :item="item" @click="getCoupons(item)"/>
+    <couponService  v-for="(item,index) in coupons" :key="index" :item="item" />
     <Home-Footer></Home-Footer>
   </div>
 </template>
@@ -123,20 +123,24 @@
        * 获取产品信息
        */
       getCoupons({current:1,size:100,asc:false,descs:"id"}).then(res1=>{
+        this.coupons=[]
        let list1=res1.data.data.records;
         getUserCoupons({userId:this.userId}).then((res2) => {
-          let list2=res1.data.data.records;
+          let list2=res2.data.data.records;
           //循环优惠券设置属性
         for(let i=0;i<list1.length;i++){
           for(let j=0;j<list2.length;j++){
             list1[i].status="可领取"
+            list1[i].pageType="system"
             //如果已拥有设置已领取
+            console.log(list1[i].id==list2[j].couponId)
             if(list1[i].id==list2[j].couponId){
               list1[i].status="已领取"
+              break
             }
           }
+          this.coupons.push(list1[i])
         }
-        this.coupons=list1
         })
     })
       /**
@@ -158,8 +162,6 @@
       turnPage(){
         this.$router.push({name:'serviceDetail'})
       },
-      getCoupons(i){
-      }
     }
   }
 </script>
