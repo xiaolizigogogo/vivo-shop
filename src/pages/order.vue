@@ -320,7 +320,7 @@
                     <span v-if="item.order.orderStatus==1">已付款</span>
                     <span v-if="item.order.orderStatus==2">已发货</span>
                     <span v-if="item.order.orderStatus === 3">已完成</span>
-                    <span v-if="item.order.orderStatus === -1">已取消</span>
+                    <span v-if="item.order.orderStatus === 4">已取消</span>
                   </div>
                 </div>
               </div>
@@ -348,6 +348,7 @@
                 <span class="payment" v-if="item.order.orderStatus === 2"
                       @click="finishOrder(item)">确认收货</span>
                 <span class="payment" v-if="item.order.orderStatus === 2" @click="shipInfo(item)">物流信息</span>
+                <span class="payment" v-if="item.order.orderStatus === 0" @click="cancelOrder(item)">取消</span>
                 <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
                       <!--@click="commitMessage(item)">去评论</span>-->
               </div>
@@ -486,19 +487,26 @@
       commitMessage(item) { //评论
         this.$router.push(`/review/${item.OrdertNo}`)
       },
-      cancelOrder(item) { //取消订单
-        this.$store.dispatch('CancelOrder', {
-          orderId: item.order.id
-        }).then(response => {
+      cancelOrder(item) { //确认收货
+        MessageBox.confirm('', {
+          message: '确认取消？',
+          title: '提示',
+          confirmButtonText: '确认',
+          cancelButtonText: '取消'
+        }).then(action => {
+          if (action == 'confirm') {     //确认的回调
           let params={
             id:item.order.id,
-            orderStatus:-1
+            orderStatus: 4
           }
           changeOrderStatus(params).then(res=>{
-          this.onRefreshCallback()
-      })
-          this.onRefreshCallback()
+            this.onRefreshCallback()
         })
+        }
+      }).catch(err => {
+          if (err == 'cancel') {     //取消的回调
+        }
+      });
       },
       async onRefreshCallback() { //下拉刷新
         this.params.pageSize = 10;
@@ -528,7 +536,7 @@
             this.params.orderStatus = 3;
             break;
           case 4: //已取消
-            this.params.orderStatus = -1;
+            this.params.orderStatus = 4;
             break;
           default: //其他
             throw new Error('未知TabId')

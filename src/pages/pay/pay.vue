@@ -1,5 +1,95 @@
+<style lang="scss" scoped>
+  @import '../../assets/common/css/mixin.scss';
+  .my-header {
+    padding: $padding;
+    background: #fff;
+    position: relative;
+    z-index: 1;
+    @include flexbox(space-between,
+      center,
+      row,
+      nowrap);
+    border-bottom: 1px solid #eee;
+    .back {
+      display: block;
+      width: .65rem;
+      height: .65rem;
+      background: url('../../assets/jd/images/arrow-left.png') no-repeat;
+      background-size: 100%;
+    }
+    strong {
+      font-size: 18px;
+      font-weight: normal;
+      color: #333;
+    }
+    .myMsg {
+      display: block;
+      background: url('../../assets/jd/images/searchIcon.png') no-repeat;
+      background-size: 600% 100%;
+      height: .65rem;
+      width: .65rem;
+      background-position: -2.6rem 0;
+    }
+  }
+  .buy_checkout {
+    overflow: hidden;
+    position: relative;
+    background-color: #f7f7f7;
+    margin-bottom: 15px;
+    padding-top: 15px;
+  }
+  .buy_checkout li .content {
+    position: relative;
+    display: block;
+    text-align: right;
+    font-size: 12px;
+    color: #666;
+    padding: 13px 30px 13px 75px;
+  }
+  .buy_checkout li em {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+    color: #e93b3d;
+  }
+  .buy_checkout li strong {
+    display: inline-block;
+    font-weight: 400;
+    position: absolute;
+    left: 10px;
+    top: 11px;
+    font-size: 16px;
+    color: #333;
+  }
+  .buy_checkout li a.content:after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+    width: 6px;
+    height: 10px;
+    /*background-image: url(data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2…8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z%22/%3E%3C/svg%3E);*/
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -5px;
+  }
+  .buy_checkout li {
+    position: relative;
+    overflow: hidden;
+    background-color: #fff;
+  }
+</style>
+
 <template>
   <div class="pay">
+    <div class="my-header">
+      <i class="back" @click="$router.go(-1)"></i>
+      <strong>确认订单</strong>
+      <i class="myMsg"></i>
+    </div>
     <div class="pay-address" @click="goaddress"  v-if="address">
       <div>
         <p class="main-address-per">收货人:<span>{{submitForm.userName}}</span></p>
@@ -25,7 +115,6 @@
           </a>
         </li>
       </ul>
-
       <!-- 支付成功后的提示 -->
       <div class="pay-confirm" v-else>
         支付成功!!!</br>
@@ -33,12 +122,20 @@
         购物车列表重新设置
       </div>
     </div>
+    <div class="buy_checkout" id="buyDiscountArea">
+      <ul>
+        <li id="tabPromotionList" @click="handleSingleLinePicker">
+          <a href="javascript:void(0);" class="content"> <strong>优惠券</strong>
+            <em> &nbsp;{{couponInfo}}</em>
+          </a>
+        </li>
+      </ul>
+    </div>
     <h3 class="pay-allpay">
       商品总金额 : <i>￥</i><span>{{order.orderPrice}}</span><br>
-      运费 : <i>￥</i><span>{{order.orderPrice}}</span><br>
-      优惠 : <i>￥</i><span>{{order.orderPrice}}</span><br>
-      赠送积分 : <i>￥</i><span>{{order.orderPrice}}</span><br>
-      总需要支付 : <i>￥</i><span>{{order.orderPrice}}</span>
+      优惠 : <i>￥</i><span>{{order.couponPrice}}</span><br>
+      赠送积分 : <i></i><span>{{order.orderPrice}}</span><br>
+      总需要支付 : <i>￥</i><span>{{order.actualPrice}}</span>
     </h3>
     <footer class="pay-footer" ontouchstrat="" @click="payConfirm">
       <span>立即支付</span>
@@ -52,11 +149,14 @@
   .pay {
     width: 100%;
     background-color: #f7f7f7;
-
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
     .pay-address {
       background-color: #fff;
       border-bottom: 1 * 10vw/75 solid #dedede;
-      padding: 30 * 10vw/75;
+      padding: 6vw;
 
       > div {
         display: -webkit-flex;
@@ -79,11 +179,15 @@
   }
   }
   .pay-product {
-    background-color: #fff;
-    height:60vw;
-    overflow: auto;
 
+    /*height:60vw;*/
+    /*overflow: auto;*/
+    background-color: #f7f7f7;
+    ul{
+      padding-top: 2vw;
+    }
     li {
+      background-color: #fff;
       a {
         display: -webkit-flex;
         display: -ms-flex;
@@ -91,6 +195,7 @@
         box-sizing: border-box;
         padding: 20 * 10vw/75 30 * 10vw/75;
         color: #4d4d4d;
+
   .fz(font-size,30px);
   border-bottom: 1 * 10vw/75 solid #dedede;
 
@@ -136,10 +241,11 @@
   }
 
   .pay-footer {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     left: 0;
     width: 100%;
+    padding-top: 4vw;
     padding-bottom: 4vw;
     span {
       display: block;
@@ -175,6 +281,7 @@ import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 import { MessageBox } from 'mint-ui';
 import wexinPay from '../pay/wxPayComponent'
+import {fmoney} from '../../api/global'
 import {unifiedOrder,addOrder,preOrder,getJsTicket} from '../../api/api'
 import wx from 'weixin-js-sdk'
 export default {
@@ -192,8 +299,10 @@ export default {
         totalFee:"1",
         body:"订单支付",
         tradeType:"JSAPI",
-        money:undefined
+        money:undefined,
+        couponId:undefined
       },
+      couponInfo:"请选择",
       submitForm:{
 
       },
@@ -213,13 +322,44 @@ export default {
       ],
       text: "",
       ly: "",
-      address:undefined
+      address:undefined,
+      timeArray:[
+        {
+          label:'请选择',
+          defaultLabel:'请选择',
+          value:undefined
+        },
+      ],
+      couponsArray:[
+        {
+          label:'请选择',
+          defaultLabel:'请选择',
+          value:undefined
+        },
+      ],
+      coupons:[]
     };
   },
   components: {
 
   },
   methods: {
+    handleSingleLinePicker(){
+      let that = this
+      weui.picker(this.couponsArray, {
+        className: 'custom-classname',
+        container: 'body',
+        defaultValue: [0],
+        onChange: function (result) {
+        },
+        onConfirm: function (result) {
+          that.couponInfo = result[0].label
+          that.params.couponId = result[0].value
+          that.refresh()
+        },
+        id: 'singleLinePicker'
+      });
+    },
     btn(id, index) {
       this.listIndex = index;
     },
@@ -259,7 +399,7 @@ export default {
       }
       addOrder(_this.submitForm).then(function(res) {
         if(res.data.status==200){
-          _this.params.totalFee=res.data.data.order.orderPrice*100;
+          _this.params.totalFee=res.data.data.order.actualPrice*100;
           // _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
           _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:res.data.data.order.orderSn})
           _this.payOrder();
@@ -270,21 +410,49 @@ export default {
       })
       },
     init(){
+
       var _this=this
+       _this.couponsArray=_this.timeArray;
       preOrder({userId:JSON.parse(localStorage.getItem("user")).id}).then(function(res) {
         if(res.data.status==200) {
           _this.order = res.data.data.order
+          _this.order.orderPrice=fmoney(_this.order.orderPrice);
+          _this.order.couponPrice=fmoney(_this.order.couponPrice);
+          _this.order.actualPrice=fmoney(_this.order.actualPrice);
           _this.pay = res.data.data.orderGoods
+          _this.coupons=res.data.data.coupons;
+          _this.coupons.forEach(item=>{
+            let info={
+              label:"满¥"+item.minGoodsAmount+"减"+item.typeMoney+"元",
+              value:item.id
+            }
+            _this.couponsArray.push(info)
+          })
+
         }
         else{
           _this.pay=[]
           alert(res.data.exception)
         }
-        })
+      })
+    },
+    refresh(){
+      var _this=this
+      preOrder({userId:JSON.parse(localStorage.getItem("user")).id,couponId: _this.params.couponId}).then(function(res) {
+        if(res.data.status==200) {
+          _this.order.orderPrice=fmoney(res.data.data.order.orderPrice);
+          _this.order.couponPrice=fmoney(res.data.data.order.couponPrice);
+          _this.order.actualPrice=fmoney(res.data.data.order.actualPrice);
+        }
+        else{
+          _this.pay=[]
+          alert(res.data.exception)
+        }
+      })
     },
     payConfirm () {
       if (this.pay) { //还未提交了订单,数据还未清空
-        MessageBox.confirm(`确定支付${this.order.orderPrice}元`).then(action => {this.addOrder()},function (err) {});
+        MessageBox.confirm(`确定支付${this.order.actualPrice}元`).then(action => {this.addOrder()},function (err) {});
       }else { //提交了订单,数据清空
         alert('请勿重复提交订单')
       }

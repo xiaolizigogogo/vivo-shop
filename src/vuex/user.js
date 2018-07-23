@@ -3,6 +3,7 @@ import {
   sendPhoneMessage,
   // registered,
   editUserInfo,
+  updateSubscribes
 } from '../api/api';
 import {
   setSessionStorage,
@@ -59,6 +60,18 @@ const user={
           reject(err)
         })
       })
+    },
+    UpdateSubscribe({ // 取消订单
+                  commit,
+                  state
+                }, parameterData) {
+      return new Promise((resolve, reject) => {
+        updateSubscribes(parameterData).then(response => {
+        resolve(response)
+      }, err => {
+        reject(err)
+      })
+    })
     },
   }
 }

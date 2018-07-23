@@ -261,6 +261,13 @@ const addSubscribes=(params)=>{
     data: params
 })
 }
+const updateSubscribes=(params)=>{
+  return request({
+    url: '/shop/subscribes',
+    method: 'put',
+    data: params
+  })
+}
   const addCoupon=(params)=>{
   return request({
     url: '/shop/coupons',
@@ -382,5 +389,6 @@ export {
   getUserCoupons,
   addCoupon,
   sendPhoneMessage,
-  editUserInfo
+  editUserInfo,
+  updateSubscribes
 }

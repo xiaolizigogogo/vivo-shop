@@ -133,7 +133,7 @@
       #loadingbar {
         position: absolute;
         transition: .4s;
-        width: calc((100%/8));
+        width: calc((100%/4));
         background: red;
         bottom: 0;
         height: 2px;
@@ -295,11 +295,10 @@
     </div>
     <div class="topnav">
       <span @click.stop.prevent="switchTabs(0)" :class="{'active':active===0}">全部</span>
-      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">待确认</span>
-      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">待完成</span>
-      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">已完成</span>
-      <span @click.stop.prevent="switchTabs(4)" :class="{'active':active===4}">已取消</span>
-      <div id="loadingbar" :style="active===0 ? 'left:4%' : active===1 ?  'left:24%' : active===2 ?'left:44%' : active===3 ? 'left:64%' : 'left: 84%'"></div>
+      <span @click.stop.prevent="switchTabs(1)" :class="{'active':active===1}">待完成</span>
+      <span @click.stop.prevent="switchTabs(2)" :class="{'active':active===2}">已完成</span>
+      <span @click.stop.prevent="switchTabs(3)" :class="{'active':active===3}">已取消</span>
+      <div id="loadingbar" :style="active===0 ? 'left:0%' : active===1 ?  'left:25%' : active===2 ?'left:50%' : active===3 ? 'left:75%' : 'left: 84%'"></div>
     </div>
     <div class="order-container">
       <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params" :loadMoreIconVisible="false" ref="orderLoadmore">
@@ -316,10 +315,9 @@
                 </div>
                 <div class="right">
                   <div class="order-status">
-                    <span v-if="item.subscribeStatus === 0">等待付款</span>
-                    <span v-if="item.subscribeStatus === 1">等待收货</span>
-                    <span v-if="item.subscribeStatus === 2">已完成</span>
-                    <span v-if="item.subscribeStatus === 2">已取消</span>
+                    <span v-if="item.subscribeStatus == 0">待完成</span>
+                    <span v-if="item.subscribeStatus == 3">已完成</span>
+                    <span v-if="item.subscribeStatus == -1">已取消</span>
                   </div>
                 </div>
               </div>
@@ -337,17 +335,10 @@
                   </div>
                 </div>
               </div>
-              <!--<div class="order-sku">-->
-                <!--<span>共{{item.id}}件商品&nbsp;需支付：</span>-->
-                <!--<strong>&yen;&nbsp;{{item.id}}</strong>-->
-              <!--</div>-->
+
               <div class="order-btn-group">
-                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 0" @click="payment(item)">去支付</span>
-                <span class="payment" v-if="item.subscribeStatus === 1 && item.subscribeStatus === 1 && item.subscribeStatus=== 2"
-                      @click="finishOrder(item)">确认收货</span>
-                <span class="payment" v-if="item.subscribeStatus === 0 && item.subscribeStatus === 0" @click="cancelOrder(item)">取消</span>
-                <!--<span class="payment" v-if="item.comment_status === 0 && item.confirm_status === 1 && item.pay_status === 1 && item.finish_status === 1"-->
-                <!--@click="commitMessage(item)">去评论</span>-->
+                <span class="payment" v-if="item.subscribeStatus == 0" @click="finishOrder(item)">完成</span>
+                <span class="payment" v-if="item.subscribeStatus == 0" @click="cancelOrder(item)">取消</span>
               </div>
             </div>
           </div>
@@ -434,11 +425,12 @@
         }, 2000)
       },
       finishOrder(item) { //确认收货
-        this.$store.dispatch('FinishOrder', {
-          OrderNo: item.OrdertNo
+        this.$store.dispatch('UpdateSubscribe', {
+          id: item.id,
+          subscribeStatus: 3
         }).then(response => {
           Toast({
-            message: response.Message
+            message: "操作成功"
           })
           this.onRefreshCallback()
         })
@@ -447,11 +439,12 @@
         this.$router.push(`/review/${item.OrdertNo}`)
       },
       cancelOrder(item) { //取消订单
-        this.$store.dispatch('CancelOrder', {
-          orderId: item.order.id
+        this.$store.dispatch('UpdateSubscribe', {
+          id: item.id,
+          subscribeStatus: -1
         }).then(response => {
           Toast({
-            message: response.Message
+            message: "操作成功"
           })
           this.onRefreshCallback()
         })
@@ -472,16 +465,13 @@
           case 0: //全部订单
             this.params.subscribeStatus = null;
             break;
-          case 1: //待付款
+          case 1: //待完成
             this.params.subscribeStatus = 0;
             break;
-          case 2: //待收货
-            this.params.subscribeStatus = 1;
-            break;
-          case 3: //已完成
+          case 2: //已完成
             this.params.subscribeStatus = 2;
             break;
-          case 4: //已取消
+          case 3: //已取消
             this.params.subscribeStatus = -1;
             break;
           default: //其他
