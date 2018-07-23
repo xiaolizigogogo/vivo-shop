@@ -129,9 +129,9 @@
           let list2=res2.data.data.records;
           //循环优惠券设置属性
         for(let i=0;i<list1.length;i++){
+          list1[i].status="可领取"
+          list1[i].pageType="system"
           for(let j=0;j<list2.length;j++){
-            list1[i].status="可领取"
-            list1[i].pageType="system"
             //如果已拥有设置已领取
             console.log(list1[i].id==list2[j].couponId)
             if(list1[i].id==list2[j].couponId){
