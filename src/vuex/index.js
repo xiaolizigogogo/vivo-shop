@@ -4,6 +4,7 @@ import state from './state'
 import mutations from './mutations'
 import actions from './actions'
 import shop from './shop'
+import user from './user'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -11,7 +12,8 @@ const store = new Vuex.Store({
     shop,
     state,
     mutations,
-    actions
+    actions,
+    user
   },
 })
 export default store

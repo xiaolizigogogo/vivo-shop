@@ -30,6 +30,7 @@ import product from '@/pages/detail/product'
 import index from '@/pages/home/index'
 import coupon from '@/pages/coupon/index'
 import myCoupon from '@/pages/coupon/myCoupon'
+import login from '@/pages/my/login'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -64,6 +65,11 @@ const router =  new Router({
       path: '/subscribe',
       name:'subscribe',
       component: subscribe
+    },
+    {
+      path: '/login',
+      name:'login',
+      component: login
     },
     {
       path: '/index',

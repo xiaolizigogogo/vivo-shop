@@ -108,7 +108,7 @@ body,
 }
 
 ._v-content .pull-to-refresh-layer {
-  background-image: url('../../jd/images/jdload.gif');
+  background-image: url('/assets/jd/images/jdload.gif');
   background-repeat: no-repeat;
   background-position: 100px 10px;
   background-size: 40px 40px;
@@ -142,7 +142,7 @@ body,
     display:none;
   }
   >div{
-    background-image: url('../../jd/images/jdload.gif');
+    background-image: url('/assets/jd/images/jdload.gif');
     background-repeat: no-repeat;
     background-size: 40px 40px;
     -webkit-transform: scale(1);
@@ -169,7 +169,7 @@ body,
 
 //单选框
 .select-icon {
-  background: url('../../jd/images/check1.png') no-repeat!important;
+  background: url('/assets/jd/images/check1.png') no-repeat!important;
   background-size: 100% 100%!important;
 }
 
@@ -188,7 +188,7 @@ body,
   display: table;
   width: 20px;
   height: 20px;
-  background: url('../../jd/images/check0.png') no-repeat;
+  background: url('/assets/jd/images/check0.png') no-repeat;
   background-size: 100% 100%;
 }
 //眼睛
@@ -196,10 +196,10 @@ body,
   display: block;
   width: 25px;
   height: 25px;
-  background: url('../../jd/images/eye.png') no-repeat;
+  background: url('/assets/jd/images/eye.png') no-repeat;
   background-size: 100% 100%;
   &.eye-close-icon{
-    background: url('../../jd/images/eye-close.png') no-repeat;
+    background: url('/assets/jd/images/eye-close.png') no-repeat;
     background-size: 100% 100%;
   }
 }
@@ -263,7 +263,7 @@ body,
   display: block;
   width: 16px;
   height: 20px;
-  background: url('../../jd/images/arrow-right.png') no-repeat;
+  background: url('/assets/jd/images/arrow-right.png') no-repeat;
   background-size: 100%;
 }
 
@@ -277,14 +277,14 @@ body,
     display: block;
     width: 14px;
     height: 14px;
-    background: url('../../jd/images/star-h.png') no-repeat;
+    background: url('/assets/jd/images/star-h.png') no-repeat;
     background-size: 100%;
   }
   .blur{
     display: block;
     width: 14px;
     height: 14px;
-    background: url('../../jd/images/star-n.png') no-repeat;
+    background: url('/assets/jd/images/star-n.png') no-repeat;
     background-size: 100%;
   }
 }

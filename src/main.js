@@ -15,7 +15,8 @@ import VueLazyLoad from 'vue-lazyload'
 import axios from 'axios';
 //引入vue-resource
 import VueResource from 'vue-resource';
-
+import VeeValidate from 'vee-validate';
+Vue.use(VeeValidate);
 Vue.use(VueScroller)
 Vue.use(Navigation, {router, store})
 

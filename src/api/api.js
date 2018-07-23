@@ -182,7 +182,7 @@ const getWechatOpenid = (params) => {
  */
 const getUserInfo = (params) => {
   return request({
-    url: '/shop/users/user',
+    url: '/shop/users',
     method: 'get',
     params: params
   })
@@ -319,6 +319,14 @@ const getCartCount=(params)=>{
     params: params
   })
 }
+const sendPhoneMessage=(params)=> {
+  return request({
+    url: '/shop/users/smsCode',
+    method: 'get',
+    params: params
+  })
+}
+
 const       getArticleList=(params)=>{
   return axios.get("/static/article.json")
 
@@ -330,7 +338,13 @@ const changeOrderStatus=(params)=>{
     data: params
   })
 }
-
+const editUserInfo=(params)=>{
+  return request({
+    url: '/shop/users',
+    method: 'put',
+    data: params
+  })
+}
 export {
   getGoods,
   getCategory,
@@ -366,5 +380,7 @@ export {
   getArticleList,
   changeOrderStatus,
   getUserCoupons,
-  addCoupon
+  addCoupon,
+  sendPhoneMessage,
+  editUserInfo
 }
