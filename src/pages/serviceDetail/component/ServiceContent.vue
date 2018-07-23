@@ -5,7 +5,7 @@
           <span class="ReservationsTopLeft">
             选择预约项目
           </span>
-          <router-link to="/price" tag="a">查看价格表</router-link>
+          <!--<router-link to="/price" tag="a">查看价格表</router-link>-->
         </div>
         <div class="ReservationsBottom">
           <div class="ReservationsMarks marks" @click="handleReservationsClick"  v-for="(item,index) in productTypes" :id="item.id" :name="item.name">{{item.name}}</div>
@@ -108,50 +108,58 @@ export default {
       timeArray:[
         {
           label:'请选择',
+          defaultLabel:'请选择',
           value:0
         },
         {
-          label: '9:00',
-          value: 9
-        },
-        {
           label: '10:00',
+          defaultLabel:'10:00',
           value: 10
         },
         {
           label: '11:00',
+          defaultLabel:'11:00',
           value: 11
         },
         {
           label: '12:00',
+          defaultLabel: '12:00',
           value: 12,
         },
         {
           label: '13:00',
+          defaultLabel: '13:00',
           value: 13,
         },
         {
           label: '14:00',
+          defaultLabel: '14:00',
           value: 14,
         },
         {
           label: '15:00',
+          defaultLabel: '15:00',
           value: 15,
         },
         {
           label: '16:00',
+          defaultLabel: '16:00',
           value: 16,
         },{
           label: '17:00',
+          defaultLabel: '17:00',
           value: 17,
         },{
           label: '18:00',
+          defaultLabel: '18:00',
           value: 18,
         },{
           label: '19:00',
+          defaultLabel: '19:00',
           value: 19,
         },{
           label: '20:00',
+          defaultLabel: '20:00',
           value: 20,
         }
       ],
@@ -272,11 +280,14 @@ export default {
     initTime(){
       this.timeArray.forEach(item=>{
         item.disabled=false
+        item.label=item.defaultLabel;
+        //已经预约出去
         if(this.unAvilTime.includes(item.value)){
           item.label=item.label+"(不可预约)"
           item.disabled=true
         }
         const date=new Date()
+        //当日不可用
         if(this.today==this.submitForm.subscribeDay&&date.getHours()>=item.value){
           item.label=item.label+"(不可预约)"
           item.disabled=true

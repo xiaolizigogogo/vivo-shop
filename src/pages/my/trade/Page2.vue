@@ -457,6 +457,8 @@
         this.params.pageIndex = 1;
         this.params.current = 1;
         this.orderList = [];
+        this.params.asc= false;
+        this.params.descs="id";
         this.$refs.orderLoadmore.onTopLoaded(this.$refs.orderLoadmore.uuid);
       },
       switchTabs(Id) {
@@ -505,7 +507,7 @@
         if (response.data.data.trades.records.length > 0) {
           response.data.data.trades.records.map(i => {
             i.tradeMoney = fmoney(i.tradeMoney)
-            i.gmtCreate = formatDateTime(new Date(i.gmtCreate))
+            // i.gmtCreate = formatDateTime(new Date(i.gmtCreate))
             this.orderList.push(i)
           })
         }

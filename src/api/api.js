@@ -61,6 +61,7 @@ const getAdPositionDetail = (params) => {
     params: params
   })
 }
+
 /**
  *
  * 不分页
@@ -84,7 +85,17 @@ const getCoupons = (params) => {
     params: params
   })
 }
-
+/**
+ *
+ * 获取优惠券类表
+ */
+const getUserCoupons = (params) => {
+  return request({
+    url: '/shop/coupons/users',
+    method: 'get',
+    params: params
+  })
+}
 /**
  *
  * 获取订单列表
@@ -305,7 +316,13 @@ const       getArticleList=(params)=>{
   return axios.get("/static/article.json")
 
 }
-
+const changeOrderStatus=(params)=>{
+  return request({
+    url: '/shop/orders/',
+    method: 'put',
+    data: params
+  })
+}
 
 export {
   getGoods,
@@ -339,5 +356,7 @@ export {
   getCartCount,
   preOrder,
   getOrderExpress,
-  getArticleList
+  getArticleList,
+  changeOrderStatus,
+  getUserCoupons
 }

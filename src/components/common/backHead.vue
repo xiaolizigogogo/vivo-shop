@@ -59,7 +59,7 @@
 
 </script>
 <style lang='scss' scoped>
-  @import '~assets/common/css/mixin.scss';
+  @import '../../assets/common/css/mixin.scss';
   .backHead {
     position: fixed;
     bottom: 62px;

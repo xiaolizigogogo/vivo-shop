@@ -165,10 +165,10 @@
       <!--</div>-->
       <div style="border-bottom:1px solid #eee;background:#fff;">
         <div class="topnav" :class="Status? 'Navfixed': ''">
-          <span @click.stop.prevent="switchTabs('tab-container1')" :class="{'active':active==='tab-container1'}">精选</span>
-          <span @click.stop.prevent="switchTabs('tab-container2')" :class="{'active':active==='tab-container2'}">生活</span>
-          <span @click.stop.prevent="switchTabs('tab-container3')" :class="{'active':active==='tab-container3'}">视频</span>
-          <span @click.stop.prevent="switchTabs('tab-container4')" :class="{'active':active==='tab-container4'}">数码</span>
+          <span @click.stop.prevent="switchTabs('tab-container1')" :class="{'active':active==='tab-container1'}">产品展示</span>
+          <span @click.stop.prevent="switchTabs('tab-container2')" :class="{'active':active==='tab-container2'}">案例介绍</span>
+          <span @click.stop.prevent="switchTabs('tab-container3')" :class="{'active':active==='tab-container3'}">关于我们</span>
+          <!--<span @click.stop.prevent="switchTabs('tab-container4')" :class="{'active':active==='tab-container4'}">数码</span>-->
           <div id="loadingbar" :style="active==='tab-container1' ? 'left:0%' : active==='tab-container2' ?  'left:25%' : active==='tab-container3' ?'left:50%' : 'left:75%'"></div>
         </div>
       </div>
@@ -231,21 +231,21 @@
               </div>
             </div>
           </mt-tab-container-item>
-          <mt-tab-container-item id="tab-container4">
-            <div class="article-container" v-if="articleData!=''">
-              <div class="data-item" v-for="(item,index) in articleData" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
-                <div class="article-item" >
-                  <div class="left">
-                    <p class="title">{{item.article_title}}</p>
-                    <span class="subTitle">{{item.summary}}</span>
-                  </div>
-                  <div class="right">
-                    <img v-lazy="item.image_url[0].url" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mt-tab-container-item>
+          <!--<mt-tab-container-item id="tab-container4">-->
+            <!--<div class="article-container" v-if="articleData!=''">-->
+              <!--<div class="data-item" v-for="(item,index) in articleData" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">-->
+                <!--<div class="article-item" >-->
+                  <!--<div class="left">-->
+                    <!--<p class="title">{{item.article_title}}</p>-->
+                    <!--<span class="subTitle">{{item.summary}}</span>-->
+                  <!--</div>-->
+                  <!--<div class="right">-->
+                    <!--<img v-lazy="item.image_url[0].url" alt="">-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</mt-tab-container-item>-->
         </mt-tab-container>
       </load-more>
     </div>

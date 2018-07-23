@@ -339,6 +339,7 @@
                 </div>
               </div>
               <div class="order-sku">
+                <div style="text-align: left"><span>下单时间:{{item.order.addTime}}</span></div>
                 <span>共{{item.orderGoods.length}}件商品&nbsp;需支付：</span>
                 <strong>&yen;&nbsp;{{item.order.orderPrice}}</strong>
               </div>
@@ -368,14 +369,14 @@
 
 <script>
   import {
-    getOrders,unifiedOrder,getOrderExpress
+    getOrders,unifiedOrder,getOrderExpress,changeOrderStatus
   } from '../api/api';
   import wexinPay from './pay/wxPayComponent'
   import LoadMore from '../components/common/loadMore';
   import {
     Toast,MessageBox
   } from 'mint-ui'
-  import {fmoney} from '../api/global'
+  import {fmoney,formatDateTime} from '../api/global'
   export default {
     data() {
       return {
@@ -469,7 +470,13 @@
           cancelButtonText: '取消'
         }).then(action => {
           if (action == 'confirm') {     //确认的回调
+            let params={
+              id:item.order.id,
+              orderStatus:3
+            }
+          changeOrderStatus(params).then(res=>{
             this.onRefreshCallback()
+          })
           }
         }).catch(err => {
           if (err == 'cancel') {     //取消的回调
@@ -483,9 +490,13 @@
         this.$store.dispatch('CancelOrder', {
           orderId: item.order.id
         }).then(response => {
-          Toast({
-            message: response.Message
-          })
+          let params={
+            id:item.order.id,
+            orderStatus:-1
+          }
+          changeOrderStatus(params).then(res=>{
+          this.onRefreshCallback()
+      })
           this.onRefreshCallback()
         })
       },
@@ -494,6 +505,8 @@
         this.params.pageIndex = 1;
         this.params.current = 1;
         this.orderList = [];
+    this.params.asc= false;
+    this.params.descs="id";
         this.$refs.orderLoadmore.onTopLoaded(this.$refs.orderLoadmore.uuid);
       },
       switchTabs(Id) {
@@ -546,6 +559,7 @@
         if (response.data.data.records.length > 0) {
           response.data.data.records.map(i => {
             i.orderPrice = fmoney(i.orderPrice)
+            i.order.addTime=formatDateTime(new Date(i.order.addTime*1000))
             _this.orderList.push(i)
 
           })

@@ -22,6 +22,7 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
+    host:'0.0.0.0',
     env: require('./dev.env'),
     port: 7778,
     autoOpenBrowser: true,
@@ -29,7 +30,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/shop/': {
-        target: 'http://shop.yodemon.top:8888',//226:8799              host:'192.168.1.226',
+        target: 'http://localhost:8888',//226:8799              host:'192.168.1.226',
         changeOrigin: true,
         pathRewrite: {
           '^/shop/': '/'

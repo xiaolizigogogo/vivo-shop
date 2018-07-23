@@ -26,12 +26,15 @@ import trade from "@/pages/my/trade/Page2"
 import serviceDetail from '@/pages/serviceDetail/serviceDetail'
 import HomeContainer from '@/pages/home/component/HomeContainer'
 import article from '@/pages/cms/article'
+import product from '@/pages/detail/product'
+import index from '@/pages/home/index'
+import coupon from '@/pages/coupon/index'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
   mode: 'history',
   routes: [
-    { path: '/', name: 'Home', component: Home },
+    { path: '/', name: 'index', component: index },
     { path: '/Home', name: 'Home', component: Home },
     { path: '/cart', name: 'cart', component: cart },
     { path: '/my', name: 'my', component: my },
@@ -60,6 +63,11 @@ const router =  new Router({
       path: '/subscribe',
       name:'subscribe',
       component: subscribe
+    },
+    {
+      path: '/index',
+      name:'index',
+      component: index
     },
     {
       path: '/goodDetail/:id',
@@ -113,6 +121,16 @@ const router =  new Router({
       path: '/homeContainer/',
       name:'HomeContainer',
       component:HomeContainer
+    },
+    {
+      path: '/product/:id',
+      name:'product',
+      component:product
+    },
+    {
+      path: '/coupon',
+      name:'coupon',
+      component:coupon
     },
   ],
   //路由切换页面始终回到最顶部
