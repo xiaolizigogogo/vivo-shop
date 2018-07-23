@@ -78,7 +78,7 @@
   <div class="my-order">
     <div class="my-header">
       <i class="back" @click="$router.go(-1)"></i>
-      <strong>领券大厅</strong>
+      <strong>我的优惠券</strong>
       <i class="myMsg"></i>
     </div>
     <couponService  v-for="(item,index) in coupons" :key="index" :item="item" @click="getCoupons(item)"/>
@@ -122,21 +122,26 @@
       /**
        * 获取产品信息
        */
-      getCoupons({current:1,size:100,asc:false,descs:"id"}).then(res1=>{
+      getUserCoupons({current:1,size:100,asc:false,descs:"id",userId:this.userId}).then(res1=>{
        let list1=res1.data.data.records;
-        getUserCoupons({userId:this.userId}).then((res2) => {
+       getCoupons({current:1,size:100,asc:false,descs:"id"}).then((res2) => {
           let list2=res1.data.data.records;
           //循环优惠券设置属性
         for(let i=0;i<list1.length;i++){
           for(let j=0;j<list2.length;j++){
-            list1[i].status="可领取"
             //如果已拥有设置已领取
             if(list1[i].id==list2[j].couponId){
-              list1[i].status="已领取"
+              if(list[i].orderId==0){
+                list1[i].status="可使用"
+              }
+              else{
+                list1[i].status="已使用"
+              }
+              this.coupons.push(list2[j]);
             }
           }
         }
-        this.coupons=list1
+
         })
     })
       /**
