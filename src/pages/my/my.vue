@@ -57,7 +57,7 @@ export default {
           getUserInfoByOpenId({"openid":this.openid}).then(res=>{
             localStorage.setItem("user",JSON.stringify(res.data.data))
             const user=JSON.parse( localStorage.getItem("user"));
-            this.name=user.nickname;
+            this.name=user.username;
             this.header_url=user.avatar
             this.coupons=fmoney(user.restMoney,2)
             this.encourage=fmoney(user.purchaseMoney,2)
@@ -68,7 +68,7 @@ export default {
     }
     else{
       const user=JSON.parse( localStorage.getItem("user"));
-      this.name=user.nickname;
+      this.name=user.username;
       this.header_url=user.avatar
       this.coupons=fmoney(user.restMoney,2)
       this.encourage=fmoney(user.purchaseMoney,2)

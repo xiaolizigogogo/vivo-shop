@@ -39,11 +39,19 @@ const user={
                      }, parameterData) {
       return new Promise((resolve, reject) => {
         sendPhoneMessage(parameterData).then(response => {
-          if (response.Code !== 0) return Toast({
-            message: response.Message,
-            position: 'bottom'
-          })
-          return resolve(response)
+          resolve(response)
+        }, err => {
+          reject(err)
+        })
+      })
+    },
+    ValidatePhoneCode({ //获取验证码
+                       commit,
+                       state
+                     }, parameterData) {
+      return new Promise((resolve, reject) => {
+        validatePhoneCode(parameterData).then(response => {
+          resolve(response)
         }, err => {
           reject(err)
         })

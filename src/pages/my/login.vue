@@ -197,7 +197,7 @@
               <div :class="['registered-getCode',registeredForm.resetSendPhoneMessage?'disabled-btn':'']" @click="registeredSendPhoneMessage"
                 :disabled="registeredForm.resetSendPhoneMessage">{{registeredForm.resetSendPhoneMessage ? `(${registeredForm.resetSendPhoneMessage})` : '获取验证码'}}</div>
             </div>
-            <div :class="['cell-btn',errors.has('registeredCode')?'disabled-btn':'']" @click="()=>{errors.has('registeredCode')?false: visiblePopup.registeredFormId = true}">下一步</div>
+            <div :class="['cell-btn',errors.has('registeredCode')?'disabled-btn':'']" @click="validateSendPhoneMessage">下一步</div>
           </div>
         </div>
       </mt-popup>
@@ -353,6 +353,9 @@
           })
         })
       },
+      /**
+       * 验证手机号是否已注册
+       * */
       async registeredNext() { //注册账号发送短信
         this.$store.dispatch('GetUserInfo', {
           mobile: this.registeredForm.phone
@@ -366,34 +369,69 @@
           this.visiblePopup.registeredCode = true
         })
       },
+      /**
+       * 发送验证码
+       * */
       async registeredSendPhoneMessage() { //获取验证码
         await this.$store.dispatch('SendPhoneMessage', {
-          phone: this.registeredForm.phone
-        });
-        this.registeredForm.resetSendPhoneMessage = 120;
-        let times = setInterval(() => {
-          if (this.registeredForm.resetSendPhoneMessage <= 0) {
-            this.registeredForm.resetSendPhoneMessage = null;
-            clearInterval(times);
-          } else {
-            this.registeredForm.resetSendPhoneMessage--;
+          mobile: this.registeredForm.phone,
+          id:JSON.parse(localStorage.getItem("user")).id
+        }).then(res=>{
+          let message="验证码发送成功"
+          if(res.data.status==200){
+            this.registeredForm.resetSendPhoneMessage = 120;
+            let times = setInterval(() => {
+              if (this.registeredForm.resetSendPhoneMessage <= 0) {
+                this.registeredForm.resetSendPhoneMessage = null;
+                clearInterval(times);
+              } else {
+                this.registeredForm.resetSendPhoneMessage--;
+              }
+            }, 1000)
           }
-        }, 1000)
-      },
-      async forgetSendPhoneMessage() { //获取验证码
-        await this.$store.dispatch('SendPhoneMessage', {
-          phone: this.forgetForm.phone
-        });
-        this.forgetForm.resetSendPhoneMessage = 120;
-        let times = setInterval(() => {
-          if (this.forgetForm.resetSendPhoneMessage <= 0) {
-            this.forgetForm.resetSendPhoneMessage = null;
-            clearInterval(times);
-          } else {
-            this.forgetForm.resetSendPhoneMessage--;
+          else{
+            message=res.data.exception
           }
-        }, 1000)
+          return Toast({
+            message: message,
+            position: 'bottom'
+          })
+        });
+
       },
+      /**
+       * 验证验证码
+       * @returns {Promise<void>}
+       */
+      async validateSendPhoneMessage(){
+        this.$store.dispatch('ValidatePhoneCode', {
+          mobile: this.registeredForm.phone,
+          id:JSON.parse(localStorage.getItem("user")).id,
+          smsCode:this.registeredForm.code
+        }).then(response => {
+          let message="验证成功";
+          if (response.data.status==200){
+            return Toast({
+              message: '该手机已被注册',
+              position: 'bottom'
+            })
+            this.visiblePopup.registeredCode = true
+          }
+          else{
+            return Toast({
+              message: res.data.exception,
+              position: 'bottom'
+            })
+          }
+        }, err => {
+          this.visiblePopup.registeredCode = true
+        })
+      },
+      /**
+       *
+       * @returns {Promise<*>}
+       * @constructor
+       */
       async Login() { //登录
         let Data = await this.$store.dispatch('Login', {
           username: this.loginForm.username,

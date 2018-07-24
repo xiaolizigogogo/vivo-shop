@@ -334,6 +334,14 @@ const sendPhoneMessage=(params)=> {
   })
 }
 
+const validatePhoneCode=(params)=> {
+  return request({
+    url: '/shop/users/smsCode/'+params.smsCode,
+    method: 'get',
+    params: params
+  })
+}
+
 const       getArticleList=(params)=>{
   return axios.get("/static/article.json")
 
@@ -390,5 +398,6 @@ export {
   addCoupon,
   sendPhoneMessage,
   editUserInfo,
-  updateSubscribes
+  updateSubscribes,
+  validatePhoneCode
 }
