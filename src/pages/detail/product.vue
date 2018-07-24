@@ -893,7 +893,7 @@
                     </div>
                   </div>
                 </div>
-                <span class="comment-date">{{item.createTime | DateFormat('yyyy-MM-dd hh:mm')}}</span>
+                <span class="comment-date">{{item.createTime }}</span>
               </div>
               <div class="comment-content">
                 <p>{{item.content}}</p>
@@ -901,20 +901,20 @@
                   <img v-for="(img,imgIndex) in item.image_url" :key="imgIndex" :src="img.url" :alt="img.name">
                 </div>
               </div>
-              <!-- <div class="comment-sku">
+               <div class="comment-sku">
                 <p>规格规格规格规格规格规格</p>
-              </div> -->
+              </div>
               <div class="comment-other">
-                <span class="createDate">{{item.createTime | DateFormat('yyyy-MM-dd hh:mm')}}</span>
+                <span class="createDate">{{item.createTime}}</span>
                 <div>
-                  <!-- <div class="like-icon">
+                   <div class="like-icon">
                     <i></i>
                     <span>0</span>
                   </div>
                   <div class="sendcomment">
                     <i></i>
                     <span>0</span>
-                  </div> -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -966,7 +966,8 @@
     getRecommend,
     getGoodDetail,
     getCartCount
-  } from '../../api/api'
+  } from '../../api/api';
+  import {formatNativeDate} from '../../api/global'
   import LoadMore from '../../components/common/loadMore';
   import BackHead from '../../components/common/backHead';
   import axios from "axios";
@@ -996,7 +997,21 @@
         },
         commentData: [],
         goodDetails: [],
-        attributes:[]
+        attributes:[],
+        commentData:[
+          {
+            username:"123",
+            avatar:JSON.parse(localStorage.getItem("user")).avatar,
+            star:[1,2,3,4],
+            createTime:new Date(),
+            content:"123",
+            image_url:[
+              {
+                url:JSON.parse(localStorage.getItem("user")).avatar
+              }
+            ]
+          }
+        ]
       };
     },
 
