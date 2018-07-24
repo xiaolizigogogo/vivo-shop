@@ -785,10 +785,10 @@
           <i class="back"></i>
         </div>
         <div class="product-tabs">
-          <!--<span @click="switchTabs('mainLayout')" :class="['product-tabs-item',containerTab==='mainLayout'?'active':'']">商品</span>-->
-          <!--<span @click="switchTabs('goodDetail')" :class="['product-tabs-item',containerTab==='goodDetail'?'active':'']">详情</span>-->
-          <!--<span @click="switchTabs('goodcommentList')" :class="['product-tabs-item',containerTab==='goodcommentList'?'active':'']">评价</span>-->
-          <!--<div id="loadingbar" :style="containerTab==='mainLayout' ? 'left:5%' : containerTab==='goodDetail' ?  'left:38.63%' : 'left:71.66%'"></div>-->
+          <span @click="switchTabs('mainLayout')" :class="['product-tabs-item',containerTab==='mainLayout'?'active':'']">商品</span>
+          <span @click="switchTabs('goodDetail')" :class="['product-tabs-item',containerTab==='goodDetail'?'active':'']">详情</span>
+          <span @click="switchTabs('goodcommentList')" :class="['product-tabs-item',containerTab==='goodcommentList'?'active':'']">评价</span>
+          <div id="loadingbar" :style="containerTab==='mainLayout' ? 'left:5%' : containerTab==='goodDetail' ?  'left:38.63%' : 'left:71.66%'"></div>
         </div>
         <!--<div class="other">-->
           <!--<i class="share"></i>-->
@@ -855,9 +855,18 @@
                 <div class="top-tip">
                   <span>商品信息</span>
                 </div>
-                <div id="prodContent-container" v-html="productInfo.content"></div>
+                <div id="prodContent-container" v-html="productInfo.goodsDesc"></div>
               </div>
-              <div v-show="detailTab==='skuContent'">skuContent</div>
+              <div v-show="detailTab==='skuContent'">
+                <div class="goodDetailParam">
+                  <ul>
+                    <li class="goodDetailLi" v-for="(item, index) in attributes" :key="index">
+                      <span class="paramKey fontSize04">{{item.name}}</span>
+                      <span class="paramValue fontSize03">{{item.value}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
               <div v-show="detailTab==='service'">service</div>
             </div>
           </div>
@@ -987,6 +996,7 @@
         },
         commentData: [],
         goodDetails: [],
+        attributes:[]
       };
     },
 
@@ -1084,7 +1094,8 @@
     this.productInfo=res.data.data.info;
     this.productInfo.retailPrice = this.productInfo.retailPrice.toFixed(2);
     this.swipeIndex.total =res.data.data.gallerys.length;
-    this.productInfo.image_url=res.data.data.gallerys
+    this.productInfo.image_url=res.data.data.gallerys;
+    this.attributes=res.data.data.attributes
     })
     getCartCount({"userId": JSON.parse(localStorage.getItem("user")).id}).then(res=> {
       this.cartlength = res.data.data;
