@@ -867,7 +867,7 @@
                   </ul>
                 </div>
               </div>
-              <div v-show="detailTab==='service'">service</div>
+              <div v-show="detailTab==='service'">暂无</div>
             </div>
           </div>
         </div>
