@@ -134,7 +134,7 @@
     <h3 class="pay-allpay">
       商品总金额 : <i>￥</i><span>{{order.orderPrice}}</span><br>
       优惠 : <i>￥</i><span>{{order.couponPrice}}</span><br>
-      赠送积分 : <i></i><span>{{order.orderPrice}}</span><br>
+      赠送积分 : <i></i><span>{{order.actualPrice}}</span><br>
       总需要支付 : <i>￥</i><span>{{order.actualPrice}}</span>
     </h3>
     <footer class="pay-footer" ontouchstrat="" @click="payConfirm">
@@ -355,6 +355,7 @@ export default {
         onConfirm: function (result) {
           that.couponInfo = result[0].label
           that.params.couponId = result[0].value
+          that.submitForm.couponId = result[0].value
           that.refresh()
         },
         id: 'singleLinePicker'
@@ -400,7 +401,6 @@ export default {
       addOrder(_this.submitForm).then(function(res) {
         if(res.data.status==200){
           _this.params.totalFee=res.data.data.order.actualPrice*100;
-          // _this.params.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
           _this.params.attach=JSON.stringify({orderType:"订单支付",orderNo:res.data.data.order.orderSn})
           _this.payOrder();
         }
@@ -410,7 +410,6 @@ export default {
       })
       },
     init(){
-
       var _this=this
        _this.couponsArray=_this.timeArray;
       preOrder({userId:JSON.parse(localStorage.getItem("user")).id}).then(function(res) {
@@ -428,7 +427,6 @@ export default {
             }
             _this.couponsArray.push(info)
           })
-
         }
         else{
           _this.pay=[]
@@ -460,7 +458,6 @@ export default {
     payOrder(params){
       var _this=this
       unifiedOrder( _this.params).then(res=>{
-        // alert(JSON.stringify(res))
         wexinPay(res.data.data,_this.success(),_this.error())
         this.$router.push({path:"/order"})
       })

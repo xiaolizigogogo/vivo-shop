@@ -331,7 +331,7 @@
                     <div class="product-info">
                       <p class="prod-name">{{prod.goodsName}}</p>
                       <p class="prod-price">
-                        <strong>&yen;{{prod.retailPrice * prod.number}}</strong>
+                        <strong>&yen;{{prod.retailPrice}}</strong>
                         <span>x {{prod.number}}</span>
                       </p>
                     </div>
@@ -429,7 +429,7 @@
           cancelButtonText: '取消'
         }).then(action => {
           if (action == 'confirm') {     //确认的回调
-            _this.payParams.totalFee=item.order.orderPrice*100;
+            _this.payParams.totalFee=item.order.actualPrice*100;
             _this.payParams.attach=JSON.stringify({orderType:"订单支付",orderNo:item.order.orderSn})
             _this.payParams.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid;
             _this.payParams.userId=JSON.parse(localStorage.getItem("user")).id;
