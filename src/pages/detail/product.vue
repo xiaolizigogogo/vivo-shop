@@ -667,7 +667,7 @@
         }
         .comment-date {
           color: $gray;
-          font-size: smsub;
+          font-size: .1rem;
         }
       }
       .comment-content {
@@ -685,7 +685,6 @@
           wrap);
           img {
             width: 33.33%;
-            height: 100px;
             margin-right: $margin;
           }
         }
@@ -696,7 +695,7 @@
         padding: $padding 0 $padding .9rem;
         p {
           color: $gray;
-          font-size: smsub;
+          font-size: .1rem;
           @include textoverflow(1);
         }
       }
