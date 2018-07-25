@@ -360,6 +360,13 @@ const editUserInfo=(params)=>{
     data: params
   })
 }
+const getHomeColumn=(params)=>{
+  return request({
+    url: '/shop/homeColumns',
+    method: 'get',
+    params: params
+  })
+}
 export {
   getGoods,
   getCategory,
@@ -399,5 +406,6 @@ export {
   sendPhoneMessage,
   editUserInfo,
   updateSubscribes,
-  validatePhoneCode
+  validatePhoneCode,
+  getHomeColumn
 }

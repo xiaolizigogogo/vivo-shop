@@ -931,7 +931,7 @@
         </div>
       </div>
       <!-- 特色推荐 -->
-
+      <homeColumn v-for="(info,index) in columns" :secondColumns="secondColumnMap[info.id]" :fisrtColumns="fisrtColumnMap[info.id]" :info="info"></homeColumn>
       <!-- 为您推荐 -->
       <div class="floor recommend" style="top:0rem;">
         <div class="gray-text">
@@ -973,7 +973,7 @@
   import {
     getRecommend,
     getArticle,
-    getArticleList,
+    getHomeColumn,
     getGoodsCategoryList,
     getUserInfoByOpenId,
     getWechatOpenid,
@@ -984,6 +984,8 @@
   import marqueeItem from '../../components/common/marquee/marquee-item';
   import SearchBar from '../../components/common/searchBar';
   import LoadMore from '../../components/common/loadMore';
+  import homeColumn from './component/homeColumn';
+
   import {
     Swipe,
     SwipeItem,
@@ -1006,10 +1008,19 @@
         recommendData: [],
         cmsData: null,
         searchBarVisilbe: true,
-        swiper:[]
+        swiper:[],
+        columns:[],
+        fisrtColumnMap:{},
+        secondColumnMap:{}
       };
     },
     created(){
+      getHomeColumn({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
+        console.log(res)
+      this.columns=res.data.data.columns.records;
+      this.fisrtColumnMap=res.data.data.fisrtColumnMap;
+      this.secondColumnMap=res.data.data.secondColumnMap;
+    });
       if(window.signLink==undefined||window.signLink==''){
         window.signLink=window.location.href
         const  code=this.$route.query.code
@@ -1084,7 +1095,8 @@
       SearchBar,
       LoadMore,
       HomeFooter,
-      MapPositioning
+      MapPositioning,
+      homeColumn
     },
     computed: {
     },
@@ -1127,19 +1139,26 @@
       infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
     })
   },
-       initData() { //初始化数据
+  initData() { //初始化数据
     axios.get("/static/index.json").then(res=> {
       this.cmsData = res.data.Data;
     });
     getAdPositionDetail({"adPositionId":1,"enabled":1}).then(res=>{
       this.swiper=res.data.data
-  })
+  });
+    // getHomeColumn({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
+    //     console.log(res)
+    //     this.columns=res.data.data.columns.records;
+    //     this.fisrtColumnMap=res.data.data.fisrtColumnMap;
+    //     this.secondColumnMap=res.data.data.secondColumnMap;
+    //
+    // });
         // if (!this.indexCmsData) {
         //   this.updatedData();
         // } else {
         //   this.cmsData = this.indexCmsData.Data;
         // }
-      },
+  },
   goPath(i){
         this.$router.push(i)
   }
