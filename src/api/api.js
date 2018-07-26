@@ -297,6 +297,20 @@ const getJsTicket=(params)=> {
     params: params
   })
 }
+const getHomeMenus=(params)=> {
+  return request({
+    url: '/shop/homeMenus',
+    method: 'get',
+    params: params
+  })
+}
+const getHomeActivitis=(params)=> {
+  return request({
+    url: '/shop/homeActivitis',
+    method: 'get',
+    params: params
+  })
+}
 const unifiedOrder=(params)=>
 {
   return request({
@@ -407,5 +421,6 @@ export {
   editUserInfo,
   updateSubscribes,
   validatePhoneCode,
-  getHomeColumn
+  getHomeColumn,getHomeMenus,getHomeActivitis
+
 }

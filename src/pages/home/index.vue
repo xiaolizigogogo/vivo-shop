@@ -817,7 +817,9 @@
     getUserInfoByOpenId,
     getWechatOpenid,
     getAdPositionDetail,
-    getJsTicket
+    getJsTicket,
+    getHomeMenus,
+    getHomeActivitis
   } from '../../api/api';
   import marquee from '../../components/common/marquee/marquee';
   import marqueeItem from '../../components/common/marquee/marquee-item';
@@ -850,7 +852,9 @@
         swiper:[],
         columns:[],
         fisrtColumnMap:{},
-        secondColumnMap:{}
+        secondColumnMap:{},
+        homeMenus:[],
+        homeActivitis:[]
       };
     },
     created(){
@@ -860,6 +864,12 @@
       this.fisrtColumnMap=res.data.data.fisrtColumnMap;
       this.secondColumnMap=res.data.data.secondColumnMap;
     });
+      getHomeMenus({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
+        this.homeMenus=res.data.data.records;
+      });
+      getHomeActivitis({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
+        this.homeActivitis=res.data.data.records;
+      });
       if(window.signLink==undefined||window.signLink==''){
         window.signLink=window.location.href
         const  code=this.$route.query.code

@@ -21,7 +21,12 @@
 
 <script>
     export default {
-        name: "home-activiti"
+        name: "home-activiti",
+      props:{
+          item:{
+            type:Object
+          }
+      }
     }
 </script>
 
