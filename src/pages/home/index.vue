@@ -1,5 +1,5 @@
 <!-- index -->
-<style lang="scss" scoped>
+<style lang="scss" >
   /* banner */
 
   @import '../../assets/common/css/mixin.scss';
@@ -472,75 +472,7 @@
       </mt-swipe>
       <!-- banner -->
       <!-- tabBanner -->
-      <div class="appTabscenter">
-        <mt-swipe :speed="200" :continuous="false" :stopPropagation="false" :prevent="false" :auto="0">
-          <mt-swipe-item>
-            <ul class="tableTabs">
-              <li class="table-tabs-item">
-                <i>
-                  <img src="../../assets/jd/images/applist (1).png" alt="">
-                </i>
-                <p>关于我们</p>
-              </li>
-              <li class="table-tabs-item" >
-                <i>
-                  <img src="../../assets/jd/images/applist (2).png" alt="" @click="$router.push('/subscribe')" >
-                </i>
-                <p>立即预约</p>
-              </li>
-
-              <li class="table-tabs-item">
-                <i>
-                  <img src="../../assets/jd/images/applist (8).png" alt="" @click="$router.push('/coupon')">
-                </i>
-                <p>领券</p>
-              </li>
-              <li class="table-tabs-item">
-                <i>
-                  <img src="../../assets/jd/images/applist (6).png" alt="" @click="$router.push('/mytrade')">
-                </i>
-                <p>充值</p>
-              </li>
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (5).png" alt="">-->
-                <!--</i>-->
-                <!--<p>京东超市</p>-->
-              <!--</li>-->
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (6).png" alt="">-->
-                <!--</i>-->
-                <!--<p>充值缴费</p>-->
-              <!--</li>-->
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (7).png" alt="">-->
-                <!--</i>-->
-                <!--<p>全球购</p>-->
-              <!--</li>-->
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (8).png" alt="">-->
-                <!--</i>-->
-                <!--<p>领券</p>-->
-              <!--</li>-->
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (9).png" alt="">-->
-                <!--</i>-->
-                <!--<p>领京豆</p>-->
-              <!--</li>-->
-              <!--<li class="table-tabs-item">-->
-                <!--<i>-->
-                  <!--<img src="../../assets/jd/images/applist (10).png" alt="">-->
-                <!--</i>-->
-                <!--<p>赚钱</p>-->
-              <!--</li>-->
-            </ul>
-          </mt-swipe-item>
-        </mt-swipe>
-      </div>
+      <homeMenu></homeMenu>
       <MapPositioning>
         <div class="all" @click="openLocation">
           <div>
@@ -553,103 +485,9 @@
           </div>
         </div>
       </MapPositioning>
-      <!-- tabBanner -->
       <!-- 底部资讯 -->
-      <div class="floor">
-        <div class="container-bg">
-          <img src="../../assets/jd/images/floor1.jpg" alt="">
-        </div>
-        <div class="activity_list">
-          <div class="left_item">
-            <img src="../../assets/jd/images/floor (1).jpg" alt="">
-          </div>
-          <div class="right_item">
-            <div class="r_i_cell">
-              <img src="../../assets/jd/images/floor (2).jpg" alt="">
-            </div>
-            <div class="r_i_cell">
-              <img src="../../assets/jd/images/floor (3).jpg" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
+      <homeActiviti></homeActiviti>
       <!-- 底部资讯 -->
-
-      <!-- 京东快报 -->
-      <!--<div class="jd-express-news">-->
-        <!--<div class="jd-kuaibao">-->
-          <!--<router-link to="/new">-->
-            <!--<img class="jd-news-icon" src="../../assets/jd/images/jd-news-tit.png" alt="">-->
-          <!--</router-link>-->
-          <!--<marquee>-->
-            <!--<marquee-item v-for="(item,index) in cmsData.life" :key="index" @click.native="$router.push(`/articleDetail/${item.id}`)">{{item.article_title}}</marquee-item>-->
-          <!--</marquee>-->
-          <!--<span>更多</span>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!-- 京东快报 -->
-
-      <!-- 京东秒杀 -->
-      <!--<div class="seckill-floor">-->
-        <!--<div class="jd-flex-box">-->
-          <!--<div class="jd-f-b-l">-->
-            <!--<div class="jd-f-b-item">-->
-              <!--<div class="seckill-t">-->
-                <!--<strong class="seckill-title" style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_kill.content}}</strong>-->
-                <!--<strong class="seckill-now">{{cmsData.jd_kill.summary}}</strong>-->
-                <!--<div class="seckill-time">-->
-                  <!--<span class="sec-hou">01:</span>-->
-                  <!--<span class="sec-min">38:</span>-->
-                  <!--<span class="sec-sen">29</span>-->
-                <!--</div>-->
-              <!--</div>-->
-              <!--<div class="seckill-prd">-->
-                <!--<div class="prd-item" @click="$router.push(`/product/${item.productNo}`)" v-for="(item,index) in cmsData.jd_kill.product_list"-->
-                  <!--:key="index" v-if="index<3">-->
-                  <!--<img v-lazy.jd="item.image_url[0].url" :alt="item.image_url[0].name">-->
-                  <!--<strong>&yen;{{item.price}}</strong>-->
-                  <!--<del>&yen;{{item.price}}</del>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="jd-f-b-pd-item">-->
-              <!--<div class="seckill-p-item" @click="$router.push(`/product/${item.productNo}`)" v-for="(item,index) in cmsData.shop_kill.product_list"-->
-                <!--:key="index" v-if="index<2">-->
-                <!--<div class="seckill-t">-->
-                  <!--<strong class="seckill-title" style="background-image: -webkit-linear-gradient(left, rgb(255, 42, 42), rgb(241, 57, 210));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.shop_kill.summary}}</strong>-->
-                  <!--<p class="seckill-summary">{{cmsData.shop_kill.content}}</p>-->
-                  <!--<img v-lazy.jd="item.image_url[0].url" alt="">-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="jd-f-b-r">-->
-            <!--<div class="jd-f-b-r-item">-->
-              <!--<div class="seckill-t">-->
-                <!--<strong class="seckill-title" style="background-image: -webkit-linear-gradient(left, rgb(0, 194, 171), rgb(62, 148, 255));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_goods_watch.content}}</strong>-->
-                <!--<p class="seckill-summary">{{cmsData.jd_goods_watch.summary}}</p>-->
-              <!--</div>-->
-              <!--<div class="seckill-pd-r">-->
-                <!--<img v-lazy.jd="item.image_url[index].url" alt="" @click="$router.push(`/product/${item.productNo}`)" v-for="(item,index) in cmsData.jd_goods_watch.product_list"-->
-                  <!--:key="index" v-if="index<2">-->
-              <!--</div>-->
-            <!--</div>-->
-            <!--<div class="jd-f-b-r-item">-->
-              <!--<div class="seckill-t">-->
-                <!--<strong class="seckill-title" style="background-image: -webkit-linear-gradient(left, rgb(254, 133, 55), rgb(240, 43, 43));-webkit-background-clip: text;-webkit-text-fill-color: transparent;">{{cmsData.jd_hmzj.content}}</strong>-->
-                <!--<p class="seckill-summary">{{cmsData.jd_hmzj.summary}}</p>-->
-              <!--</div>-->
-              <!--<div class="seckill-pd-r">-->
-                <!--<img @click="$router.push(`/product/${item.productNo}`)" v-for="(item,index) in cmsData.jd_hmzj.product_list" :key="index"-->
-                  <!--v-if="index<2" v-lazy.jd="item.image_url[0].url" alt="">-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!-- 京东秒杀 -->
-
-
       <!-- 爱生活 -->
       <div class="floor">
         <div class="floor-title">
@@ -837,7 +675,6 @@
         </div>
       </div>
       <!-- 逛商场 -->
-
       <!-- 特色推荐 -->
       <div class="floor">
         <div class="floor-title">
@@ -965,6 +802,8 @@
   import FooterView from '../../components/footer/footerView';
   import BackHead from '../../components/common/backHead';
   import axios from 'axios';
+  import homeActiviti from './component/homeActiviti';
+  import homeMenu from './component/homeMenu';
   import MapPositioning from './component/MapPositioning'
   import wx from 'weixin-js-sdk'
   import {
@@ -1096,7 +935,9 @@
       LoadMore,
       HomeFooter,
       MapPositioning,
-      homeColumn
+      homeColumn,
+      homeActiviti,
+      homeMenu
     },
     computed: {
     },
