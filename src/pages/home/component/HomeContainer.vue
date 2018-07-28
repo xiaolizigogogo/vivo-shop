@@ -154,6 +154,13 @@
 </script>
 
 <style lang="stylus" scoped>
+  .main {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
   .main h2 {
     display: block;
     height: 1.3rem;
