@@ -134,18 +134,18 @@ export default {
     margin-bottom:1.45rem
 
 .mainColor
-    color #98499C
+    color #bb2727
     font-weight bold
 .iconfont
-    color #98499C
+    color #bb2727
     font-size 0.4rem
 .mint-cell
     height 1rem
     display flex
     justify-content flex-start
-    border-bottom 1px solid #98499C
+    border-bottom 1px solid #bb2727
 .container-order
-    box-shadow 5px 5px 5px #98499C
+    box-shadow 5px 5px 5px #ffffff
     height 3.5rem
     background white
     display block
@@ -202,7 +202,7 @@ export default {
         overflow hidden
         width: 100%;
         height: 5rem;
-        background: url('/static/img/bg2.jpg') no-repeat;
+        background: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532780193223&di=27ba73eddb071381a8eff664d955e0ea&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0d338744ebf81a4c1a402fe4dc2a6059252da6a9.jpg');
         background-size: 100% 100%;
         display: flex;
         justify-content: center;
@@ -226,7 +226,7 @@ export default {
         }
     }
     .container-integral{
-        box-shadow 5px 5px 5px #98499C
+        box-shadow 5px 5px 5px #ffffff
         margin 0.3rem 0.3rem 0
         height 2rem
         background #ffffff
