@@ -3,7 +3,7 @@
   /* banner */
 
   @import '../../assets/common/css/mixin.scss';
-  .banner2 {
+  .banner2!important {
     height: 4.88rem;
     img {
       min-width: 100%;
