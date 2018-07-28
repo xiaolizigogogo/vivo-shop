@@ -3,7 +3,7 @@
   /* banner */
 
   @import '../../assets/common/css/mixin.scss';
-  .banner {
+  .banner2 {
     height: 4.88rem;
     img {
       min-width: 100%;
@@ -463,7 +463,7 @@
       <span style="-webkit-transform: scale(.9)!important;transform: scale(.9)!important;position:  absolute;top: 45%;left: 45%;font-size:  12px;font-weight: normal;text-shadow:  none;box-shadow:  none;"
         slot="refresh-spinner">更新中...</span>
       <!-- banner -->
-      <mt-swipe :stopPropagation="true" :prevent="true" :auto="5000" class="banner">
+      <mt-swipe :stopPropagation="true" :prevent="true" :auto="5000" class="banner2">
         <mt-swipe-item v-for="(item,index) in swiper" :key="index">
           <img :src="item.imageUrl" :alt="item.name">
         </mt-swipe-item>
