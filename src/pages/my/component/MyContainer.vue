@@ -33,7 +33,12 @@
       </div>
     </router-link>
     <div class="box">
-
+      <mt-cell
+        title="关联手机"
+        to="/login"
+        is-link >
+        <i class="iconfont icon-collection" slot="icon" ></i>
+      </mt-cell>
       <mt-cell
         title="我的交易"
         to="/trade"
@@ -216,7 +221,7 @@ export default {
         }
 
         span {
-            color: #ffffff;
+            color: #353535;
             font-size: 0.5rem;
         }
 

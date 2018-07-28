@@ -197,7 +197,7 @@
               <div :class="['registered-getCode',registeredForm.resetSendPhoneMessage?'disabled-btn':'']" @click="registeredSendPhoneMessage"
                 :disabled="registeredForm.resetSendPhoneMessage">{{registeredForm.resetSendPhoneMessage ? `(${registeredForm.resetSendPhoneMessage})` : '获取验证码'}}</div>
             </div>
-            <div :class="['cell-btn',errors.has('registeredCode')?'disabled-btn':'']" @click="validateSendPhoneMessage">下一步</div>
+            <div :class="['cell-btn',errors.has('registeredCode')?'disabled-btn':'']" @click="validateSendPhoneMessage">确认</div>
           </div>
         </div>
       </mt-popup>
@@ -360,10 +360,11 @@
         this.$store.dispatch('GetUserInfo', {
           mobile: this.registeredForm.phone
         }).then(response => {
-          if (response.data.data!=null) return Toast({
-            message: '该手机已被注册',
-            position: 'bottom'
-          })
+          if (response.data.data!=null)
+    {
+      alert("该手机号已注册")
+      return
+    }
           this.visiblePopup.registeredCode = true
         }, err => {
           this.visiblePopup.registeredCode = true
@@ -392,10 +393,8 @@
           else{
             message=res.data.exception
           }
-          return Toast({
-            message: message,
-            position: 'bottom'
-          })
+          alert(message)
+          return
         });
 
       },
@@ -409,19 +408,14 @@
           id:JSON.parse(localStorage.getItem("user")).id,
           smsCode:this.registeredForm.code
         }).then(response => {
+          console.log(response)
           let message="验证成功";
           if (response.data.status==200){
-            return Toast({
-              message: '该手机已被注册',
-              position: 'bottom'
-            })
-            this.visiblePopup.registeredCode = true
+              alert(message)
+            this.$router.push({path:"/home"})
           }
           else{
-            return Toast({
-              message: res.data.exception,
-              position: 'bottom'
-            })
+            alert(res.data.exception)
           }
         }, err => {
           this.visiblePopup.registeredCode = true

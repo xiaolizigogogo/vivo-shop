@@ -351,8 +351,8 @@ const sendPhoneMessage=(params)=> {
 const validatePhoneCode=(params)=> {
   return request({
     url: '/shop/users/smsCode/'+params.smsCode,
-    method: 'get',
-    params: params
+    method: 'put',
+    data: params
   })
 }
 

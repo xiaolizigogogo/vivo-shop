@@ -3,7 +3,8 @@ import {
   sendPhoneMessage,
   // registered,
   editUserInfo,
-  updateSubscribes
+  updateSubscribes,
+  validatePhoneCode
 } from '../api/api';
 import {
   setSessionStorage,
