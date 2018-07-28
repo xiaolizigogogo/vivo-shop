@@ -11,14 +11,7 @@
   top: 0;
   left: 0;
 }
-  .banner2 {
-    height: 4.88rem;
-    img {
-      min-width: 100%;
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
+
   /* banner */
 
   .appTabscenter {
@@ -63,7 +56,14 @@
       }
     }
   }
-
+  .banner2 {
+    height: 4.88rem;
+    img {
+      min-width: 100%;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
   .floor {
     position: relative;
     background: #fff;
