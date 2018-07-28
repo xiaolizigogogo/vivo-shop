@@ -57,7 +57,7 @@
     }
   }
   .banner2 {
-    height: 4.88rem;
+    height: 4.88rem !important;;
     img {
       min-width: 100%;
       max-width: 100%;
