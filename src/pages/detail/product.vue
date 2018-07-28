@@ -37,7 +37,7 @@
         #loadingbar {
           position: absolute;
           transition: .4s;
-          width: calc((100%/4));
+          width: calc((100%/2));
           background: #000;
           bottom: -1px;
           height: 2px;
@@ -786,8 +786,8 @@
         <div class="product-tabs">
           <span @click="switchTabs('mainLayout')" :class="['product-tabs-item',containerTab==='mainLayout'?'active':'']">商品</span>
           <span @click="switchTabs('goodDetail')" :class="['product-tabs-item',containerTab==='goodDetail'?'active':'']">详情</span>
-          <span @click="switchTabs('goodcommentList')" :class="['product-tabs-item',containerTab==='goodcommentList'?'active':'']">评价</span>
-          <div id="loadingbar" :style="containerTab==='mainLayout' ? 'left:5%' : containerTab==='goodDetail' ?  'left:38.63%' : 'left:71.66%'"></div>
+          <!--<span @click="switchTabs('goodcommentList')" :class="['product-tabs-item',containerTab==='goodcommentList'?'active':'']">评价</span>-->
+          <div id="loadingbar" :style="containerTab==='mainLayout' ? 'left:0%' : containerTab==='goodDetail' ?  'left:50%' : 'left:100%'"></div>
         </div>
         <!--<div class="other">-->
           <!--<i class="share"></i>-->
@@ -825,6 +825,7 @@
                 <strong>{{productInfo.extraPrice}}</strong>
               </div>
             </div>
+            <div id="prodContent-container" v-html="productInfo.goodsDesc"></div>
             <!-- 商品信息 -->
             <!-- 商品规格 -->
             <!-- <div class="product-sku">
