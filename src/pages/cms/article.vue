@@ -5,7 +5,9 @@
     @include flexbox(center, center, row, nowrap);
     font-size: 16px;
   }
-
+.guanyuwomen{
+  width: 100%;
+}
   .Navfixed {
     position: fixed !important;
     z-index: 999 !important;
@@ -217,18 +219,7 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="tab-container3">
             <div class="article-container" v-if="articleData!=''">
-              <div class="data-item" v-for="(item,index) in articleData" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
-                <div class="video-item">
-                  <p class="title">{{item.article_title}}</p>
-                  <div class="video-container">
-                    <img v-lazy="item.image_url[0].url" alt="">
-                    <i class="playerIcon"></i>
-                  </div>
-                  <div class="videoInfo">
-                    <span class="subTitle">{{item.summary}}</span>
-                  </div>
-                </div>
-              </div>
+                <img class="guanyuwomen" src="http://payobwhnt.bkt.clouddn.com/7c559b36fd7148be9eee73547e3fbda9.jpg">
             </div>
           </mt-tab-container-item>
           <!--<mt-tab-container-item id="tab-container4">-->
