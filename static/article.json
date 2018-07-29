@@ -1,1 +1,63 @@
-{"Code":0,"Message":"ok","data":{"records":[{"id":365464,"article_title":"像纸一样的新型水瓶，创意超薄便携带","type":"video","article_url":"https://article.jd.com/?id=655312","media_video":[{"url":"https://awei.fun/shop/api/resouces/2018121011367fdf23803a953286c923021373ae8bf2.mp4","name":"movie.mp4"}],"summary":"酷潮玩2018-1-3143721人看过","content":"<span style=\"color: rgb(0, 0, 0); font-family: &quot;Microsoft YaHei&quot;;\">水瓶大小根据纸张来设计，共有A4(1.25升)、A5(750毫升)、信纸(1.25升)三种型号可选，材料选用 共聚聚酯，晶莹剔透，环保安全。防漏水。采用可重复利用，不含 BPA。</span>","status":1,"end_date":"2019-02-28T16:00:00.000Z","start_date":"2018-01-31T16:00:00.000Z","create_date":"2018-02-02T02:11:40.908Z","image_url":[{"name":"5a707cc5N1b88370d.jpg!q70.jpg","url":"https://awei.fun/shop/api/resouces/20181210113931da93bf04552d3f2705df3d9fff1e40.jpg"}],"__v":0},{"id":253378,"article_title":"你想和谁一起看NBA","type":"video","article_url":"https://article.jd.com/?id=664470","media_video":[{"url":"https://awei.fun/shop/api/resouces/2018121012524e3faf1dc90f33d6c384fc37f9f9f832.mp4","name":"4d539ddb1e5ff536e02bf3db3f5f8858.mp4"}],"summary":"蒙牛京东自营旗舰.","status":1,"end_date":"2019-02-28T16:00:00.000Z","start_date":"2018-01-31T16:00:00.000Z","create_date":"2018-02-02T02:13:32.372Z","image_url":[{"name":"5a72ed19N7aeae285.jpg!q70.jpg","url":"https://awei.fun/shop/api/resouces/2018121013307476570a5bedd080351b507b27c3e903.jpg"}],"__v":0},{"id":353713,"article_title":"帅爆！大对决GTR 大牛 911 C63 马丁 等10辆改装赛车的机场","type":"video","article_url":".","summary":"up：保时捷718","content":"帅爆！大对决GTR 大牛 911 C63 马丁 等10辆改装赛车的机场","status":1,"media_video":[{"name":"201816184543f4ab4771e2ac5344f3cf0a97c9a869fc.mp4","url":"https://awei.fun/shop/api/resouces/201816184543f4ab4771e2ac5344f3cf0a97c9a869fc.mp4"}],"end_date":"2019-02-28T16:00:00.000Z","start_date":"2018-01-31T16:00:00.000Z","create_date":"2018-02-02T02:25:29.312Z","image_url":[{"status":"success","uid":1519663838789,"url":"https://awei.fun/shop/api/resouces/2018161846153c4f5ac37035aa3c8d06005b8c3d2d58.webp","name":"图片.webp"}],"__v":0}]},"total":3}
+{
+  "Code": 0,
+  "Message": "ok",
+  "data": {
+    "records": [{
+      "id": 365464,
+      "article_title": "美甲产品",
+      "type": "product",
+      "article_url": "https://article.jd.com/?id=655312",
+      "media_video": [{
+        "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg",
+        "name": "movie.mp4"
+      }],
+      "summary": "3143721人看过",
+      "content": "<span style=\"color: rgb(0, 0, 0); font-family: &quot;Microsoft YaHei&quot;;\">水瓶大小根据纸张来设计，共有A4(1.25升)、A5(750毫升)、信纸(1.25升)三种型号可选，材料选用 共聚聚酯，晶莹剔透，环保安全。防漏水。采用可重复利用，不含 BPA。</span>",
+      "status": 1,
+      "end_date": "2019-02-28T16:00:00.000Z",
+      "start_date": "2018-01-31T16:00:00.000Z",
+      "create_date": "2018-02-02T02:11:40.908Z",
+      "image_url": [{
+        "name": "5a707cc5N1b88370d.jpg!q70.jpg",
+        "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg"
+      },
+        {
+          "name": "5a707cc5N1b88370d.jpg!q70.jpg",
+          "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg"
+        },
+        {
+          "name": "5a707cc5N1b88370d.jpg!q70.jpg",
+          "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg"
+        },
+        {
+          "name": "5a707cc5N1b88370d.jpg!q70.jpg",
+          "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg"
+        },
+        {
+          "name": "5a707cc5N1b88370d.jpg!q70.jpg",
+          "url": "http://payobwhnt.bkt.clouddn.com/8a21560c4e9940fab2170a4a5e601307.jpg"
+        }],
+      "__v": 0
+    }, {
+      "id": 253378,
+      "article_title": "你想和谁一起看NBA",
+      "type": "anli",
+      "article_url": "https://article.jd.com/?id=664470",
+      "media_video": [{
+        "url": "https://awei.fun/shop/api/resouces/2018121012524e3faf1dc90f33d6c384fc37f9f9f832.mp4",
+        "name": "4d539ddb1e5ff536e02bf3db3f5f8858.mp4"
+      }],
+      "summary": "蒙牛京东自营旗舰.",
+      "status": 1,
+      "end_date": "2019-02-28T16:00:00.000Z",
+      "start_date": "2018-01-31T16:00:00.000Z",
+      "create_date": "2018-02-02T02:13:32.372Z",
+      "image_url": [{
+        "name": "5a72ed19N7aeae285.jpg!q70.jpg",
+        "url": "https://awei.fun/shop/api/resouces/2018121013307476570a5bedd080351b507b27c3e903.jpg"
+      }],
+      "__v": 0
+    }]
+  },
+  "total": 3
+}
