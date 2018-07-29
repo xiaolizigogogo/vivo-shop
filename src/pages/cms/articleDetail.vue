@@ -1,6 +1,10 @@
 <!-- articleDetail -->
 <style lang="scss" scoped>
   @import '../../assets/common/css/mixin.scss';
+  .image2{
+    width: 100%;
+    margin-top: 5px;
+  }
   .article-container {
     .con {
       padding: 20px $padding;
@@ -67,7 +71,7 @@
   <div class="article-container" v-if="articleData">
     <div class="my-header">
       <i class="back" @click="$router.go(-1)"></i>
-      <strong>资讯详情</strong>
+      <strong>详情</strong>
       <i class="myMsg"></i>
     </div>
     <div class="con">
@@ -75,6 +79,7 @@
       <p class="summary">{{articleData.summary}}</p>
       <!--<d-player :contextmenu="[1,2,3,4]" v-if="articleData.type==='video'" :screenshot="true" :loop="true" :autoplay="true" :video="articleData.VideoData"></d-player>-->
       <div class="content" v-html="articleData.content"></div>
+      <div><img class="image2" v-lazy="i.url" alt="" v-for="(i,index) in articleData.image_url"></div>
     </div>
   </div>
 </template>

@@ -179,8 +179,8 @@
         <mt-tab-container v-model="active" :swipeable="true">
           <mt-tab-container-item id="tab-container1">
             <div class="article-container" v-if="articleData!=''">
-              <div class="data-item" v-for="(item,index) in articleData" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
-                <div class="video-item" v-if="item.type==='video'">
+              <div class="data-item" v-for="(item,index) in articleData" v-if="item.type==='product'" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
+                <div class="video-item" v-if="item.type==='product'">
                   <p class="title">{{item.article_title}}</p>
                   <div class="video-container">
                     <img v-lazy="item.image_url[0].url" alt="">
@@ -204,7 +204,7 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="tab-container2">
             <div class="article-container" v-if="articleData!=''">
-              <div class="data-item" v-for="(item,index) in articleData" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
+              <div class="data-item" v-for="(item,index) in articleData" v-if="item.type==='anli'" :key="index" @click="$router.push(`/articleDetail/${item.id}`)">
                 <div class="article-item" >
                   <div class="left">
                     <p class="title">{{item.article_title}}</p>
@@ -219,7 +219,7 @@
           </mt-tab-container-item>
           <mt-tab-container-item id="tab-container3">
             <div class="article-container" v-if="articleData!=''">
-                <img class="guanyuwomen" src="http://payobwhnt.bkt.clouddn.com/7c559b36fd7148be9eee73547e3fbda9.jpg">
+                <img class="guanyuwomen" src="http://payobwhnt.bkt.clouddn.com/7d35272a52364158879f211204532fe8.jpeg">
             </div>
           </mt-tab-container-item>
           <!--<mt-tab-container-item id="tab-container4">-->
@@ -290,7 +290,7 @@
         this.$refs.articleLoadmore.onTopLoaded(this.$refs.articleLoadmore.uuid);
       },
       async infiniteCallback(response) { //加载更多
-        if (response.data.data.records.length > 0) {
+        if (this.articleData == 0) {
           response.data.data.records.map(i => {
             this.articleData.push(i)
           })

@@ -357,12 +357,7 @@ const validatePhoneCode=(params)=> {
 }
 
 const       getArticleList=(params)=>{
-    if(params.Type==null){
       return axios.get("/static/article.json")
-    }
-    else {
-      return axios.get("/static/article1.json")
-    }
 
 
 }
