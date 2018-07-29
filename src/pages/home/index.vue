@@ -589,27 +589,9 @@
       getHomeActivitis({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
         this.homeActivitis=res.data.data.records;
       });
-      if(window.signLink==undefined||window.signLink==''){
-        window.signLink=window.location.href
-        const  code=this.$route.query.code
-        if(!code){
-          alert("请从公众号入口进入")
-          getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
-            localStorage.setItem("user",JSON.stringify(res.data.data))
-        })
-          return
-        }
-        getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
-          localStorage.setItem("token",JSON.stringify(res.data.data))
-        this.openid=res.data.data.openId;
-        getUserInfoByOpenId({"openid":this.openid}).then(res=>{
-          localStorage.setItem("user",JSON.stringify(res.data.data))
-      })
-      })
-      }
       getJsTicket({url:window.signLink}).then(res=>{
         res.data.data.debug=false
-        res.data.data.jsApiList=['onMenuShareTimeline',
+      res.data.data.jsApiList=['onMenuShareTimeline',
         'onMenuShareAppMessage',
         'onMenuShareQQ',
         'onMenuShareWeibo',
@@ -652,6 +634,24 @@
         //可以更新签名
       });
     })
+      if(window.signLink==undefined||window.signLink==''){
+        window.signLink=window.location.href
+        const  code=this.$route.query.code
+        if(!code){
+          alert("请从公众号入口进入")
+          getUserInfoByOpenId({"openid":"obWT-0giZxiX-k1MNWMt2kXics5k"}).then(res=>{
+            localStorage.setItem("user",JSON.stringify(res.data.data))
+        })
+          return
+        }
+        getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+          localStorage.setItem("token",JSON.stringify(res.data.data))
+        this.openid=res.data.data.openId;
+        getUserInfoByOpenId({"openid":this.openid}).then(res=>{
+          localStorage.setItem("user",JSON.stringify(res.data.data))
+      })
+      })
+      }
     },
     watch: {},
     components: {
