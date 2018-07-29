@@ -31,6 +31,7 @@ import index from '@/pages/home/index'
 import coupon from '@/pages/coupon/index'
 import myCoupon from '@/pages/coupon/myCoupon'
 import login from '@/pages/my/login'
+import articleDetail from '@/pages/cms/articleDetail'
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -143,6 +144,11 @@ const router =  new Router({
       path: '/myCoupon',
       name:'myCoupon',
       component:myCoupon
+    },
+    {
+      path: '/articleDetail/:id',
+      name:'articleDetail',
+      component:articleDetail
     },
 
   ],

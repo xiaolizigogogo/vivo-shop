@@ -26,7 +26,7 @@
         display: block;
         width: .65rem;
         height: .65rem;
-        background: url('~jd/images/arrow-left.png') no-repeat;
+        background: url('../../assets/jd/images/arrow-left.png') no-repeat;
         background-size: 100%;
       }
       strong {
@@ -36,7 +36,7 @@
       }
       .myMsg {
         display: block;
-        background: url('~jd/images/searchIcon.png') no-repeat;
+        background: url('../../assets/jd/images/searchIcon.png') no-repeat;
         background-size: 600% 100%;
         height: .65rem;
         width: .65rem;
@@ -73,7 +73,7 @@
     <div class="con">
       <p class="titile">{{articleData.article_title}}</p>
       <p class="summary">{{articleData.summary}}</p>
-      <d-player :contextmenu="[1,2,3,4]" v-if="articleData.type==='video'" :screenshot="true" :loop="true" :autoplay="true" :video="articleData.VideoData"></d-player>
+      <!--<d-player :contextmenu="[1,2,3,4]" v-if="articleData.type==='video'" :screenshot="true" :loop="true" :autoplay="true" :video="articleData.VideoData"></d-player>-->
       <div class="content" v-html="articleData.content"></div>
     </div>
   </div>
@@ -81,6 +81,7 @@
 
 <script>
   import VueDPlayer from 'vue-dplayer'
+  import {getArticleList} from '../../api/api'
   export default {
     data() {
       return {
@@ -97,26 +98,39 @@
     computed: {},
 
     methods: {
-      async initData() {
-        let {
-          Data
-        } = await this.$store.dispatch('GetArticle', {
-          Id: this.$route.params.Id
-        })
-        if (Data.type === 'video') {
-          Data.VideoData = {
-            url: Data.media_video[0].url,
-            pic: Data.image_url[0].url
-          }
-        }
-        this.articleData = Data;
+       initData() {
+        getArticleList().then(res=>{
+          res.data.data.records.forEach(item=>{
+
+         if(this.$route.params.id==item.id){
+           console.log(item)
+           if (item.type == 'video') {
+             item.VideoData = {
+               url: item.media_video[0].url,
+               pic: item.image_url[0].url
+             }
+           }
+        this.articleData=item
+    }
+    })
+    })
+        // let {
+        //   Data
+        // } = await this.$store.dispatch('GetArticle', {
+        //   Id: this.$route.params.id
+        // })
+        //
+        // if (Data.type === 'video') {
+        //   Data.VideoData = {
+        //     url: Data.media_video[0].url,
+        //     pic: Data.image_url[0].url
+        //   }
+        // }
+        // this.articleData = Data;
       }
     },
 
-    mounted: function () {
-      if (!this.$route.params.Id) return Toast({
-        message: '无效的Id'
-      })
+  mounted: function () {
       this.initData()
     }
   }

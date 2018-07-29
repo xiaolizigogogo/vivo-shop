@@ -110,7 +110,7 @@
             <img :src="list.listPicUrl" alt="">
             <div>
               <h2><span style="color:#ee7150">{{list.goodsName}}</span>× {{list.number}}</h2>
-              <p>¥ {{list.retailPrice}}</p>
+              <p>¥ {{list.marketPrice}}</p>
             </div>
           </a>
         </li>
