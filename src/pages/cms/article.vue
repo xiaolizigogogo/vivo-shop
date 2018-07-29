@@ -71,7 +71,7 @@
     #loadingbar {
       position: absolute;
       transition: .4s;
-      width: calc((100%/4));
+      width: calc((100%/3));
       background: red;
       bottom: 0;
       height: 2px;
@@ -169,7 +169,7 @@
           <span @click.stop.prevent="switchTabs('tab-container2')" :class="{'active':active==='tab-container2'}">案例介绍</span>
           <span @click.stop.prevent="switchTabs('tab-container3')" :class="{'active':active==='tab-container3'}">关于我们</span>
           <!--<span @click.stop.prevent="switchTabs('tab-container4')" :class="{'active':active==='tab-container4'}">数码</span>-->
-          <div id="loadingbar" :style="active==='tab-container1' ? 'left:0%' : active==='tab-container2' ?  'left:25%' : active==='tab-container3' ?'left:50%' : 'left:75%'"></div>
+          <div id="loadingbar" :style="active==='tab-container1' ? 'left:0%' : active==='tab-container2' ?  'left:33%' : active==='tab-container3' ?'left:66%' : 'left:75%'"></div>
         </div>
       </div>
       <load-more style="width:100%;" @loadMore="infiniteCallback" :commad="commad" :param="params"
