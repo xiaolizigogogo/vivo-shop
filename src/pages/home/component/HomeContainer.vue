@@ -19,7 +19,7 @@
       </div>
 
       <div class="main_box" :style="{'-webkit-overflow-scrolling': scrollMode}">
-        <v-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
+        <v-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" ref="loadmore">
         <div class="weui-panel__bd" v-for="todo in list" :key="todo.id" @click="open(todo.id)">
           <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
               <div class="weui-media-box__hd">
