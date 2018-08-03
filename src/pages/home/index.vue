@@ -474,8 +474,8 @@
       <MapPositioning>
         <div class="all" @click="openLocation">
           <div>
-            <h6>斯卡莱日式美甲美睫<span></span></h6>
-            <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>辽宁省大连市中山区人民路43号新世界名泷1008</p>
+            <h6>{{HomeName.paramValue}}<span></span></h6>
+            <p><i class="iconfont icon-diliweizhi iconfontLittle"></i>{{HomeAddress.paramValue}}</p>
           </div>
           <div>
             <h5><i class="iconfont icon-diliweizhi iconfontBig"></i></h5>
@@ -574,7 +574,10 @@
         fisrtColumnMap:{},
         secondColumnMap:{},
         homeMenus:[],
-        homeActivitis:[]
+        homeActivitis:[],
+        paramsMap:undefined,
+        HomeName:'',
+        HomeAddress:'',
       };
     },
     created(){
@@ -586,6 +589,11 @@
     });
       getParamsMap().then(res=>{
         console.log(res)
+        this.HomeName=res.data.data.HomeName;
+        this.HomeAddress=res.data.data.HomeAddress
+        this.latitude=res.data.data.latitude
+        this.longitude=res.data.data.longitude
+        document.title = res.data.data.HomeTitle.paramValue
       })
       getHomeMenus({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
         this.homeMenus=res.data.data.records;
@@ -706,10 +714,10 @@
       },
   openLocation:function () {
     wx.openLocation({
-      latitude: this.latitude, // 纬度，浮点数，范围为90 ~ -90
-      longitude: this.longitude, // 经度，浮点数，范围为180 ~ -180。
-      name: '斯卡莱日式美甲美睫', // 位置名
-      address: '辽宁省大连市中山区人民路43号新世界名泷1008', // 地址详情说明
+      latitude: this.latitude.paramValue, // 纬度，浮点数，范围为90 ~ -90
+      longitude: this.longitude.paramValue, // 经度，浮点数，范围为180 ~ -180。
+      name: this.HomeName.paramValue, // 位置名
+      address: this.HomeAddress.paramValue, // 地址详情说明
       scale: 14, // 地图缩放级别,整形值,范围从1~28。默认为最大
       infoUrl: 'http://weixin.qq.com' // 在查看位置界面底部显示的超链接,可点击跳转
     })
