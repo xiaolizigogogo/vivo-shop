@@ -538,7 +538,8 @@
     getAdPositionDetail,
     getJsTicket,
     getHomeMenus,
-    getHomeActivitis
+    getHomeActivitis,
+    getParamsMap
   } from '../../api/api';
   import marquee from '../../components/common/marquee/marquee';
   import marqueeItem from '../../components/common/marquee/marquee-item';
@@ -583,6 +584,9 @@
       this.fisrtColumnMap=res.data.data.fisrtColumnMap;
       this.secondColumnMap=res.data.data.secondColumnMap;
     });
+      getParamsMap().then(res=>{
+        console.log(res)
+      })
       getHomeMenus({enable:1,asc:true,ascs:"orderBy",current:1,size:10}).then(res=>{
         this.homeMenus=res.data.data.records;
       });

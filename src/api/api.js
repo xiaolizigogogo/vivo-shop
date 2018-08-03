@@ -382,6 +382,14 @@ const getHomeColumn=(params)=>{
     params: params
   })
 }
+
+const getParamsMap=(params)=>{
+  return request({
+    url: '/shop/paramss/maps',
+    method: 'get',
+    params: params
+  })
+}
 export {
   getGoods,
   getCategory,
@@ -422,6 +430,6 @@ export {
   editUserInfo,
   updateSubscribes,
   validatePhoneCode,
-  getHomeColumn,getHomeMenus,getHomeActivitis
+  getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap
 
 }

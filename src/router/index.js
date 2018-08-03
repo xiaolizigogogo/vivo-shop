@@ -33,6 +33,8 @@ import myCoupon from '@/pages/coupon/myCoupon'
 import login from '@/pages/my/login'
 import articleDetail from '@/pages/cms/articleDetail'
 import myQrcode from '@/pages/my/myQrcode'
+import chenxisubscribeDetail from "@/pages/chenxi/subscribe/subscribeDetail"
+import chenxisubscribe from "@/pages/chenxi/subscribe/subscribe"
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -155,6 +157,16 @@ const router =  new Router({
       path: '/myQrcode',
       name:'myQrcode',
       component:myQrcode
+    },
+    {
+      path: '/chenxisubscribe',
+      name:'chenxisubscribe',
+      component:chenxisubscribe
+    },
+    {
+      path: '/chenxisubscribeDetail',
+      name:'chenxisubscribeDetail',
+      component:chenxisubscribeDetail
     },
 
   ],
