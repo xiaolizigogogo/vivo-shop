@@ -469,7 +469,7 @@
             this.params.subscribeStatus = 0;
             break;
           case 2: //已完成
-            this.params.subscribeStatus = 2;
+            this.params.subscribeStatus = 3;
             break;
           case 3: //已取消
             this.params.subscribeStatus = -1;
