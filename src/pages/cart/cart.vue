@@ -16,7 +16,7 @@
                         <div class="cartName">{{cart.goodsName}}
                             <a href="javascript:;" class="iconfont icon-huishouzhan7"  @click="shanchu(index)" ></a>
                         </div>
-                        <p class="cartPrice">￥{{cart.marketPrice}}</p>
+                        <p class="cartPrice">￥{{cart.retailPrice}}</p>
                     </div>
                     <!-- 购物车商品数量 -->
                     <div class="cartNumber">
