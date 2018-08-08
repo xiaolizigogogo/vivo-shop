@@ -360,7 +360,8 @@
 
         <!-- 没有订单 -->
         <div class="order-nomore-tip" v-if="orderList==''">
-          <i>没有数据</i>
+          <i></i>
+          <span style="font-size: 16px">暂无数据</span>
         </div>
         <!-- 没有订单 -->
       </load-more>

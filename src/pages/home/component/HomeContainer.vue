@@ -29,7 +29,7 @@
                   <h4 class="weui-media-box__title fontSize04" style="font-weight:bold"><span class="promotionDesc colorRed" v-if="todo.promotionDes">{{todo.promotionDesc}}</span><span class="color98499C">{{todo.name}}</span></h4>
                   <p class="weui-media-box__desc fontSize03">{{todo.goodsBrief}}</p>
                   <p class="weui-media-box__desc fontSize03">剩余&nbsp;<span class="colorRed">{{todo.goodsNumber}}</span>&nbsp;{{todo.goodsUnit}}</p>
-                  <p class="weui-media-box__desc fontSize03 retailPrice colorRed isBottom">￥<span class="fontSize04">{{todo.retailPrice}}</span></p>
+                  <p class="weui-media-box__desc fontSize03 retailPrice colorRed isBottom">￥<span class="fontSize04">{{todo.extraPrice}}</span></p>
               </div>
           </a>
         </div>
