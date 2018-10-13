@@ -33,7 +33,7 @@ import myCoupon from '@/pages/coupon/myCoupon'
 import login from '@/pages/my/login'
 import articleDetail from '@/pages/cms/articleDetail'
 import myQrcode from '@/pages/my/myQrcode'
-import chenxisubscribeDetail from "@/pages/chenxi/subscribe/subscribeDetail"
+import chenxisubscribeDetail from "@/pages/chenxiserviceDetail/serviceDetail"
 import chenxisubscribe from "@/pages/chenxi/subscribe/subscribe"
 import store from '../vuex'
 Vue.use(Router)

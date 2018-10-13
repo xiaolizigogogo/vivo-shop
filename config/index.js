@@ -30,7 +30,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/shop/': {
-        target: 'http://localhost:8889',//226:8799              host:'192.168.1.226',
+        target: 'http://localhost:8890',//226:8799              host:'192.168.1.226',
         changeOrigin: true,
         pathRewrite: {
           '^/shop/': '/'

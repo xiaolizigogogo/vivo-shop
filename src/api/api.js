@@ -261,6 +261,13 @@ const addSubscribes=(params)=>{
     data: params
 })
 }
+const addchenxiSubscribes=(params)=>{
+  return request({
+    url: '/shop/subscribes/chenxi',
+    method: 'post',
+    data: params
+  })
+}
 const updateSubscribes=(params)=>{
   return request({
     url: '/shop/subscribes',
@@ -430,6 +437,6 @@ export {
   editUserInfo,
   updateSubscribes,
   validatePhoneCode,
-  getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap
+  getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap,addchenxiSubscribes
 
 }

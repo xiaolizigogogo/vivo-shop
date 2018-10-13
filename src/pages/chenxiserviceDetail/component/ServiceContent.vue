@@ -1,47 +1,58 @@
 <template>
   <div class="serviceContent">
-      <div class="Reservations">
-        <div class="ReservationsTop">
+    <div class="Reservations">
+      <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
             选择预约项目
           </span>
-          <!--<router-link to="/price" tag="a">查看价格表</router-link>-->
-        </div>
-        <div class="ReservationsBottom">
-          <div class="ReservationsMarks marks" @click="handleReservationsClick"  v-for="(item,index) in productTypes" :id="item.id" :name="item.name" >{{item.name}}</div>
+        <!--<router-link to="/price" tag="a">查看价格表</router-link>-->
+      </div>
+      <div class="ReservationsBottom">
+        <img src="http://payobwhnt.bkt.clouddn.com/chenxi123.jpg" style="width: 100% ;padding: 10px;"/>
+      </div>
+    </div>
+      <div class="Reservations ReservationNumber">
+        <div class="ReservationsTop">
+          <span class="ReservationsTopLeft">
+            <span style="color: #bd2c00">*</span>
+           您的性别
+          </span>
+          <div class="ReservationsBottom" style="margin: 20px">
+            <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">男</div>
+            <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">女</div>
+          </div>
         </div>
       </div>
       <div class="Reservations ReservationNumber">
         <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
-            选择预约人数
+            <span style="color: #bd2c00">*</span>
+            您的星座
           </span>
-        </div>
-        <div class="ReservationsBottom">
-          <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">1人</div>
-          <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">2人</div>
-          <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">3人</div>
-          <div class="ReservationNumberMarks marks" @click="handleReservationNumberClick">多人</div>
+          <div class="ReservationsBottom DatePickerBottom">
+            <div id="datePicker" @click="handleDatePicker">
+              <span class="myDate" style="font-size: 20px">{{xingzuo}}</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="Reservations ReservationNumber">
-        <div class="ReservationsTop">
+    <div class="Reservations ReservationNumber">
+      <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
-            选择到店时间
+            <span style="color: #bd2c00">*</span>
+            您的问题
           </span>
-        </div>
-        <div class="ReservationsBottom DatePickerBottom">
-          <div id="datePicker" @click="handleDatePicker">
-            <span class="chooseDateTop" style="font-size: 20px">选择预约日期</span>
-            <span class="myDate" style="font-size: 20px">{{year}}-{{month}}-{{date}}</span>
-          </div>
-          <div class="smallLine"></div>
-          <div id="datePicker" @click="handleSingleLinePicker" >
-            <span class="chooseDateTop" style="font-size: 20px">选择预约时间</span>
-            <span class="myDate" style="font-size: 20px">{{time}}</span>
+      </div>
+      <div class="ReservationsBottom">
+        <div class="weui-cells weui-cells_form">
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请详细描述您的问题" v-model="submitForm.productName"/>
+            </div>
           </div>
         </div>
       </div>
+    </div>
       <div class="Reservations ReservationNumber">
         <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
@@ -52,7 +63,7 @@
           <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
               <div class="weui-cell__bd">
-                  <input class="weui-input" type="text" placeholder="请输入预约姓名" v-model="submitForm.username"/>
+                  <input class="weui-input" type="text" placeholder="请输入预约姓名" v-model="submitForm.userName"/>
               </div>
             </div>
             <div class="weui-cell">
@@ -63,9 +74,20 @@
           </div>
         </div>
       </div>
+
       <div class="weui-btn-area">
           <a class="weui-btn" href="javascript:" id="showTooltips" @click="submit">确定预约</a>
       </div>
+    <div class="Reservations ReservationNumber">
+      <div class="ReservationsTop">
+          <span class="ReservationsTopLeft">
+            联系方式
+          </span>
+      </div>
+      <div class="ReservationsBottom">
+        <img src="http://payobwhnt.bkt.clouddn.com/chenxierweima.jpg" style="margin: 10px;width: 100%;"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -77,7 +99,7 @@ const getDate = function(){
   let date = dateNow.getDate()
   return [year, month, date]
 }
-import {addSubscribes,getAdminAilviliableInfo} from '../../../api/api'
+import {addSubscribes,getAdminAilviliableInfo,addchenxiSubscribes} from '../../../api/api'
 export default {
   data(){
     return {
@@ -102,6 +124,7 @@ export default {
         productUrl:'',
         adminName:'',
       },
+      array: ["白羊", "金牛", "双子", "巨蟹", "狮子", "处女", "天秤", "天蝎", "射手", "摩羯", "水瓶", "双鱼"],
       userInfo:{
 
       },
@@ -166,7 +189,8 @@ export default {
       unAvilTime:[],
       item:{},
       adminId:undefined,
-      today:undefined
+      today:undefined,
+      xingzuo:''
     }
   },
   props:{
@@ -188,6 +212,7 @@ export default {
     this.productTypes=JSON.parse(sessionStorage.getItem("productTypes"));
     this.submitForm.subscribeDay=this.year+"-"+this.month+"-"+this.date
     this.today=this.year+"-"+this.month+"-"+this.date
+    this.xingzuo='白羊'
     //初始化
     this.init()
   },
@@ -217,19 +242,50 @@ export default {
     },
     handleDatePicker(){
       let that = this
-      weui.datePicker({
-        start: new Date(), // 从今天开始
-        end: new Date(that.year+10,0,1),
-        defaultValue: [that.year,that.month,that.date],
+      weui.picker([{
+          label: '白羊',
+          value: '白羊'
+        }, {
+          label: '金牛',
+          value: '金牛'
+        }, {
+          label: '双子',
+          value: '双子'
+        },{
+          label: '巨蟹',
+          value: '巨蟹'
+        }, {
+          label: '狮子',
+          value: '狮子'
+        }, {
+        label: '处女',
+        value: '处女'
+      }, {
+        label: '天秤',
+        value: '天秤'
+      }, {
+        label: '天蝎',
+        value: '天蝎'
+      }, {
+        label: '射手',
+        value: '射手'
+      }, {
+        label: '摩羯',
+        value: '摩羯'
+      }, {
+        label: '水瓶',
+        value: '水瓶'
+      }, {
+        label: '双鱼',
+        value: '双鱼'
+      }], {
+        defaultValue: [0],
         onChange: function(result){
 
         },
         onConfirm: function(result){
-            that.year = result[0].value;
-            that.month = result[1].value;
-            that.date = result[2].value;
-            that.submitForm.subscribeDay=that.year+"-"+that.month+"-"+that.date
-            that.init()
+            that.submitForm.productUrl=result[0].value
+            that.xingzuo=result[0].value
         },
         id: 'datePicker'
     });
@@ -250,65 +306,44 @@ export default {
       });
     },
     submit(){
-      if(this.submitForm.productId==undefined){
-        alert("请选择服务项目")
+      if(this.submitForm.userNumber==undefined){
+        alert("请选择性别")
         return
       }
-      if(this.submitForm.subscribeDay==undefined){
-        alert("请选择服务日期")
+      if(this.submitForm.productUrl==undefined){
+        alert("请选择星座")
         return
       }
-      if(this.submitForm.subscribeTime==undefined){
-        alert("请选择服务时间")
+      if(this.submitForm.productName==undefined){
+        alert("请选择问题")
         return
       }
       this.submitForm.userId=JSON.parse(localStorage.getItem("user")).id
       this.submitForm.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid
       this.submitForm.adminId=this.item.id
       this.submitForm.adminName=this.item.nickname;
-      this.submitForm.productUrl=this.item.avatar
-      addSubscribes(this.submitForm).then(res=>{
+      addchenxiSubscribes(this.submitForm).then(res=>{
         if(res.data.status==200){
           alert("预约成功")
-          this.$router.push({path:"/mysubscribe"})
         }
         else{
           alert(res.data.exception)
         }
       });
     },
-    initTime(){
-      this.timeArray.forEach(item=>{
-        item.disabled=false
-        item.label=item.defaultLabel;
-        //已经预约出去
-        if(this.unAvilTime.includes(item.value)){
-          item.label=item.label+"(不可预约)"
-          item.disabled=true
-        }
-        const date=new Date()
-        //当日不可用
-        if(this.today==this.submitForm.subscribeDay&&date.getHours()>=item.value){
-          item.label=item.label+"(不可预约)"
-          item.disabled=true
-        }
-      })
-    },
     init(){
-      getAdminAilviliableInfo({adminId:this.$route.query.id,subscribeDay:this.submitForm.subscribeDay}).then(res=>{
-        this.item=res.data.data.userInfo
-        this.unAvilTime=res.data.data.unailviliableTime
-        this.initTime();
-      })
     }
   }
 }
 </script>
 <style lang="stylus" scoped>
+ body {
+   font-size: 15px!important
+ }
 .Reservations
-  min-height 3rem
+  /*min-height 3rem*/
   background-color #ffffff
-  margin 2.5rem 0.3rem 0.3rem
+  margin .5rem 0.3rem 0.3rem
   box-shadow 5px 5px 20px #ccc
   .ReservationsTop
     border-bottom 1px solid #e9e9e9
@@ -346,6 +381,7 @@ export default {
   color #ffffff
 .DatePickerBottom
   justify-content center
+  margin 40px
   #datePicker
     flex 1
     display flex
@@ -356,7 +392,7 @@ export default {
       color #9D9D9D
       font-size 0.3rem
     .myDate
-      font-size 0.6rem
+      font-size 0.35rem!important
   .smallLine
     width 0.05rem
     height 0.5rem
@@ -373,12 +409,11 @@ export default {
   margin 0.3rem
   .weui-btn
     height 1.2rem
-    background-color #2a10ff
+    background-color #98499C
     display flex
     justify-content center
     align-items center
     font-size 0.5rem
-    .weui-picker__item weui-picker__item_disabled{
-    font-size: 20px
-  }
+.weui-picker__item
+   font-size: 20px!important
 </style>
