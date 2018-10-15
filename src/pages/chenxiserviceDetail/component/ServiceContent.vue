@@ -93,7 +93,7 @@
     <div class="Reservations ReservationNumber">
       <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
-            联系方式
+            联系方式(单击放大，长按识别)
           </span>
       </div>
       <div class="ReservationsBottom">
