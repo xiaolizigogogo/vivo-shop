@@ -18,7 +18,7 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-	        <div class="ReservationNumberMarks1 marks1" @click="handleReservationNumberClick1">140元/个 问题</div>
+	        <div class="ReservationNumberMarks1 marks1" @click="handleReservationNumberClick1">260/个 问题</div>
             <div class="ReservationNumberMarks1 marks1" @click="handleReservationNumberClick1">500元/30分钟 问答时间</div>
       </div>
     </div>
