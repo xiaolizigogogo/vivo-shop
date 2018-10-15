@@ -96,7 +96,7 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-        <img src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" style="margin: 10px;width: 100%;"/>
+        <img class=" lazy aligncenter" src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" data-src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" alt style="width: 100%;"/>
       </div>
     </div>
   </div>
@@ -364,6 +364,12 @@ export default {
 img{
 -webkit-touch-callout: none;
 } 
+.aligncenter {
+    clear: both;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 .Reservations
   /*min-height 3rem*/
   background-color #ffffff
