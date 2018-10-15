@@ -1,3 +1,4 @@
+let wx = require('weixin-js-sdk');
 <template>
   <div class="serviceContent">
     <div class="Reservations">
@@ -96,7 +97,7 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-        <img class=" lazy aligncenter" src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" data-src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg"  style="width: 200px;"/>
+        <img class=" lazy aligncenter" src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" data-src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg"  style="width: 200px;" @click="preImage"/>
       </div>
     </div>
   </div>
@@ -353,7 +354,15 @@ export default {
       });
     },
     init(){
-    }
+
+    },
+	preImage(){
+		var imgArray=['http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg']
+		var curImageSrc='http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg'
+		wx.previewImage({
+		current: curImageSrc,
+		urls: imgArray
+		});}
   }
 }
 </script>
