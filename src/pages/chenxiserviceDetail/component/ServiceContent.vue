@@ -361,6 +361,9 @@ export default {
  body {
    font-size: 15px!important
  }
+img{
+-webkit-touch-callout: none;
+} 
 .Reservations
   /*min-height 3rem*/
   background-color #ffffff
