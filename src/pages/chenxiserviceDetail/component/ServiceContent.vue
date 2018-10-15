@@ -389,7 +389,7 @@ export default {
   font-size 0.35rem
 .marks1
   margin-left 0.3rem
-  width 3rem
+  width 4rem
   height 0.8rem
   border-radius 1rem
   border 1px solid #e9e9e9
