@@ -329,10 +329,6 @@ export default {
         alert("请选择问题")
         return
       }
-      this.submitForm.userId=JSON.parse(localStorage.getItem("user")).id
-      this.submitForm.openid=JSON.parse(localStorage.getItem("user")).weixinOpenid
-      this.submitForm.adminId=this.item.id
-      this.submitForm.adminName=this.item.nickname;
       addchenxiSubscribes(this.submitForm).then(res=>{
         if(res.data.status==200){
           alert("预约成功")
