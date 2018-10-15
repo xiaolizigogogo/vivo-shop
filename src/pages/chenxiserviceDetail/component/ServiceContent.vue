@@ -96,7 +96,7 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-        <img class=" lazy aligncenter" src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" data-src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" alt style="width: 100%;"/>
+        <img class=" lazy aligncenter" src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg" data-src="http://payobwhnt.bkt.clouddn.com/chenxierweima1.jpg"  style="width: 200px;"/>
       </div>
     </div>
   </div>
