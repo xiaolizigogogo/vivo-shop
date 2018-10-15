@@ -11,6 +11,17 @@
         <img src="http://payobwhnt.bkt.clouddn.com/chenxi123.jpg" style="width: 100% ;padding: 10px;"/>
       </div>
     </div>
+	<div class="Reservations">
+      <div class="ReservationsTop">
+          <span class="ReservationsTopLeft">
+            收费说明
+          </span>
+      </div>
+      <div class="ReservationsBottom">
+        <span>140元/个 问题</span>
+		<span>500元/30分钟 问答时间</span>
+      </div>
+    </div>
       <div class="Reservations ReservationNumber">
         <div class="ReservationsTop">
           <span class="ReservationsTopLeft">
