@@ -18,8 +18,8 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-	        <div class="ReservationNumberMarks mark1" >140元/个 问题</div>
-            <div class="ReservationNumberMarks mark1" >500元/30分钟 问答时间</div>
+	        <div class="ReservationNumberMarks marks1" >140元/个 问题</div>
+            <div class="ReservationNumberMarks marks1" >500元/30分钟 问答时间</div>
       </div>
     </div>
       <div class="Reservations ReservationNumber">
