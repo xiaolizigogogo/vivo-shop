@@ -1,4 +1,4 @@
-let wx = require('weixin-js-sdk');
+
 <template>
   <div class="serviceContent">
     <div class="Reservations">
@@ -112,6 +112,7 @@ const getDate = function(){
   return [year, month, date]
 }
 import {addSubscribes,getAdminAilviliableInfo,addchenxiSubscribes} from '../../../api/api'
+let wx = require('weixin-js-sdk');
 export default {
   data(){
     return {
