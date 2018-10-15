@@ -18,8 +18,8 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-	        <div class="ReservationNumberMarks marks" >140元/个 问题</div>
-            <div class="ReservationNumberMarks marks" >500元/30分钟 问答时间</div>
+	        <div class="ReservationNumberMarks mark1" >140元/个 问题</div>
+            <div class="ReservationNumberMarks mark1" >500元/30分钟 问答时间</div>
       </div>
     </div>
       <div class="Reservations ReservationNumber">
@@ -387,6 +387,15 @@ export default {
   text-align center
   line-height 0.8rem
   font-size 0.35rem
+.marks1
+  margin-left 0.3rem
+  width 3rem
+  height 0.8rem
+  border-radius 1rem
+  border 1px solid #e9e9e9
+  text-align center
+  line-height 0.8rem
+  font-size 0.35rem  
 .activeMarks
   background-color #98499C
   color #ffffff
