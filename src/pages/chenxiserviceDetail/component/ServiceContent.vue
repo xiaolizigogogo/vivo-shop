@@ -18,8 +18,8 @@
           </span>
       </div>
       <div class="ReservationsBottom">
-	        <div class=" marks1" >140元/个 问题</div>
-            <div class=" marks1" >500元/30分钟 问答时间</div>
+	        <div class="ReservationNumberMarks1 marks1" @click="handleReservationNumberClick1">140元/个 问题</div>
+            <div class="ReservationNumberMarks1 marks1" @click="handleReservationNumberClick1">500元/30分钟 问答时间</div>
       </div>
     </div>
       <div class="Reservations ReservationNumber">
@@ -251,6 +251,16 @@ export default {
       this.submitForm.userNumber=e.toElement.textContent
       target.setAttribute('class','ReservationNumberMarks marks activeMarks')
     },
+	handleReservationNumberClick1(e){
+      const target = e.currentTarget;
+      let ReservationsMarks = document.querySelectorAll('.ReservationNumberMarks1')
+      let len = ReservationsMarks.length
+      for(let i = 0; i < len; i++){
+        ReservationsMarks[i].setAttribute('class','ReservationNumberMarks1 marks1')
+      }
+      this.submitForm.adminName=e.toElement.textContent
+      target.setAttribute('class','ReservationNumberMarks1 marks1 activeMarks')
+    },
     handleDatePicker(){
       let that = this
       weui.picker([{
@@ -326,7 +336,11 @@ export default {
         return
       }
       if(this.submitForm.productName==undefined){
-        alert("请选择问题")
+        alert("请填写问题")
+        return
+      }
+	  if(this.submitForm.productName==undefined){
+        alert("请选择预约项目")
         return
       }
       addchenxiSubscribes(this.submitForm).then(res=>{
