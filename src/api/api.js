@@ -397,6 +397,13 @@ const getParamsMap=(params)=>{
     params: params
   })
 }
+const getCardList=(params)=>{
+  return request({
+    url: '/shop/sMembers',
+    method: 'get',
+    params: params
+  })
+}
 export {
   getGoods,
   getCategory,
@@ -437,6 +444,7 @@ export {
   editUserInfo,
   updateSubscribes,
   validatePhoneCode,
-  getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap,addchenxiSubscribes
+  getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap,addchenxiSubscribes,
+  getCardList
 
 }

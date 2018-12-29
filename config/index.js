@@ -22,15 +22,15 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
-    host:'0.0.0.0',
+    host:'localhost',
     env: require('./dev.env'),
-    port: 7778,
+    port: 7766,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/shop/': {
-        target: 'http://localhost:8890',//226:8799              host:'192.168.1.226',
+        target: 'http://localhost:8888',//226:8799              host:'192.168.1.226',
         changeOrigin: true,
         pathRewrite: {
           '^/shop/': '/'
