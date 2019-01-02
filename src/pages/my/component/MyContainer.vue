@@ -40,6 +40,13 @@
         <i class="iconfont icon-collection" slot="icon" ></i>
       </mt-cell>
       <mt-cell
+        title="在线充值"
+        to="/mytrade"
+        is-link
+      >
+        <i class="iconfont icon-zhifu" slot="icon"></i>
+      </mt-cell>
+      <mt-cell
         title="我的交易"
         to="/trade"
         is-link>
@@ -58,13 +65,6 @@
         is-link
         >
         <i class="iconfont icon-gouwuche" slot="icon"></i>
-      </mt-cell>
-      <mt-cell
-        title="在线充值"
-        to="/mytrade"
-        is-link
-        >
-        <i class="iconfont icon-zhifu" slot="icon"></i>
       </mt-cell>
       <mt-cell
         title="我的预约"

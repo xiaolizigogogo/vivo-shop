@@ -45,7 +45,7 @@ export default {
         openid: "",
         totalFee: "1",
         body: "在线充值",
-        tradeType: "JSAPI",  
+        tradeType: "JSAPI",
         money: undefined,
       },
       selectCard:{},
@@ -69,6 +69,13 @@ export default {
   methods: {
     pay() {
       this.params.totalFee = this.params.money * 100;
+      if(this.selectCard==null){
+        Toast({
+          message: "请先选择会员卡",
+          duration: 950
+        });
+        return;
+      }
       this.params.attach = JSON.stringify({ orderType: "在线充值",cardId:this.selectCard.id,cardName:this.selectCard.cardName });
       let params = this.params;
       unifiedOrder(params).then(res => {
