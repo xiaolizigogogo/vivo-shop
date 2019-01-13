@@ -35,6 +35,7 @@ import articleDetail from '@/pages/cms/articleDetail'
 import myQrcode from '@/pages/my/myQrcode'
 import chenxisubscribeDetail from "@/pages/chenxiserviceDetail/serviceDetail"
 import chenxisubscribe from "@/pages/chenxi/subscribe/subscribe"
+import youhuiquan from "@/pages/youhuiquan/index"
 import store from '../vuex'
 Vue.use(Router)
 const router =  new Router({
@@ -168,7 +169,12 @@ const router =  new Router({
       name:'chenxisubscribeDetail',
       component:chenxisubscribeDetail
     },
-
+    {
+      path: '/youhuiquan',
+      name:'youhuiquan',
+      component:youhuiquan
+    },
+    
   ],
   //路由切换页面始终回到最顶部
   // scrollBehavior(to, from, savedPosition) {
