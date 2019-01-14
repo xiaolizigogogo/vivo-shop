@@ -474,22 +474,22 @@ export default {
   .main-view
   .package-container
   .activity-rule[data-v-90eb8484] {
-  font-size: 0.15rem;
+  font-size: 0.6rem;
   color: #a48f88;
-  padding-top: 0.21rem;
-  margin-bottom: 0.1rem;
+  padding-top: 0.7rem;
+  margin-bottom: 0.5rem;
   text-align: center;
 }
 .coupon-active-page
   .main-view
   .package-container
   .rule-detail[data-v-90eb8484] {
-  font-size: 0.115rem;
+  font-size: 0.4rem;
   color: #b7a199;
   letter-spacing: 0;
   text-align: left;
   width: 100%;
-  padding: 0 0.2rem 0.15rem;
+  padding: 0 0.5rem 0.45rem;
   overflow: hidden;
 }
 .coupon-active-page .footer[data-v-90eb8484] {
