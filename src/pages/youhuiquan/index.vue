@@ -29,18 +29,17 @@
         class="main-view flex-container"
         style="background-color: rgb(227, 237, 247);"
       >
-        <div data-v-90eb8484 class="banner-container">
-          <img
-            data-v-90eb8484
-            id="banner"
-            class="banner"
-            src="http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg"
-          >
+        <div data-v-90eb8484 class="banner-container home-swiper">
+        <mt-swipe :auto="4000">
+          <mt-swipe-item v-for="(list,index) in swiper" :key="index">
+            <img :src="list.imageUrl">
+          </mt-swipe-item>
+        </mt-swipe>
         </div>
         <div data-v-90eb8484 class="package-container bg-image">
           <div data-v-90eb8484 class="bottom-con">
             <div data-v-90eb8484>
-              <h4 class="desc">斯卡莱380深层护理体验券</h4>
+              <h4 class="desc">斯卡莱价值398元小气泡深层清洁体验券</h4>
               <input
                 type="tel"
                 placeholder="请输入领取手机号"
@@ -67,6 +66,9 @@
             </p>
             <p style="white-space: normal;">
               <span style="font-family: arial, helvetica, sans-serif;">5.一次LED灯照光；</span>
+            </p>
+            <p style="white-space: normal;">
+              <span style="font-family: arial, helvetica, sans-serif;">6.全程60分钟；</span>
             </p>
             <p>
               <br>
@@ -107,17 +109,21 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      nowIndex: 0,
-      params: {
-        current: 1,
-        size: 10
-      },
-      address: [],
-      total: 0
-    };
-  }
+  data(){
+    return{
+      swiper:[
+        {
+          imageUrl:"/static/img/home1.jpg"
+        },
+        {
+          imageUrl:"/static/img/home2.jpg"
+        },
+        {
+          imageUrl:"/static/img/home3.jpg"
+        }
+      ]
+    }
+  },
 };
 </script>
 
@@ -464,7 +470,7 @@ export default {
 }
 .coupon-active-page .main-view .package-container .bottom-con[data-v-90eb8484] {
   width: 9.55rem;
-  padding: 0.4rem 0.3rem;
+  padding: 0.7rem 0.3rem;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 0.06rem;
@@ -1432,4 +1438,12 @@ button {
   color: #ffffff;
   letter-spacing: 0;
 }
+.home-swiper {
+  height:6.5rem;
+}
+ img {
+  width: 100% ;
+  height: 6.5rem;
+ }
+
 </style>
