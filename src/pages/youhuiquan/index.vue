@@ -46,7 +46,7 @@
                 maxlength="11"
                 class="form-input text-center"
               >
-              <button type="button" class="btn btn-submit">领取体验券</button>
+              <button type="button" class="btn btn-submit" @click="submit()">领取体验券</button>
             </div>
             <!---->
           </div>
@@ -108,8 +108,21 @@
   </div>
 </template>
 <script>
-import wx from 'weixin-js-sdk'
-import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
+import wx from "weixin-js-sdk";
+import {
+  getProductTypes,
+  getUserInfoByOpenId,
+  getGoods,
+  getCategory,
+  getWechatUserInfo,
+  getWechatOAuth2UserInfo,
+  getWechatOpenid,
+  getAdPositionDetail,
+  getJsTicket,
+  unifiedOrder,
+  getAdmins,
+  getWxCardExt
+} from "../../api/api";
 export default {
   data() {
     return {
@@ -124,66 +137,111 @@ export default {
     };
   },
   created() {
-     if(window.signLink==undefined||window.signLink==''){
-      window.signLink=window.location.href
-     }
-    getJsTicket({url:window.signLink}).then(res=>{
-      res.data.data.jsApiList=['onMenuShareTimeline',
-        'onMenuShareAppMessage',
-        'onMenuShareQQ',
-        'onMenuShareWeibo',
-        'onMenuShareQZone',
-        'startRecord',
-        'stopRecord',
-        'onVoiceRecordEnd',
-        'playVoice',
-        'pauseVoice',
-        'stopVoice',
-        'onVoicePlayEnd',
-        'uploadVoice',
-        'downloadVoice',
-        'chooseImage',
-        'previewImage',
-        'uploadImage',
-        'downloadImage',
-        'translateVoice',
-        'getNetworkType',
-        'openLocation',
-        'getLocation',
-        'hideOptionMenu',
-        'showOptionMenu',
-        'hideMenuItems',
-        'showMenuItems',
-        'hideAllNonBaseMenuItem',
-        'showAllNonBaseMenuItem',
-        'closeWindow',
-        'scanQRCode',
-        'chooseWXPay',
-        'openProductSpecificView',
-        'addCard',
-        'chooseCard',
-        'openCard',
-        'updateAppMessageShareData']
-      wx.config(res.data.data);
-      wx.ready(()=>{
-            wx.onMenuShareAppMessage({
-      title: "送你斯卡莱美容免费体验券，速领", // 分享标题
-      desc: "点击领取398元美容免费体验券", // 分享描述
-      link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-      imgUrl: "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
-      type: "link", // 分享类型,music、video或link，不填默认为link
-      dataUrl: "", // 如果type是music或video，则要提供数据链接，默认为空
-      success: function() {
-        // 用户点击了分享后执行的回调函数
+    if (window.signLink == undefined || window.signLink == "") {
+      window.signLink = window.location.href;
+      const code = this.$route.query.code;
+      if (!code) {
+        return;
       }
+      getWechatOpenid({ code: code, lang: "zh_CN" }).then(res => {
+        sessionStorage.setItem("token", JSON.stringify(res.data.data));
+        this.openid = res.data.data.openId;
+        getUserInfoByOpenId({ openid: this.openid }).then(res => {
+          sessionStorage.setItem("user", JSON.stringify(res.data.data));
+        });
+      });
+    }
+    getJsTicket({ url: window.signLink }).then(res => {
+      res.data.data.jsApiList = [
+        "onMenuShareTimeline",
+        "onMenuShareAppMessage",
+        "onMenuShareQQ",
+        "onMenuShareWeibo",
+        "onMenuShareQZone",
+        "startRecord",
+        "stopRecord",
+        "onVoiceRecordEnd",
+        "playVoice",
+        "pauseVoice",
+        "stopVoice",
+        "onVoicePlayEnd",
+        "uploadVoice",
+        "downloadVoice",
+        "chooseImage",
+        "previewImage",
+        "uploadImage",
+        "downloadImage",
+        "translateVoice",
+        "getNetworkType",
+        "openLocation",
+        "getLocation",
+        "hideOptionMenu",
+        "showOptionMenu",
+        "hideMenuItems",
+        "showMenuItems",
+        "hideAllNonBaseMenuItem",
+        "showAllNonBaseMenuItem",
+        "closeWindow",
+        "scanQRCode",
+        "chooseWXPay",
+        "openProductSpecificView",
+        "addCard",
+        "chooseCard",
+        "openCard",
+        "updateAppMessageShareData"
+      ];
+      wx.config(res.data.data);
+      wx.ready(() => {
+        wx.onMenuShareAppMessage({
+          title: "送你斯卡莱美容免费体验券，速领", // 分享标题
+          desc: "点击领取398元美容免费体验券", // 分享描述
+          link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl:
+            "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
+          type: "link", // 分享类型,music、video或link，不填默认为link
+          dataUrl: "", // 如果type是music或video，则要提供数据链接，默认为空
+          success: function() {
+            // 用户点击了分享后执行的回调函数
+          }
+        });
+        wx.onMenuShareTimeline({
+          title: "送你斯卡莱美容免费体验券，速领", // 分享标题
+          link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl:
+            "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
+          success: function() {
+            // 用户点击了分享后执行的回调函数
+          }
+        });
+      });
+      wx.error(function(res) {
+        console.log("wx err", res);
+        //可以更新签名
+      });
     });
-  });
-    wx.error(function(res){
-      console.log('wx err',res);
-      //可以更新签名
-    });
-    })
-
+  },
+  methods: {
+    submit() {
+      if (sessionStorage.getItem("user") == null) {
+        window.location.href =
+          "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
+      } else {
+        getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(res => {
+          console.log(res);
+          wx.addCard({
+            cardList: [
+              {
+                cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk",
+                cardExt: ""
+              }
+            ], // 需要添加的卡券列表
+            success: function(res) {
+              var cardList = res.cardList; // 添加的卡券列表信息
+            }
+          });
+        });
+      }
+    }
   }
 };
 </script>

@@ -404,6 +404,13 @@ const getCardList=(params)=>{
     params: params
   })
 }
+const getWxCardExt=(params)=>{
+  return request({
+    url: '/wechat/card/cardExt',
+    method: 'get',
+    params: params
+  })
+}
 export {
   getGoods,
   getCategory,
@@ -445,6 +452,6 @@ export {
   updateSubscribes,
   validatePhoneCode,
   getHomeColumn,getHomeMenus,getHomeActivitis,getParamsMap,addchenxiSubscribes,
-  getCardList
+  getCardList,getWxCardExt
 
 }
