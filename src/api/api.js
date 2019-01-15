@@ -406,7 +406,7 @@ const getCardList=(params)=>{
 }
 const getWxCardExt=(params)=>{
   return request({
-    url: '/wechat/card/cardExt',
+    url: '/shop/wechat/card/cardExt',
     method: 'get',
     params: params
   })
