@@ -230,6 +230,7 @@ export default {
         window.location.href =
           "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
       } else {
+        //https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==&scene=126&bizpsid=0&subscene=0#wechat_redirect
         getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(res => {
           console.log(res);
           wx.addCard({
