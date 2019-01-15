@@ -232,11 +232,12 @@ export default {
             cardList: [
               {
                 cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk",
-                cardExt: ""
+                cardExt: res.data.data.signature
               }
             ], // 需要添加的卡券列表
             success: function(res) {
               var cardList = res.cardList; // 添加的卡券列表信息
+              console.log(res)
             }
           });
         });
