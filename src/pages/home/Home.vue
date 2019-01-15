@@ -57,6 +57,7 @@ export default {
     HomeService
   },
   created(){
+    debugger
     if(window.signLink==undefined||window.signLink==''){
       window.signLink=window.location.href
       const  code=this.$route.query.code
@@ -110,7 +111,8 @@ export default {
         'openProductSpecificView',
         'addCard',
         'chooseCard',
-        'openCard']
+        'openCard',
+        'updateAppMessageShareData']
       wx.config(res.data.data);
       wx.ready(()=>{
   });

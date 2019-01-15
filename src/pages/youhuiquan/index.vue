@@ -30,11 +30,11 @@
         style="background-color: rgb(227, 237, 247);"
       >
         <div data-v-90eb8484 class="banner-container home-swiper">
-        <mt-swipe :auto="4000">
-          <mt-swipe-item v-for="(list,index) in swiper" :key="index">
-            <img :src="list.imageUrl">
-          </mt-swipe-item>
-        </mt-swipe>
+          <mt-swipe :auto="4000">
+            <mt-swipe-item v-for="(list,index) in swiper" :key="index">
+              <img :src="list.imageUrl">
+            </mt-swipe-item>
+          </mt-swipe>
         </div>
         <div data-v-90eb8484 class="package-container bg-image">
           <div data-v-90eb8484 class="bottom-con">
@@ -108,22 +108,83 @@
   </div>
 </template>
 <script>
+import wx from 'weixin-js-sdk'
+import { getProductTypes,getUserInfoByOpenId, getGoods, getCategory, getWechatUserInfo, getWechatOAuth2UserInfo, getWechatOpenid,getAdPositionDetail,getJsTicket,unifiedOrder,getAdmins} from '../../api/api'
 export default {
-  data(){
-    return{
-      swiper:[
+  data() {
+    return {
+      swiper: [
         {
-          imageUrl:"/static/img/home1.jpg"
+          imageUrl: "/static/img/home1.jpg"
         },
         {
-          imageUrl:"/static/img/home2.jpg"
-        },
-        {
-          imageUrl:"/static/img/home3.jpg"
+          imageUrl: "/static/img/home2.jpg"
         }
       ]
-    }
+    };
   },
+  created() {
+     if(window.signLink==undefined||window.signLink==''){
+      window.signLink=window.location.href
+     }
+    getJsTicket({url:window.signLink}).then(res=>{
+      res.data.data.jsApiList=['onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'onMenuShareQQ',
+        'onMenuShareWeibo',
+        'onMenuShareQZone',
+        'startRecord',
+        'stopRecord',
+        'onVoiceRecordEnd',
+        'playVoice',
+        'pauseVoice',
+        'stopVoice',
+        'onVoicePlayEnd',
+        'uploadVoice',
+        'downloadVoice',
+        'chooseImage',
+        'previewImage',
+        'uploadImage',
+        'downloadImage',
+        'translateVoice',
+        'getNetworkType',
+        'openLocation',
+        'getLocation',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'hideMenuItems',
+        'showMenuItems',
+        'hideAllNonBaseMenuItem',
+        'showAllNonBaseMenuItem',
+        'closeWindow',
+        'scanQRCode',
+        'chooseWXPay',
+        'openProductSpecificView',
+        'addCard',
+        'chooseCard',
+        'openCard',
+        'updateAppMessageShareData']
+      wx.config(res.data.data);
+      wx.ready(()=>{
+            wx.onMenuShareAppMessage({
+      title: "送你斯卡莱美容免费体验券，速领", // 分享标题
+      desc: "点击领取398元美容免费体验券", // 分享描述
+      link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+      imgUrl: "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
+      type: "link", // 分享类型,music、video或link，不填默认为link
+      dataUrl: "", // 如果type是music或video，则要提供数据链接，默认为空
+      success: function() {
+        // 用户点击了分享后执行的回调函数
+      }
+    });
+  });
+    wx.error(function(res){
+      console.log('wx err',res);
+      //可以更新签名
+    });
+    })
+
+  }
 };
 </script>
 
@@ -1439,11 +1500,10 @@ button {
   letter-spacing: 0;
 }
 .home-swiper {
-  height:6.5rem;
-}
- img {
-  width: 100% ;
   height: 6.5rem;
- }
-
+}
+img {
+  width: 100%;
+  height: 6.5rem;
+}
 </style>
