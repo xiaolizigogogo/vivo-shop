@@ -127,12 +127,17 @@ export default {
   data() {
     return {
       swiper: [
+
+        {
+          imageUrl: "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg"
+        },
         {
           imageUrl: "/static/img/home1.jpg"
         },
         {
           imageUrl: "/static/img/home2.jpg"
-        }
+        },
+        
       ]
     };
   },
@@ -140,16 +145,15 @@ export default {
     if (window.signLink == undefined || window.signLink == "") {
       window.signLink = window.location.href;
       const code = this.$route.query.code;
-      if (!code) {
-        return;
-      }
-      getWechatOpenid({ code: code, lang: "zh_CN" }).then(res => {
+      if (code) {
+        getWechatOpenid({ code: code, lang: "zh_CN" }).then(res => {
         sessionStorage.setItem("token", JSON.stringify(res.data.data));
         this.openid = res.data.data.openId;
         getUserInfoByOpenId({ openid: this.openid }).then(res => {
           sessionStorage.setItem("user", JSON.stringify(res.data.data));
         });
       });
+      }
     }
     getJsTicket({ url: window.signLink }).then(res => {
       res.data.data.jsApiList = [
