@@ -235,10 +235,13 @@ export default {
         //http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg
         // window.location.href =
         //   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
-        MessageBox.confirm('', {
-          message: '<img style="width:100px;height:100px" src="http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" />',
-          title: '关注公众号',
-          confirmButtonText: '关注成功'})
+        wx.previewImage({
+          current:
+            "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg", // 当前显示图片的http链接
+          urls: [
+            "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
+          ] // 需要预览的图片http链接列表
+        });
       } else {
         /**
          * 已授权则去查询该openid是否关注
@@ -246,7 +249,8 @@ export default {
         getUserInfoByOpenId({ openid: this.openid }).then(res => {
           let user = res.data.data;
           if (user.subscribe == 0) {
-            window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
+            window.location.href =
+              "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
             // window.open('https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect');
           } else {
             getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
