@@ -127,17 +127,16 @@ export default {
   data() {
     return {
       swiper: [
-
         {
-          imageUrl: "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg"
+          imageUrl:
+            "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg"
         },
         {
           imageUrl: "/static/img/home1.jpg"
         },
         {
           imageUrl: "/static/img/home2.jpg"
-        },
-        
+        }
       ]
     };
   },
@@ -147,12 +146,12 @@ export default {
       const code = this.$route.query.code;
       if (code) {
         getWechatOpenid({ code: code, lang: "zh_CN" }).then(res => {
-        sessionStorage.setItem("token", JSON.stringify(res.data.data));
-        this.openid = res.data.data.openId;
-        getUserInfoByOpenId({ openid: this.openid }).then(res => {
-          sessionStorage.setItem("user", JSON.stringify(res.data.data));
+          sessionStorage.setItem("token", JSON.stringify(res.data.data));
+          this.openid = res.data.data.openId;
+          getUserInfoByOpenId({ openid: this.openid }).then(res => {
+            sessionStorage.setItem("user", JSON.stringify(res.data.data));
+          });
         });
-      });
       }
     }
     getJsTicket({ url: window.signLink }).then(res => {
@@ -199,7 +198,8 @@ export default {
         wx.onMenuShareAppMessage({
           title: "送你斯卡莱美容免费体验券，速领", // 分享标题
           desc: "点击领取398元美容免费体验券", // 分享描述
-          link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link:
+            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl:
             "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
           type: "link", // 分享类型,music、video或link，不填默认为link
@@ -210,7 +210,8 @@ export default {
         });
         wx.onMenuShareTimeline({
           title: "送你斯卡莱美容免费体验券，速领", // 分享标题
-          link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link:
+            "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl:
             "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
           success: function() {
@@ -233,25 +234,37 @@ export default {
         window.location.href =
           "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
       } else {
-        //https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==&scene=126&bizpsid=0&subscene=0#wechat_redirect
-        getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(res => {
-          console.log(res);
-          wx.addCard({
-            cardList: [
-              {
-                cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk",
-                cardExt: JSON.stringify({
-                  timestamp:res.data.data.timestamp,
-                  nonce_str:res.data.data.nonceStr,
-                  signature:res.data.data.signature
-                })
+        /**
+         * 已授权则去查询该openid是否关注
+         */
+        getUserInfoByOpenId({ openid: this.openid }).then(res => {
+          let user = res.data.data;
+          if (user.subscribe == 0) {
+            window.location.href =
+              "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==&scene=126&bizpsid=0&subscene=0#wechat_redirect";
+          } else {
+            getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
+              res => {
+                console.log(res);
+                wx.addCard({
+                  cardList: [
+                    {
+                      cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk",
+                      cardExt: JSON.stringify({
+                        timestamp: res.data.data.timestamp,
+                        nonce_str: res.data.data.nonceStr,
+                        signature: res.data.data.signature
+                      })
+                    }
+                  ], // 需要添加的卡券列表
+                  success: function(res) {
+                    var cardList = res.cardList; // 添加的卡券列表信息
+                    console.log(res);
+                  }
+                });
               }
-            ], // 需要添加的卡券列表
-            success: function(res) {
-              var cardList = res.cardList; // 添加的卡券列表信息
-              console.log(res)
-            }
-          });
+            );
+          }
         });
       }
     }
