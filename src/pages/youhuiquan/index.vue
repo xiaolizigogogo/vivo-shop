@@ -236,7 +236,7 @@ export default {
         // window.location.href =
         //   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
         MessageBox.confirm('', {
-          message: '<img src="http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" />',
+          message: '<img style="width:100px;height:100px" src="http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" />',
           title: '关注公众号',
           confirmButtonText: '关注成功'})
       } else {
