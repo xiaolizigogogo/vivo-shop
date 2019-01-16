@@ -252,7 +252,7 @@ export default {
               showModal: true,
               confirmButtonText: "立即去关注"
             }).then(actions => {
-              if (action == "confirm") {
+              if (actions == "confirm") {
                 //确认的回调
                 wx.previewImage({
                   current:
