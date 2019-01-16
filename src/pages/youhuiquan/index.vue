@@ -46,10 +46,6 @@
                 maxlength="11"
                 class="form-input text-center"
               >
-              
-              <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5MzUxMDQ2OQ==&scene=110#wechat_redirect">关注</a>
-              <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect">关注</a>
-               <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==&scene=110#wechat_redirect">关注</a>
               <button type="button" class="btn btn-submit" @click="submit()">领取体验券</button>
             </div>
             <!---->
@@ -235,8 +231,13 @@ export default {
        * 如果未授权先授权
        */
       if (sessionStorage.getItem("user") == null) {
-        window.location.href =
-          "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
+        //http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg
+        // window.location.href =
+        //   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
+        MessageBox.confirm('', {
+          message: '<img src="http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg" />',
+          title: '关注公众号',
+          confirmButtonText: '关注成功'})
       } else {
         /**
          * 已授权则去查询该openid是否关注
