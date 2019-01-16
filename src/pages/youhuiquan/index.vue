@@ -240,7 +240,7 @@ export default {
         getUserInfoByOpenId({ openid: this.openid }).then(res => {
           let user = res.data.data;
           if (user.subscribe == 0) {
-            window.location.href =
+            window.open =
               "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
           } else {
             getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
