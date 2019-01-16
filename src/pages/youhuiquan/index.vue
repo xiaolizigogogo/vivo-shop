@@ -46,6 +46,7 @@
                 maxlength="11"
                 class="form-input text-center"
               >
+              <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect">关注</a>
               <button type="button" class="btn btn-submit" @click="submit()">领取体验券</button>
             </div>
             <!---->
@@ -240,8 +241,8 @@ export default {
         getUserInfoByOpenId({ openid: this.openid }).then(res => {
           let user = res.data.data;
           if (user.subscribe == 0) {
-            // window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
-            window.open('https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect');
+            window.location.href = "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
+            // window.open('https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect');
           } else {
             getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
               res => {
