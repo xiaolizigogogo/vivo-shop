@@ -110,7 +110,7 @@
 </template>
 <script>
 import wx from "weixin-js-sdk";
-import { MessageBox } from "mint-ui";
+import { Toast,MessageBox } from "mint-ui";
 import {
   getProductTypes,
   getUserInfoByOpenId,
@@ -264,6 +264,11 @@ export default {
               }
             });
           } else {
+            if(phone==''){
+            Toast({
+              message: '请输入手机号！'
+            });
+            }
             getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
               res => {
                 console.log(res);
