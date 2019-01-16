@@ -199,7 +199,7 @@ export default {
         wx.onMenuShareAppMessage({
           title: "送你斯卡莱美容免费体验券，速领", // 分享标题
           desc: "点击领取398元美容免费体验券", // 分享描述
-          link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl:
             "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
           type: "link", // 分享类型,music、video或link，不填默认为link
@@ -210,7 +210,7 @@ export default {
         });
         wx.onMenuShareTimeline({
           title: "送你斯卡莱美容免费体验券，速领", // 分享标题
-          link: "http://sikalai.szfre.cn/youhuiquan", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          link: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect", // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl:
             "http://image.yodemon.top//sikalai/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20190113223854.jpg", // 分享图标
           success: function() {
@@ -226,6 +226,9 @@ export default {
   },
   methods: {
     submit() {
+      /**
+       * 如果未授权先授权
+       */
       if (sessionStorage.getItem("user") == null) {
         window.location.href =
           "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
