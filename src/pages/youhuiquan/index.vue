@@ -237,25 +237,6 @@ export default {
         //http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg
         window.location.href =
           "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
-        MessageBox.confirm("", {
-          width: 200,
-          height: 200,
-          message: "关注后即可领券，还有更多优惠！",
-          title: "关注公众号",
-          showModal: true,
-          confirmButtonText: "立即去关注"
-        }).then(actions => {
-          if (action == "confirm") {
-            //确认的回调
-            wx.previewImage({
-              current:
-                "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg", // 当前显示图片的http链接
-              urls: [
-                "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
-              ] // 需要预览的图片http链接列表
-            });
-          }
-        });
       } else {
         /**
          * 已授权则去查询该openid是否关注
