@@ -45,6 +45,7 @@
                 placeholder="请输入领取手机号"
                 maxlength="11"
                 class="form-input text-center"
+                v-modal="phone"
               >
               <button type="button" class="btn btn-submit" @click="submit()">领取体验券</button>
             </div>
@@ -138,7 +139,8 @@ export default {
         {
           imageUrl: "/static/img/home2.jpg"
         }
-      ]
+      ],
+      phone: ""
     };
   },
   created() {
@@ -233,8 +235,8 @@ export default {
        */
       if (sessionStorage.getItem("user") == null) {
         //http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg
-        // window.location.href =
-        //   "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
+        window.location.href =
+          "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri=http://sikalai.szfre.cn/youhuiquan&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
         MessageBox.confirm("", {
           width: 200,
           height: 200,
@@ -261,9 +263,25 @@ export default {
         getUserInfoByOpenId({ openid: this.openid }).then(res => {
           let user = res.data.data;
           if (user.subscribe == 0) {
-            window.location.href =
-              "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect";
-            // window.open('https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect');
+            MessageBox.confirm("", {
+              width: 200,
+              height: 200,
+              message: "关注后即可领券，还有更多优惠！",
+              title: "关注公众号",
+              showModal: true,
+              confirmButtonText: "立即去关注"
+            }).then(actions => {
+              if (action == "confirm") {
+                //确认的回调
+                wx.previewImage({
+                  current:
+                    "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg", // 当前显示图片的http链接
+                  urls: [
+                    "http://image.yodemon.top/sikalai/%E6%96%AF%E5%8D%A1%E8%8E%B1%E4%BA%8C%E7%BB%B4%E7%A0%81.jpg"
+                  ] // 需要预览的图片http链接列表
+                });
+              }
+            });
           } else {
             getWxCardExt({ cardId: "pbWT-0rqFHE3NrAt_njQQ4YwJ9Vk" }).then(
               res => {
