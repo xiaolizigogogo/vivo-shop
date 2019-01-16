@@ -46,7 +46,10 @@
                 maxlength="11"
                 class="form-input text-center"
               >
+              
+              <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA5MzUxMDQ2OQ==&scene=110#wechat_redirect">关注</a>
               <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==#wechat_redirect">关注</a>
+               <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzUzOTg4NzIxMw==&scene=110#wechat_redirect">关注</a>
               <button type="button" class="btn btn-submit" @click="submit()">领取体验券</button>
             </div>
             <!---->
