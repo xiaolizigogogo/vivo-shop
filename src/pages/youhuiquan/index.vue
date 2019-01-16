@@ -109,6 +109,7 @@
 </template>
 <script>
 import wx from "weixin-js-sdk";
+import { MessageBox } from "mint-ui";
 import {
   getProductTypes,
   getUserInfoByOpenId,
