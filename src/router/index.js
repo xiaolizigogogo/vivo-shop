@@ -50,7 +50,7 @@ import {
   unifiedOrder,
   getAdmins,
   getWxCardExt
-} from "../../api/api";
+} from "../api/api";
 Vue.use(Router)
 const router =  new Router({
   mode: 'history',
