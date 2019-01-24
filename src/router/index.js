@@ -37,6 +37,20 @@ import chenxisubscribeDetail from "@/pages/chenxiserviceDetail/serviceDetail"
 import chenxisubscribe from "@/pages/chenxi/subscribe/subscribe"
 import youhuiquan from "@/pages/youhuiquan/index"
 import store from '../vuex'
+import {
+  getProductTypes,
+  getUserInfoByOpenId,
+  getGoods,
+  getCategory,
+  getWechatUserInfo,
+  getWechatOAuth2UserInfo,
+  getWechatOpenid,
+  getAdPositionDetail,
+  getJsTicket,
+  unifiedOrder,
+  getAdmins,
+  getWxCardExt
+} from "../../api/api";
 Vue.use(Router)
 const router =  new Router({
   mode: 'history',
