@@ -183,14 +183,23 @@ const router =  new Router({
 
 })
 router.beforeEach((to, from, next) => {
-  // if(!store.state.user && to.path != '/author'){
-  //   // 第一次进入项目
-  //   holdno.cookie.set('beforeLoginUrl', to.fullPath) // 保存用户进入的url
-  //   next('/author')
-  //   return false
-  // }
-  // window.location = window.location;
-  // 记录进入app时的url
+  if(localStorage.getItem("user")==undefined){
+    const  code=to.query.code;
+    const url=window.location.href;
+    if(!code){
+      window.location.href =
+      "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe0320d47d0ff807f&redirect_uri="+url+"&response_type=code&scope=snsapi_userinfo&state=#wechat_redirect";
+      return;
+    }
+    getWechatOpenid({"code":code,"lang":"zh_CN"}).then(res=>{
+      sessionStorage.setItem("token",JSON.stringify(res.data.data))
+      localStorage.setItem("token",JSON.stringify(res.data.data))
+    getUserInfoByOpenId({"openid":this.openid}).then(res=>{
+      localStorage.setItem("user",JSON.stringify(res.data.data))
+      sessionStorage.setItem("user",JSON.stringify(res.data.data))
+  })
+  })
+  }
   if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
   window.entryUrl = location.href.split('#')[0]
   }
